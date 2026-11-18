@@ -1,0 +1,6 @@
+The next step is three-dimensional immersion cooling.
+A heated chip below. A cold plate above.
+Built on a Cartesian grid.
+We reconstruct the moving liquid and vapor interface in three dimensions.
+Temperature and velocity come directly from the calculation.
+Early numerical evolution. The full cycle remains under study.

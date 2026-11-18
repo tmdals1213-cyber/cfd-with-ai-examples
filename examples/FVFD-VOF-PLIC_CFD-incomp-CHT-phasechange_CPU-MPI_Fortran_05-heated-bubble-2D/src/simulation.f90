@@ -1,0 +1,988 @@
+
+module simulation
+   use precision,         only: WP
+   use geometry,          only: cfg,Lz
+   use hypre_str_class,   only: hypre_str
+   use tpns_class,        only: tpns
+   use vfs_class,         only: vfs
+   use evap_class,        only: evap
+   use timetracker_class, only: timetracker
+   use ensight_class,     only: ensight
+   use surfmesh_class,    only: surfmesh
+   use event_class,       only: event
+   use monitor_class,     only: monitor
+   use boiling_energy
+   use mpi_f08
+   use parallel, only: MPI_REAL_WP
+   use messager, only: die
+   use, intrinsic :: ieee_arithmetic, only: ieee_is_finite
+   implicit none
+   private
+   
+   !> Get a couple linear solvers, a two-phase flow solver and volume fraction solver and corresponding time tracker
+   type(hypre_str),   public :: ps,psL
+   type(tpns),        public :: fs,fsL
+   type(vfs),         public :: vf
+   type(evap),        public :: evp
+   type(timetracker), public :: time
+   
+   !> Ensight postprocessing
+   type(surfmesh) :: smesh
+   type(ensight)  :: ens_out
+   type(event)    :: ens_evt,diagnostic_evt
+   integer::last_field_output_step=-1
+   integer::trace_unit=-1
+   integer::checkpoint_step,stop_after_checkpoint,last_checkpoint_step=-1
+   character(len=1024)::restart_prefix
+   character(len=64)::checkpoint_identity
+   
+   !> Simulation monitor file
+   type(monitor) :: mfile,mfileL,cflfile,evpfile
+   
+   public :: simulation_init,simulation_run,simulation_final
+   
+   !> Private work arrays
+   real(WP), dimension(:,:,:), allocatable :: resU,resV,resW
+   real(WP), dimension(:,:,:), allocatable :: Ui,Vi,Wi
+   real(WP), dimension(:,:,:), allocatable :: Ui_L,Vi_L,Wi_L
+   
+   !> Problem definition
+   real(WP), dimension(3) :: center
+   real(WP) :: radius
+   real(WP) :: mdotdp
+   real(WP), allocatable :: source_local(:,:),source_global(:,:),pressure_keep(:,:,:)
+   integer :: history_unit
+   real(WP)::phase_cfl_limit,phase_cfl_actual
+   integer::thermal_trial_count,thermal_replay_test
+   real(WP) :: input_integral=0,phase_integral=0,out_integral=0,initial_sensible,initial_vapor,previous_vapor
+   real(WP) :: top_volume_out,top_gas_out,source_error
+   real(WP) :: rad_drop
+   
+contains
+
+
+   !> Function that defines a level set function for a drop problem
+   function levelset_drop(xyz,t) result(G)
+      implicit none
+      real(WP), dimension(3),intent(in) :: xyz
+      real(WP), intent(in) :: t
+      real(WP) :: G
+      ! Create the drop
+      G=sqrt((xyz(1)-center(1))**2+(xyz(2)-center(2))**2)-radius
+   end function levelset_drop
+
+
+   !> Function that localizes the x- boundary
+   function xm_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (i.eq.pg%imin) isIn=.true.
+   end function xm_locator
+
+
+   !> Function that localizes the x- boundary for scalar fields
+   function xm_locator_sc(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (i.eq.pg%imin-1) isIn=.true.
+   end function xm_locator_sc
+
+
+   !> Function that localizes the x+ boundary
+   function xp_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (i.eq.pg%imax+1) isIn=.true.
+   end function xp_locator
+   
+
+   !> Function that localizes y- boundary
+   function ym_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (j.eq.pg%jmin) isIn=.true.
+   end function ym_locator
+
+
+   !> Function that localizes y- boundary for scalar fields
+   function ym_locator_sc(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (j.eq.pg%jmin-1) isIn=.true.
+   end function ym_locator_sc
+   
+   
+   !> Function that localizes y+ boundary
+   function yp_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (j.eq.pg%jmax+1) isIn=.true.
+   end function yp_locator
+
+
+   !> Function that localizes z- boundary
+   function zm_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (k.eq.pg%kmin) isIn=.true.
+   end function zm_locator
+
+
+   !> Function that localizes z- boundary for scalar fields
+   function zm_locator_sc(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (k.eq.pg%kmin-1) isIn=.true.
+   end function zm_locator_sc
+   
+   
+   !> Function that localizes z+ boundary
+   function zp_locator(pg,i,j,k) result(isIn)
+      use pgrid_class, only: pgrid
+      class(pgrid), intent(in) :: pg
+      integer, intent(in) :: i,j,k
+      logical :: isIn
+      isIn=.false.
+      if (k.eq.pg%kmax+1) isIn=.true.
+   end function zp_locator
+   
+   
+   !> Initialization of problem solver
+   subroutine simulation_init
+      use param, only: param_read
+      implicit none
+      
+      
+      ! Allocate work arrays
+      allocate_work_arrays: block
+         allocate(resU(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(resV(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(resW(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Ui  (cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Vi  (cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Wi  (cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Ui_L(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Vi_L(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+         allocate(Wi_L(cfg%imino_:cfg%imaxo_,cfg%jmino_:cfg%jmaxo_,cfg%kmino_:cfg%kmaxo_))
+      end block allocate_work_arrays
+      
+      
+      ! Initialize time tracker
+      initialize_timetracker: block
+         time=timetracker(amRoot=cfg%amRoot,name='Main')
+         call param_read('Max timestep size',time%dtmax)
+         call param_read('Max cfl number',time%cflmax)
+         call param_read('Max time',time%tmax)
+         call param_read('Sub-iterations',time%itmax)
+         time%dt=time%dtmax
+      end block initialize_timetracker
+      
+      
+      ! Initialize our VOF solver and field
+      create_and_initialize_vof: block
+         use mms_geom,  only: cube_refine_vol
+         use vfs_class, only: lvira,VFhi,VFlo,flux_storage,neumann
+         use mathtools, only: Pi
+         integer :: i,j,k,n,si,sj,sk
+         real(WP), dimension(3,8) :: cube_vertex
+         real(WP), dimension(3) :: v_cent,a_cent
+         real(WP) :: vol,area
+         integer, parameter :: amr_ref_lvl=4
+         ! Create a VOF solver
+         call vf%initialize(cfg=cfg,reconstruction_method=lvira,transport_method=flux_storage,name='VOF')
+         vf%cons_correct=.true.
+         vf%use_phase_source=.true.
+         ! Boundary conditinos
+         call vf%add_bcond(name='xm',type=neumann,locator=xm_locator_sc,dir='-x')
+         call vf%add_bcond(name='xp',type=neumann,locator=xp_locator   ,dir='+x')
+         call vf%add_bcond(name='ym',type=neumann,locator=ym_locator_sc,dir='-y')
+         call vf%add_bcond(name='yp',type=neumann,locator=yp_locator   ,dir='+y')
+         ! call vf%add_bcond(name='zm',type=neumann,locator=zm_locator_sc,dir='-z')
+         ! call vf%add_bcond(name='zp',type=neumann,locator=zp_locator   ,dir='+z')
+         ! Initialize to a droplet
+         call param_read('Droplet center',center)
+         call param_read('Droplet diameter',radius); radius=radius/2.0_WP
+         do k=vf%cfg%kmino_,vf%cfg%kmaxo_
+            do j=vf%cfg%jmino_,vf%cfg%jmaxo_
+               do i=vf%cfg%imino_,vf%cfg%imaxo_
+                  ! Set cube vertices
+                  n=0
+                  do sk=0,1
+                     do sj=0,1
+                        do si=0,1
+                           n=n+1; cube_vertex(:,n)=[vf%cfg%x(i+si),vf%cfg%y(j+sj),vf%cfg%z(k+sk)]
+                        end do
+                     end do
+                  end do
+                  ! Call adaptive refinement code to get volume and barycenters recursively
+                  vol=0.0_WP; area=0.0_WP; v_cent=0.0_WP; a_cent=0.0_WP
+                  call cube_refine_vol(cube_vertex,vol,area,v_cent,a_cent,levelset_drop,0.0_WP,amr_ref_lvl)
+                  vf%VF(i,j,k)=vol/vf%cfg%vol(i,j,k)
+                  if (vf%VF(i,j,k).ge.VFlo.and.vf%VF(i,j,k).le.VFhi) then
+                     vf%Lbary(:,i,j,k)=v_cent
+                     vf%Gbary(:,i,j,k)=([vf%cfg%xm(i),vf%cfg%ym(j),vf%cfg%zm(k)]-vf%VF(i,j,k)*vf%Lbary(:,i,j,k))/(1.0_WP-vf%VF(i,j,k))
+                  else
+                     vf%Lbary(:,i,j,k)=[vf%cfg%xm(i),vf%cfg%ym(j),vf%cfg%zm(k)]
+                     vf%Gbary(:,i,j,k)=[vf%cfg%xm(i),vf%cfg%ym(j),vf%cfg%zm(k)]
+                  end if
+               end do
+            end do
+         end do
+         ! Update the band
+         call vf%update_band()
+         ! Perform interface reconstruction from VOF field
+         call vf%build_interface()
+         ! Set interface planes at the boundaries
+         call vf%set_full_bcond()
+         ! Create discontinuous polygon mesh from IRL interface
+         call vf%polygonalize_interface()
+         ! Calculate distance from polygons
+         call vf%distance_from_polygon()
+         ! Calculate subcell phasic volumes
+         call vf%subcell_vol()
+         ! Calculate curvature
+         call vf%get_curvature()
+         ! Reset moments to guarantee compatibility with interface reconstruction
+         call vf%reset_volume_moments()
+         ! Droplet size
+         call vf%get_max()
+         rad_drop=sqrt(vf%VFint/(Lz*Pi))
+      end block create_and_initialize_vof
+      
+      
+      ! Create a two-phase flow solver without bconds
+      create_and_initialize_flow_solver: block
+         use hypre_str_class, only: pcg_pfmg2
+         use mathtools,       only: Pi
+         use tpns_class,      only: dirichlet,neumann,bcond
+         type(bcond), pointer :: mybc
+         ! Create flow solver
+         fs=tpns(cfg=cfg,name='Two-phase NS')
+         ! Assign constant viscosity to each phase
+         call param_read('Liquid dynamic viscosity',fs%visc_l)
+         call param_read('Gas dynamic viscosity',fs%visc_g)
+         ! Assign constant density to each phase
+         call param_read('Liquid density',fs%rho_l)
+         call param_read('Gas density',fs%rho_g)
+         ! Read in surface tension coefficient
+         call param_read('Surface tension coefficient',fs%sigma)
+         call param_read('Static contact angle',fs%contact_angle)
+         fs%contact_angle=fs%contact_angle*Pi/180.0_WP
+         ! Assign acceleration of gravity
+         call param_read('Gravity',fs%gravity)
+         ! Boundary conditions
+         call fs%add_bcond(name='xm',type=dirichlet,face='x',dir=-1,canCorrect=.false.,locator=xm_locator)
+         call fs%add_bcond(name='xp',type=dirichlet,face='x',dir=+1,canCorrect=.false.,locator=xp_locator)
+         call fs%add_bcond(name='ym',type=dirichlet,face='y',dir=-1,canCorrect=.false.,locator=ym_locator)
+         call fs%add_bcond(name='yp',type=neumann,face='y',dir=+1,canCorrect=.false.,locator=yp_locator)
+         ! call fs%add_bcond(name='zm',type=clipped_neumann,face='z',dir=-1,canCorrect=.false.,locator=zm_locator)
+         ! call fs%add_bcond(name='zp',type=clipped_neumann,face='z',dir=+1,canCorrect=.false.,locator=zp_locator)
+         ! Configure pressure solver
+         ps=hypre_str(cfg=cfg,name='Pressure',method=pcg_pfmg2,nst=7)
+         ps%maxlevel=16
+         call param_read('Pressure iteration',ps%maxit)
+         call param_read('Pressure tolerance',ps%rcvg)
+         ! Setup the solver
+         call fs%setup(pressure_solver=ps)
+         ! Zero initial field
+         fs%U=0.0_WP; fs%V=0.0_WP; fs%W=0.0_WP
+         ! Apply boundary conditions
+         call fs%apply_bcond(time%t,time%dt)
+         ! Calculate cell-centered velocities and divergence
+         call fs%interp_vel(Ui,Vi,Wi)
+         call fs%get_div()
+      end block create_and_initialize_flow_solver
+
+
+      ! Create and initialize an evp object
+      create_evp: block
+         ! Create the object
+         call evp%initialize(cfg=cfg,vf=vf,itp_x=fs%itpr_x,itp_y=fs%itpr_y,itp_z=fs%itpr_z,div_x=fs%divp_x,div_y=fs%divp_y,div_z=fs%divp_z,name='liquid gas pc')
+         evp%rho_l=fs%rho_l;evp%rho_g=fs%rho_g
+         allocate(pressure_keep,mold=fs%P)
+         call energy_init(vf)
+         call param_read('Phase conversion CFL',phase_cfl_limit)
+         call param_read('Thermal trial replay',thermal_replay_test)
+         if(phase_cfl_limit.le.0.or.phase_cfl_limit.ge.1)call die('Invalid phase conversion CFL')
+         phase_cfl_actual=0;thermal_trial_count=0
+         allocate(source_local(cfg%nx,cfg%ny),source_global(cfg%nx,cfg%ny))
+         call global_stores(initial_sensible,initial_vapor)
+         previous_vapor=initial_vapor
+      end block create_evp
+      
+
+      if(vf%two_planes)call die('Checkpoint format qualified only for this one-plane LVIRA case')
+      call param_read('Restart prefix',restart_prefix)
+      call param_read('Checkpoint step',checkpoint_step)
+      call param_read('Stop after checkpoint',stop_after_checkpoint)
+      call param_read('Checkpoint identity',checkpoint_identity)
+      if(len_trim(checkpoint_identity).ne.64)call die('Checkpoint physics identity must be SHA256')
+      if(wall_birth_enabled.eq.1.and.initial_vapor.gt.0)call die('This wall birth prototype requires initially no vapor')
+      if(trim(restart_prefix).ne.'none')call read_checkpoint(trim(restart_prefix))
+      if(trim(restart_prefix).eq.'none')then
+       block
+        real(WP)::initial_zero_dt
+        initial_zero_dt=0._WP
+        ! Define auxiliary masses/interpolators for fresh-run diagnostics only.
+        ! The first actual step recomputes these from the unchanged geometry.
+        call fs%get_olddensity(vf=vf)
+        call fs%prepare_advection_upwind(dt=initial_zero_dt)
+       end block
+      endif
+      call trace_stage('restored',time%dt,.false.)
+
+      ! Create surfmesh object for interface polygon output
+      create_smesh: block
+         smesh=surfmesh(nvar=0,name='plic')
+         call vf%update_surfmesh(smesh)
+      end block create_smesh
+
+
+      ! Add Ensight output
+      create_ensight: block
+         ! Create Ensight output from cfg
+         ens_out=ensight(cfg=cfg,name='VaporizingDrop')
+         ! Create event for Ensight output
+         ens_evt=event(time=time,name='Ensight output')
+         call param_read('Ensight output period',ens_evt%tper)
+         diagnostic_evt=event(time=time,name='Double precision flow snapshots')
+         call param_read('CSV output period',diagnostic_evt%tper)
+         ! Add variables to output
+         call ens_out%add_vector('velocity',Ui,Vi,Wi)
+         call ens_out%add_scalar('VOF',vf%VF)
+         call ens_out%add_scalar('pressure',fs%P)
+         call ens_out%add_scalar('curvature',vf%curv)
+         call ens_out%add_surface('plic',smesh)
+         call ens_out%add_scalar('mflux',evp%mflux)
+         call ens_out%add_scalar('evp_div',evp%div_src)
+         call ens_out%add_scalar('mdotdp',evp%mdotdp)
+         call ens_out%add_scalar('mfluxL',evp%mfluxL)
+         call ens_out%add_scalar('mfluxG',evp%mfluxG)
+         call ens_out%add_scalar('divergence',fs%div)
+         call ens_out%add_vector('vel_itf',evp%U_itf,evp%V_itf,evp%W_itf)
+         call ens_out%add_scalar('temperature',T)
+         call ens_out%add_scalar('latent_sink',qphase)
+         ! Output to ensight
+         if (ens_evt%occurs()) call ens_out%write_data(time%t)
+      end block create_ensight
+      
+      
+      if(cfg%amRoot)then
+       open(newunit=history_unit,file='history.csv',status='new')
+       write(history_unit,'(a)') 'step,time_s,dt_s,solid_Tmax_K,fluid_Tmax_K,speed_max_m_s,gas_volume_m3,phase_power_W,sensible_heat_J,latent_change_J,input_heat_J,out_heat_J,total_energy_error_J,thermal_balance_W,mass_balance_relative,div_minus_source_s_1,pressure_relative_error,source_integral_error_s_1m3,top_volume_out_m3_s,top_gas_volume_out_m3_s,physical_Tmin_K,thermal_coupling_iterations,thermal_coupling_change_K,inactive_thermal_interface_cells,inactive_thermal_interface_area_m2,phase_conversion_cfl,thermal_trial_count,gas_centroid_x_m,gas_centroid_y_m,heater_gas_contact_area_m2,wall_site_temperature_K,wall_birth_events,wall_birth_surface_J'
+      endif
+      call output_fields()
+   end subroutine simulation_init
+   
+   
+   !> Perform an NGA2 simulation - this mimicks NGA's old time integration for multiphase
+   subroutine simulation_run
+    use tpns_class,only:harmonic_visc,static_contact
+    real(WP)::q,dt,source_peak,global_peak,candidate_dt
+    integer::ierr,trial
+    do while(.not.time%done())
+     call fs%get_cfl(time%dt,time%cfl);call time%adjust_dt();candidate_dt=time%dt;dt=min(candidate_dt,time%tmax-time%t)
+     vf%VFold=vf%VF
+     call trace_stage('step_begin',dt,.false.)
+     call save_thermal_trial()
+     do trial=1,20
+      if(trial.gt.1)call restore_thermal_trial()
+      call energy_step(dt,vf,fs%U,fs%V,evp%mdotdp)
+      call wall_birth_thermal_trial(dt,vf)
+     call phase_conversion_cfl(dt,vf,phase_cfl_actual)
+      if(trial.eq.1.and.thermal_replay_test.eq.1)cycle
+      if(phase_cfl_actual.le.phase_cfl_limit*(1+32*epsilon(1.0_WP)))exit
+      if(cfg%amRoot)print*,'THERMAL_PHASE_DT_RETRY',time%n+1,trial,dt,phase_cfl_actual
+      dt=dt*min(0.8_WP,0.8_WP*phase_cfl_limit/phase_cfl_actual)
+      if(.not.ieee_is_finite(dt).or.time%t+dt.eq.time%t)call die('Phase thermal trial cannot resolve a positive time increment')
+     enddo
+     if(trial.gt.20)call die('Phase thermal timestep could not be admitted within20 trials')
+     call wall_birth_commit()
+     thermal_trial_count=trial;time%cfl=time%cfl*dt/candidate_dt;time%dt=dt;call time%increment()
+     call distribute_expansion()
+     call trace_stage('after_heat_source',dt,.false.)
+     fs%Uold=fs%U;fs%Vold=fs%V;fs%Wold=fs%W
+     call wall_values()
+     call fs%get_olddensity(vf=vf)
+     call fs%prepare_advection_upwind(dt=dt)
+     call trace_stage('carrier_density',dt,.false.)
+     ! Project the old carrier to the current thermal expansion source for VOF.
+     pressure_keep=fs%P;fs%DPjx=0;fs%DPjy=0;fs%DPjz=0
+     call fs%get_div(src=evp%div_src);call project_open(dt)
+     call trace_stage('carrier_projection',dt,.false.)
+     fs%P=pressure_keep
+     call evp%get_vel_pc()
+     evp%U_itf=fs%U
+     evp%V_itf=fs%V
+     evp%W_itf=0
+     call conservative_phase_conversion(dt)
+     call recover_phase_temperature(vf)
+     vf%VFold=vf%VF
+     call open_vof()
+     call vf%advance(dt=dt,U=evp%U_itf,V=evp%V_itf,W=evp%W_itf)
+     call vf%apply_bcond(time%t,dt)
+     call trace_stage('after_vof',dt,.false.)
+     call fs%get_viscosity(vf=vf,strat=harmonic_visc)
+     ! Native two-phase midpoint momentum uses old/new VOF face densities.
+     do while(time%it.le.time%itmax)
+      fs%U=.5_WP*(fs%U+fs%Uold);fs%V=.5_WP*(fs%V+fs%Vold);fs%W=0
+      call trace_stage('momentum_midpoint',dt,.false.)
+      call fs%prepare_advection_upwind(dt=dt)
+      call trace_stage('momentum_density',dt,.false.)
+      call fs%get_dmomdt(resU,resV,resW)
+      call trace_stage('momentum_rhs',dt,.true.)
+      call fs%addsrc_gravity(resU,resV,resW)
+      call trace_stage('rhs_with_gravity',dt,.true.)
+      call open_normal_momentum_predictor(dt,.false.)
+      resU=-2*fs%rho_U*fs%U+(fs%rho_Uold+fs%rho_U)*fs%Uold+dt*resU
+      resV=-2*fs%rho_V*fs%V+(fs%rho_Vold+fs%rho_V)*fs%Vold+dt*resV
+      fs%U=2*fs%U-fs%Uold+resU/fs%rho_U
+      fs%V=2*fs%V-fs%Vold+resV/fs%rho_V;fs%W=0
+      call trace_stage('momentum_predictor',dt,.false.)
+      call fs%apply_bcond(time%t,dt);call wall_values()
+      call open_normal_momentum_predictor(dt,.true.)
+      call fs%get_div(src=evp%div_src)
+      call fs%add_surface_tension_jump(dt=dt,div=fs%div,vf=vf,contact_model=static_contact)
+      call project_open(dt)
+      call trace_stage('momentum_projection',dt,.false.)
+      time%it=time%it+1
+     enddo
+     call energy_remap(dt,vf,evp%U_itf,evp%V_itf)
+     call wall_birth_surface_cost(dt,vf,time%n,time%t)
+     call fs%interp_vel(Ui,Vi,Wi);call fs%get_max();call vf%get_max()
+     input_integral=input_integral+power*dt
+     phase_integral=phase_integral+phase_power*dt
+     out_integral=out_integral+thermal_out*dt+rg*hfg*top_gas_out*dt
+     call record_history(dt)
+     call trace_stage('accepted',dt,.false.)
+     if(max(fs%Umax,fs%Vmax).gt.20.0_WP)then
+      call trace_dump('accepted_speed_over20',dt)
+      call die('DIAGNOSTIC_ACCEPTED_SPEED_OVER20: preserved; not a physical result')
+     endif
+     if(diagnostic_evt%occurs())call output_fields()
+     if(ens_evt%occurs())then
+      call vf%update_surfmesh(smesh);call ens_out%write_data(time%t)
+     endif
+     if(time%n.eq.checkpoint_step.or.time%done().or.mod(time%n,1000).eq.0)then
+      call write_checkpoint()
+      if(stop_after_checkpoint.eq.1)exit
+     endif
+    enddo
+    call output_fields()
+    if(cfg%amRoot)close(history_unit)
+   end subroutine
+
+   subroutine conservative_phase_conversion(dt)
+    real(WP),intent(in)::dt
+    real(WP)::a,da
+    integer::i,j,k
+    ! Mixture continuity already supplies m*(1/rg-1/rl); this source supplies the
+    ! liquid recession m/rl directly, using the SAME integrated thermal mass source.
+    ! First-order operator split, no interpolated sliver normal-speed field.
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     if(cfg%VF(i,j,k).eq.0.or.qphase(i,j,k).eq.0)cycle
+     da=dt*qphase(i,j,k)/(hfg*rl);a=vf%VF(i,j,k)-da
+     if(a.lt.0.or.a.gt.1)then
+      print*,'PHASE_CONVERSION_OVERDRAW',time%n,i,j,cfg%xm(i),cfg%ym(j),vf%VF(i,j,k),da
+      call die('Resolved phase conversion exceeds local available phase; no clipping or hidden redistribution')
+     endif
+     vf%VF(i,j,k)=a
+    enddo;enddo;enddo
+    call cfg%sync(vf%VF);call vf%clean_irl_and_band()
+    call vf%sync_and_clean_barycenters();call vf%build_interface();call vf%polygonalize_interface()
+    if(vf%two_planes)call vf%sense_interface()
+    call vf%distance_from_polygon();call vf%subcell_vol();call vf%get_curvature();call vf%reset_volume_moments()
+   end subroutine
+   subroutine wall_values()
+    integer::n,i,j
+    where(fs%umask.eq.1)fs%U=0
+    where(fs%vmask.eq.1)fs%V=0
+    if(cfg%iproc.eq.1)then
+     fs%U(cfg%imin,:,:)=0
+     do n=1,cfg%no
+      i=cfg%imin-n;fs%V(i,:,:)=-fs%V(cfg%imin+n-1,:,:)
+     enddo
+    endif
+    if(cfg%iproc.eq.cfg%npx)then
+     fs%U(cfg%imax+1,:,:)=0
+     do n=1,cfg%no
+      i=cfg%imax+n;fs%V(i,:,:)=-fs%V(cfg%imax-n+1,:,:)
+     enddo
+    endif
+    if(cfg%jproc.eq.1)then
+     fs%V(:,cfg%jmin,:)=0
+     do n=1,cfg%no
+      j=cfg%jmin-n;fs%U(:,j,:)=-fs%U(:,cfg%jmin+n-1,:)
+     enddo
+    endif
+   end subroutine
+
+   subroutine open_vof()
+    integer::i,j,k
+    if(cfg%jproc.eq.cfg%npy)then
+     j=cfg%jmax
+     do k=cfg%kmino_,cfg%kmaxo_;do i=cfg%imino_,cfg%imaxo_
+      if(fs%V(i,j+1,k).lt.0)vf%VF(i,j+1:,k)=1.0_WP
+     enddo;enddo
+    endif
+    call cfg%sync(vf%VF)
+   end subroutine
+
+   subroutine distribute_expansion()
+    use irl_fortran_interface,only:calculateCentroid
+    integer::i,j,k,ierr
+    real(WP)::m,local(2),global(2)
+    ! Phase conversion removes the liquid mass BEFORE geometry transport.
+    ! Geometric transport then receives the remaining gas volume S*dt*V.
+    ! Together: liquid source=-m/rhol; gas source=+m/rhog, without a pure-gas search.
+    evp%mflux=qphase/hfg;evp%div_src=0;evp%mfluxG=evp%mflux
+    vf%liquid_volume_source=0;vf%gas_volume_source=0;vf%phase_source_point=0
+    local=0
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     if(cfg%VF(i,j,k).eq.0.or.evp%mflux(i,j,k).eq.0)cycle
+     m=evp%mflux(i,j,k);evp%div_src(i,j,k)=m*(1/rg-1/rl)
+     vf%gas_volume_source(i,j,k)=evp%div_src(i,j,k)
+     if(wall_birth_m(i,j,k).gt.0)then
+      vf%phase_source_point(:,i,j,k)=wall_birth_point(:,i,j,k)
+     else
+      vf%phase_source_point(:,i,j,k)=calculateCentroid(vf%interface_polygon(1,i,j,k))
+     endif
+     local(1)=local(1)+m*cfg%vol(i,j,k);local(2)=local(2)+evp%div_src(i,j,k)*cfg%vol(i,j,k)
+    enddo;enddo;enddo
+    call cfg%sync(evp%mflux);call cfg%sync(evp%mfluxG);call cfg%sync(evp%div_src)
+    call cfg%sync(vf%gas_volume_source)
+    call MPI_ALLREDUCE(local,global,2,MPI_REAL_WP,MPI_SUM,cfg%comm,ierr)
+    source_error=abs(global(2)-global(1)*(1/rg-1/rl))*physical_span/Lz
+   end subroutine
+
+   subroutine project_open(dt)
+    real(WP),intent(in)::dt
+    integer::i,j,k,ierr
+    real(WP)::local(2),global(2),facearea,gasface,local_rhs,global_rhs
+    call fs%update_laplacian()
+    if(cfg%jproc.eq.cfg%npy)then
+     j=cfg%jmax
+     do k=cfg%kmin_,cfg%kmax_;do i=cfg%imin_,cfg%imax_
+      ps%opr(1,i,j,k)=ps%opr(1,i,j,k)+2*cfg%vol(i,j,k)/(fs%rho_V(i,j+1,k)*cfg%dy(j)**2)
+     enddo;enddo
+    endif
+    call ps%setup();ps%rhs=-cfg%vol*fs%div/dt;ps%sol=0
+    local_rhs=maxval(abs(ps%rhs))
+    call MPI_ALLREDUCE(local_rhs,global_rhs,1,MPI_REAL_WP,MPI_MAX,cfg%comm,ierr)
+    if(global_rhs.eq.0)then
+     ps%rerr=0;ps%it=0
+    else
+     call ps%solve()
+    endif
+    if(ps%rerr.gt.1.01_WP*ps%rcvg)call die('Open pressure linear residual; custom input tolerance')
+    call fs%get_pgrad(ps%sol,resU,resV,resW)
+    if(cfg%jproc.eq.cfg%npy)then
+     j=cfg%jmax
+     do k=cfg%kmin_,cfg%kmax_;do i=cfg%imin_,cfg%imax_
+      resV(i,j+1,k)=-2*ps%sol(i,j,k)/cfg%dy(j)
+     enddo;enddo
+    endif
+    call cfg%sync(resV)
+    fs%U=fs%U-dt*resU/fs%rho_U;fs%V=fs%V-dt*resV/fs%rho_V;fs%W=0
+    fs%P=fs%P+ps%sol
+    ! Do not reapply the Neumann normal-face copy after pressure correction.
+    where(fs%umask.eq.1)fs%U=0
+    where(fs%vmask.eq.1)fs%V=0
+    if(cfg%iproc.eq.1)fs%U(cfg%imin,:,:)=0
+    if(cfg%iproc.eq.cfg%npx)fs%U(cfg%imax+1,:,:)=0
+    if(cfg%jproc.eq.1)fs%V(:,cfg%jmin,:)=0
+    call wall_values()
+    call cfg%sync(fs%U);call cfg%sync(fs%V)
+    call fs%get_div(src=evp%div_src)
+    local=0
+    if(cfg%jproc.eq.cfg%npy)then
+     j=cfg%jmax
+     do k=cfg%kmin_,cfg%kmax_;do i=cfg%imin_,cfg%imax_
+      facearea=cfg%dx(i)*physical_span
+      local(1)=local(1)+fs%V(i,j+1,k)*facearea
+      gasface=0
+      if(fs%V(i,j+1,k).gt.0)gasface=1-vf%VF(i,j,k)
+      local(2)=local(2)+fs%V(i,j+1,k)*gasface*facearea
+     enddo;enddo
+    endif
+    call MPI_ALLREDUCE(local,global,2,MPI_REAL_WP,MPI_SUM,cfg%comm,ierr)
+    top_volume_out=global(1);top_gas_out=global(2)
+   end subroutine
+
+   subroutine global_stores(sensible,gasvolume)
+    real(WP),intent(out)::sensible,gasvolume
+    real(WP)::local(2),global(2),volume
+    integer::i,j,k,ierr
+    local=0
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     volume=cfg%vol(i,j,k)*physical_span/Lz
+     local(1)=local(1)+E(i,j,k)*volume
+     if(cfg%VF(i,j,k).gt.0)local(2)=local(2)+(1-vf%VF(i,j,k))*volume
+    enddo;enddo;enddo
+    call MPI_ALLREDUCE(local,global,2,MPI_REAL_WP,MPI_SUM,cfg%comm,ierr)
+    sensible=global(1);gasvolume=global(2)
+   end subroutine
+
+   subroutine record_history(dt)
+    real(WP),intent(in)::dt
+    real(WP)::sensible,gasvolume,local(3),global(3),masserr,totalerr,speed
+    integer::i,j,k,ierr,d,ii,jj
+    integer,parameter::di(4)=[1,-1,0,0],dj(4)=[0,0,1,-1]
+    real(WP)::gaslocal(3),gasglobal(3),volume,p1(3),p2(3),area,gasface,wall_local,wall_global
+    call global_stores(sensible,gasvolume);local=-huge(1.0_WP);gaslocal=0
+    wall_local=-huge(1.0_WP)
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     if(cfg%VF(i,j,k).ne.0)cycle
+     if(abs(cfg%ym(j)-block_height+.5_WP*cfg%dy(j)).gt.64*epsilon(1._WP)*cfg%dy(j))cycle
+     if(abs(cfg%xm(i)-wall_birth_x).gt..5_WP*wall_birth_width)cycle
+     wall_local=max(wall_local,Tsat+theta_s(i,j,k))
+    enddo;enddo;enddo
+    call MPI_ALLREDUCE(wall_local,wall_global,1,MPI_REAL_WP,MPI_MAX,cfg%comm,ierr)
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     local(3)=max(local(3),-T(i,j,k))
+     if(cfg%VF(i,j,k).gt.0)then
+      volume=cfg%vol(i,j,k)*physical_span/Lz
+      gaslocal(1)=gaslocal(1)+(1-vf%VF(i,j,k))*vf%Gbary(1,i,j,k)*volume
+      gaslocal(2)=gaslocal(2)+(1-vf%VF(i,j,k))*vf%Gbary(2,i,j,k)*volume
+      do d=1,4
+       ii=i+di(d);jj=j+dj(d)
+       if(ii.lt.cfg%imin.or.ii.gt.cfg%imax.or.jj.lt.cfg%jmin.or.jj.gt.cfg%jmax)cycle
+       if(cfg%VF(ii,jj,k).gt.0)cycle
+       if(d.le.2)then
+        p1=[cfg%x(i+max(di(d),0)),cfg%y(j),cfg%zm(k)];p2=p1;p2(2)=cfg%y(j+1);area=cfg%dy(j)*physical_span
+       else
+        p1=[cfg%x(i),cfg%y(j+max(dj(d),0)),cfg%zm(k)];p2=p1;p2(1)=cfg%x(i+1);area=cfg%dx(i)*physical_span
+       endif
+       gasface=1-face_liquid(vf,i,j,k,p1,p2);gaslocal(3)=gaslocal(3)+gasface*area
+      enddo
+     endif
+
+     if(cfg%VF(i,j,k).eq.0)then
+      local(1)=max(local(1),T(i,j,k))
+     else
+      local(2)=max(local(2),T(i,j,k))
+     endif
+    enddo;enddo;enddo
+    call MPI_ALLREDUCE(local,global,3,MPI_REAL_WP,MPI_MAX,cfg%comm,ierr)
+    call MPI_ALLREDUCE(gaslocal,gasglobal,3,MPI_REAL_WP,MPI_SUM,cfg%comm,ierr)
+    if(gasvolume.gt.0)gasglobal(1:2)=gasglobal(1:2)/gasvolume
+    masserr=(rg*(gasvolume-previous_vapor)/dt+rg*top_gas_out-phase_power/hfg)/max(abs(phase_power/hfg),1e-14_WP)
+    totalerr=sensible-initial_sensible+rg*hfg*(gasvolume-initial_vapor)+out_integral-input_integral+wall_birth_surface_J
+    speed=sqrt(fs%Umax**2+fs%Vmax**2)
+    if(.not.ieee_is_finite(speed+sum(global)+gasvolume+sensible+phase_power))call die('Nonfinite physical field')
+    if(cfg%amRoot)then
+     write(history_unit,'(i0,32(",",es25.16e3))')time%n,time%t,dt,global(1:2),speed,gasvolume,phase_power,sensible,rg*hfg*(gasvolume-initial_vapor),input_integral,out_integral,totalerr,thermal_balance,masserr,fs%divmax,ps%rerr,source_error,top_volume_out,top_gas_out,-global(3),real(coupling_iterations,WP),coupling_change,real(inactive_thermal_interfaces,WP),inactive_thermal_surface_m2,phase_cfl_actual,real(thermal_trial_count,WP),gasglobal,wall_global,real(wall_birth_events,WP),wall_birth_surface_J
+     flush(history_unit)
+    endif
+    previous_vapor=gasvolume
+   end subroutine
+
+   subroutine write_checkpoint()
+    use irl_fortran_interface,only:ByteBuffer_type,new,serializeAndPack,unpackAndStore,getSize,setSize,dataPtr
+    integer::u,i,j,k,ierr,ios,magic,version,bits,bounds(12),partition(3),rank_saved
+    integer(kind=8)::nbytes
+    integer(kind=1),pointer::bytes(:)
+    type(ByteBuffer_type)::buffer
+    character(len=1200)::name
+    character(len=64)::identity
+    if(last_checkpoint_step.eq.time%n)return
+    last_checkpoint_step=time%n
+    bounds=[cfg%imin_,cfg%imax_,cfg%jmin_,cfg%jmax_,cfg%kmin_,cfg%kmax_,cfg%imino_,cfg%imaxo_,cfg%jmino_,cfg%jmaxo_,cfg%kmino_,cfg%kmaxo_];partition=[cfg%npx,cfg%npy,cfg%npz]
+    write(name,'("checkpoint_step",i8.8,"_rank",i4.4,".bin")')time%n,cfg%rank
+    call new(buffer)
+    do k=cfg%kmino_,cfg%kmaxo_;do j=cfg%jmino_,cfg%jmaxo_;do i=cfg%imino_,cfg%imaxo_
+     call serializeAndPack(vf%liquid_gas_interface(i,j,k),buffer)
+    enddo;enddo;enddo
+    nbytes=getSize(buffer);bytes=>dataPtr(buffer)
+    open(newunit=u,file=trim(name),form='unformatted',access='stream',status='new',iostat=ios)
+    if(ios.ne.0)call die('Cannot create checkpoint without overwriting')
+    write(u)20261116,4,storage_size(1.0_WP),bounds,partition,cfg%rank,checkpoint_identity
+    write(u)time%n,time%it,time%t,time%dt,time%told,time%dtold,time%tmid,time%dtmid,time%cfl
+    write(u)input_integral,phase_integral,out_integral,initial_sensible,initial_vapor,previous_vapor,top_volume_out,top_gas_out,source_error,phase_cfl_actual,thermal_trial_count,roundoff_energy,phase_power,thermal_out,thermal_balance,coupling_change,inactive_thermal_surface_m2,coupling_iterations,inactive_thermal_interfaces
+    ! Version4: accepted event state, physical ledgers, and last source geometry.
+    write(u)wall_birth_enabled,wall_birth_events,wall_birth_done,wall_birth_trial,wall_birth_event_mass,wall_birth_latent_J,wall_birth_surface_J
+    write(u)wall_birth_m,wall_birth_point
+    write(u)fs%U,fs%V,fs%W,fs%P,fs%rho_U,fs%rho_V,fs%rho_W,fs%DPjx,fs%DPjy,fs%DPjz,fs%div
+    write(u)fs%Pjx,fs%Pjy,fs%Pjz
+    write(u)vf%VF,vf%VFold,vf%Lbary,vf%Gbary,vf%SD,vf%G,vf%curv,vf%Lvol,vf%Gvol
+    write(u)T,E,El,Eg,theta_l,theta_g,theta_s,qphase
+    write(u)evp%div_src,evp%mdotdp,evp%mflux,evp%mfluxL,evp%mfluxG,evp%U_itf,evp%V_itf,evp%W_itf
+    write(u)nbytes
+    write(u)bytes
+    close(u)
+    nullify(bytes)
+    call MPI_BARRIER(cfg%comm,ierr)
+    if(cfg%amRoot)then
+     open(newunit=u,file='CHECKPOINT_INDEX.csv',status='unknown',position='append')
+     write(u,'(i0,",",es25.16e3)')time%n,time%t
+     close(u)
+    endif
+   end subroutine
+
+   subroutine read_checkpoint(prefix)
+    use tpns_class,only:static_contact
+    use irl_fortran_interface,only:ByteBuffer_type,new,serializeAndPack,unpackAndStore,getSize,setSize,dataPtr,resetBufferPointer
+    integer::u,i,j,k,ierr,ios,magic,version,bits,bounds(12),partition(3),rank_saved,birth_enabled_saved
+    integer(kind=8)::nbytes
+    integer(kind=1),pointer::bytes(:)
+    type(ByteBuffer_type)::buffer,check_buffer
+    integer(kind=1),pointer::check_bytes(:)
+    real(WP)::zero_dt
+    real(WP),allocatable::saved_sd(:,:,:),keep_x(:,:,:),keep_y(:,:,:),keep_z(:,:,:)
+    character(len=1200)::name
+    character(len=64)::identity
+    character(len=*),intent(in)::prefix
+    write(name,'(a,"_rank",i4.4,".bin")')trim(prefix),cfg%rank
+    open(newunit=u,file=trim(name),form='unformatted',access='stream',status='old',iostat=ios)
+    if(ios.ne.0)call die('Missing exact checkpoint rank file')
+    read(u,iostat=ios)magic,version,bits,bounds,partition,rank_saved,identity
+    if(ios.ne.0)call die('Truncated checkpoint header')
+    if(magic.ne.20261116.or.(version.ne.2.and.version.ne.3.and.version.ne.4).or.bits.ne.storage_size(1.0_WP).or.any(bounds.ne.[cfg%imin_,cfg%imax_,cfg%jmin_,cfg%jmax_,cfg%kmin_,cfg%kmax_,cfg%imino_,cfg%imaxo_,cfg%jmino_,cfg%jmaxo_,cfg%kmino_,cfg%kmaxo_]).or.any(partition.ne.[cfg%npx,cfg%npy,cfg%npz]).or.rank_saved.ne.cfg%rank.or.identity.ne.checkpoint_identity)call die('Checkpoint identity, precision or decomposition mismatch')
+    read(u,iostat=ios)time%n,time%it,time%t,time%dt,time%told,time%dtold,time%tmid,time%dtmid,time%cfl
+    if(ios.ne.0)call die('Truncated checkpoint time state')
+    read(u,iostat=ios)input_integral,phase_integral,out_integral,initial_sensible,initial_vapor,previous_vapor,top_volume_out,top_gas_out,source_error,phase_cfl_actual,thermal_trial_count,roundoff_energy,phase_power,thermal_out,thermal_balance,coupling_change,inactive_thermal_surface_m2,coupling_iterations,inactive_thermal_interfaces
+    if(ios.ne.0)call die('Truncated checkpoint energy ledgers')
+    if(version.eq.4)then
+     read(u,iostat=ios)birth_enabled_saved,wall_birth_events,wall_birth_done,wall_birth_trial,wall_birth_event_mass,wall_birth_latent_J,wall_birth_surface_J
+     if(ios.ne.0)call die('Truncated checkpoint wall birth state')
+     if(birth_enabled_saved.ne.wall_birth_enabled)call die('Checkpoint wall birth enable mismatch')
+     if(wall_birth_events.lt.0.or.wall_birth_events.gt.1.or.(wall_birth_done.neqv.(wall_birth_events.eq.1)))call die('Invalid checkpoint wall birth event state')
+     read(u,iostat=ios)wall_birth_m,wall_birth_point
+     if(ios.ne.0)call die('Truncated checkpoint wall birth source geometry')
+     if(cfg%amRoot)print*,'WALL_BIRTH_STATE_RESTORED',wall_birth_events,wall_birth_done,wall_birth_latent_J,wall_birth_surface_J
+    else
+     if(wall_birth_enabled.eq.1)call die('Older checkpoint lacks wall birth state')
+    endif
+    read(u,iostat=ios)fs%U,fs%V,fs%W,fs%P,fs%rho_U,fs%rho_V,fs%rho_W,fs%DPjx,fs%DPjy,fs%DPjz,fs%div
+    if(ios.ne.0)call die('Truncated checkpoint array group')
+    if(version.ge.3)then
+     read(u,iostat=ios)fs%Pjx,fs%Pjy,fs%Pjz
+     if(ios.ne.0)call die('Truncated persistent surface pressure jump')
+    endif
+    read(u,iostat=ios)vf%VF,vf%VFold,vf%Lbary,vf%Gbary,vf%SD,vf%G,vf%curv,vf%Lvol,vf%Gvol
+    if(ios.ne.0)call die('Truncated checkpoint array group')
+    read(u,iostat=ios)T,E,El,Eg,theta_l,theta_g,theta_s,qphase
+    if(ios.ne.0)call die('Truncated checkpoint array group')
+    read(u,iostat=ios)evp%div_src,evp%mdotdp,evp%mflux,evp%mfluxL,evp%mfluxG,evp%U_itf,evp%V_itf,evp%W_itf
+    if(ios.ne.0)call die('Truncated checkpoint array group')
+    read(u,iostat=ios)nbytes
+    if(ios.ne.0)call die('Missing checkpoint IRL length')
+    if(nbytes.le.0.or.nbytes.gt.128_8*size(vf%VF,kind=8))call die('Invalid checkpoint IRL byte length')
+    call new(buffer);call setSize(buffer,nbytes);bytes=>dataPtr(buffer)
+    read(u,iostat=ios)bytes
+    if(ios.ne.0)call die('Truncated checkpoint IRL payload')
+    read(u,iostat=ios)magic
+    if(ios.ge.0)call die('Unexpected checkpoint trailing bytes')
+    close(u);nullify(bytes)
+    do k=cfg%kmino_,cfg%kmaxo_;do j=cfg%jmino_,cfg%jmaxo_;do i=cfg%imino_,cfg%imaxo_
+     call unpackAndStore(vf%liquid_gas_interface(i,j,k),buffer)
+    enddo;enddo;enddo
+    ! Same decomposition: exact halo arrays and separators were saved as doubles/bytes.
+    ! Recreate only workload maps and polygon objects, not a new interface fit.
+    allocate(saved_sd,mold=vf%SD);saved_sd=vf%SD
+    call vf%update_band();call vf%polygonalize_interface()
+    ! polygonalize_interface can rewrite separators of full/empty neighbor cells.
+    ! Recreate polygon objects, then restore the exact saved separator bytes and SD.
+    call new(check_buffer)
+    do k=cfg%kmino_,cfg%kmaxo_;do j=cfg%jmino_,cfg%jmaxo_;do i=cfg%imino_,cfg%imaxo_
+     call serializeAndPack(vf%liquid_gas_interface(i,j,k),check_buffer)
+    enddo;enddo;enddo
+    bytes=>dataPtr(buffer);check_bytes=>dataPtr(check_buffer)
+    print*,'CHECKPOINT_POLYGON_REBUILD_DELTA',cfg%rank,nbytes,getSize(check_buffer),count(bytes(1:min(size(bytes),size(check_bytes))).ne.check_bytes(1:min(size(bytes),size(check_bytes)))),maxval(abs(saved_sd-vf%SD))
+    nullify(bytes);nullify(check_bytes)
+    call resetBufferPointer(buffer)
+    do k=cfg%kmino_,cfg%kmaxo_;do j=cfg%jmino_,cfg%jmaxo_;do i=cfg%imino_,cfg%imaxo_
+     call unpackAndStore(vf%liquid_gas_interface(i,j,k),buffer)
+    enddo;enddo;enddo
+    vf%SD=saved_sd;deallocate(saved_sd)
+    ! Version2 checkpoint omitted the persistent Pjx/Pjy/Pjz momentum source.
+    ! Reconstruct this static-contact source from the saved interface/curvature,
+    ! retaining the already-saved incremental pressure-jump arrays.
+    if(version.eq.2)then
+    allocate(keep_x,mold=fs%DPjx);allocate(keep_y,mold=fs%DPjy);allocate(keep_z,mold=fs%DPjz)
+    keep_x=fs%DPjx;keep_y=fs%DPjy;keep_z=fs%DPjz
+    zero_dt=0.0_WP
+    call fs%add_surface_tension_jump(dt=zero_dt,div=fs%div,vf=vf,contact_model=static_contact)
+    fs%DPjx=keep_x;fs%DPjy=keep_y;fs%DPjz=keep_z
+    deallocate(keep_x,keep_y,keep_z)
+    endif
+    call fs%interp_vel(Ui,Vi,Wi);call fs%get_max();call vf%get_max()
+    if(cfg%amRoot)print*,'EXACT_CHECKPOINT_READ',time%n,time%t
+   end subroutine
+
+
+   subroutine open_normal_momentum_predictor(dt,apply)
+    real(WP),intent(in)::dt
+    logical,intent(in)::apply
+    real(WP),allocatable,save::pred(:,:)
+    real(WP)::gp_inner,gp_boundary,other_acceleration
+    integer::i,j,k
+    if(cfg%jproc.ne.cfg%npy)then
+     if(apply)call cfg%sync(fs%V)
+     return
+    endif
+    j=cfg%jmax
+    if(.not.allocated(pred))allocate(pred(cfg%imino_:cfg%imaxo_,cfg%kmino_:cfg%kmaxo_))
+    do k=cfg%kmin_,cfg%kmax_;do i=cfg%imin_,cfg%imax_
+     if(apply)then
+      fs%V(i,j+1,k)=pred(i,k)
+     else
+      ! Qualified test scope: the open boundary is still entirely liquid.
+      if(vf%VF(i,j,k).lt.1._WP-1.e-12_WP.or.vf%VF(i,j-1,k).lt.1._WP-1.e-12_WP)call die('OPEN_MOMENTUM_TEST_SCOPE: phase interface reached outlet')
+      if(fs%rho_V(i,j,k).le.0.or.fs%rho_V(i,j+1,k).le.0)call die('OPEN_MOMENTUM_TEST_SCOPE: nonpositive normal mass')
+      ! Remove the OLD pressure/jump contribution from the adjacent native RHS.
+      gp_inner=sum(fs%divv_y(:,i,j,k)*fs%P(i,j-1:j,k))-fs%Pjy(i,j,k)
+      other_acceleration=(resV(i,j,k)+gp_inner)/fs%rho_V(i,j,k)
+      ! Same fixed ambient pressure as the existing half-cell projection (p_b=0).
+      gp_boundary=2._WP*(0._WP-fs%P(i,j,k))/cfg%dy(j)
+      ! Advance the existing normal face; do not replace it with its neighbour.
+      pred(i,k)=fs%Vold(i,j+1,k)+dt*(other_acceleration-gp_boundary/fs%rho_V(i,j+1,k))
+     endif
+    enddo;enddo
+    if(apply)call cfg%sync(fs%V)
+   end subroutine
+
+   subroutine trace_stage(stage,dt,force_available)
+    character(len=*),intent(in)::stage
+    real(WP),intent(in)::dt
+    logical,intent(in)::force_available
+    integer::lo(3),hi(3),iu(3),iv(3),mu(3),mv(3),ku(3),kv(3)
+    real(WP)::rmin,um,vm
+    character(len=100)::name
+    lo=[cfg%imin_,cfg%jmin_,cfg%kmin_];hi=[cfg%imax_,cfg%jmax_,cfg%kmax_]
+    iu=maxloc(abs(fs%U(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))),mask=fs%umask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+    iv=maxloc(abs(fs%V(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))),mask=fs%vmask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+    mu=minloc(fs%rho_U(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)),mask=fs%umask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+    mv=minloc(fs%rho_V(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)),mask=fs%vmask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+    um=abs(fs%U(iu(1),iu(2),iu(3)));vm=abs(fs%V(iv(1),iv(2),iv(3)))
+    rmin=min(fs%rho_U(mu(1),mu(2),mu(3)),fs%rho_V(mv(1),mv(2),mv(3)))
+    ! Quiet production diagnostics: retain nonpositive/nonfinite mass and large-speed evidence.
+    if(ieee_is_finite(um+vm+rmin).and.rmin.gt.0.and.max(um,vm).lt.20._WP)return
+    if(trace_unit.eq.-1)then
+     write(name,'("STAGE_TRACE_rank",i4.4,".txt")')cfg%rank
+     open(newunit=trace_unit,file=trim(name),status='new')
+     write(trace_unit,'(a)')'step time_s dt_s iteration stage event component i j k x_m y_m value old_velocity rho_old rho_new alpha_a alpha_b surface_a surface_b curvature_a curvature_b qphase_a qphase_b pressure_a pressure_b Pjump rhs momentum_kick mass_divergence rho_transport_expected outgoing_CFL'
+    endif
+    call trace_face(stage,'max_velocity','U',iu,dt,force_available)
+    call trace_face(stage,'max_velocity','V',iv,dt,force_available)
+    call trace_face(stage,'min_density','U',mu,dt,force_available)
+    call trace_face(stage,'min_density','V',mv,dt,force_available)
+    if(force_available.and.rmin.gt.0)then
+     ku=maxloc(abs(resU(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))/fs%rho_U(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))),mask=fs%umask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+     kv=maxloc(abs(resV(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))/fs%rho_V(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3))),mask=fs%vmask(lo(1):hi(1),lo(2):hi(2),lo(3):hi(3)).eq.0)+lo-1
+     call trace_face(stage,'max_force_kick','U',ku,dt,.true.)
+     call trace_face(stage,'max_force_kick','V',kv,dt,.true.)
+    endif
+    flush(trace_unit)
+    if(.not.ieee_is_finite(um+vm+rmin).or.rmin.le.0)then
+     call trace_dump(stage,dt)
+     call die('DIAGNOSTIC_NONPOSITIVE_OR_NONFINITE_STAGGERED_DENSITY: stop before dividing by it')
+    endif
+   end subroutine
+
+   subroutine trace_face(stage,event,comp,loc,dt,force_available)
+    character(len=*),intent(in)::stage,event,comp
+    integer,intent(in)::loc(3)
+    real(WP),intent(in)::dt
+    logical,intent(in)::force_available
+    integer::i,j,k,ia,ja,ib,jb
+    real(WP)::pos(2),v,oldv,ro,rn,pj,rr,kick,velx(2),vely(2),fx(2),fy(2),dm,cout
+    i=loc(1);j=loc(2);k=loc(3)
+    if(comp.eq.'U')then
+     pos=[cfg%x(i),cfg%ym(j)];v=fs%U(i,j,k);oldv=fs%Uold(i,j,k);ro=fs%rho_Uold(i,j,k);rn=fs%rho_U(i,j,k);pj=fs%Pjx(i,j,k)
+     ia=i-1;ja=j;ib=i;jb=j;rr=0;if(force_available)rr=resU(i,j,k)
+     velx=[sum(fs%itpu_x(:,i-1,j,k)*fs%U(i-1:i,j,k)),sum(fs%itpu_x(:,i,j,k)*fs%U(i:i+1,j,k))]
+     vely=[sum(fs%itpv_x(:,i,j,k)*fs%V(i-1:i,j,k)),sum(fs%itpv_x(:,i,j+1,k)*fs%V(i-1:i,j+1,k))]
+     fx=[sum(fs%hybu_x(:,i-1,j,k)*fs%rho_Uold(i-1:i,j,k))*velx(1),sum(fs%hybu_x(:,i,j,k)*fs%rho_Uold(i:i+1,j,k))*velx(2)]
+     fy=[sum(fs%hybu_y(:,i,j,k)*fs%rho_Uold(i,j-1:j,k))*vely(1),sum(fs%hybu_y(:,i,j+1,k)*fs%rho_Uold(i,j:j+1,k))*vely(2)]
+     dm=sum(fs%divu_x(:,i,j,k)*fx)+sum(fs%divu_y(:,i,j,k)*fy)
+     cout=dt*(sum(max(fs%divu_x(:,i,j,k)*velx,0._WP))+sum(max(fs%divu_y(:,i,j,k)*vely,0._WP)))
+    else
+     pos=[cfg%xm(i),cfg%y(j)];v=fs%V(i,j,k);oldv=fs%Vold(i,j,k);ro=fs%rho_Vold(i,j,k);rn=fs%rho_V(i,j,k);pj=fs%Pjy(i,j,k)
+     ia=i;ja=j-1;ib=i;jb=j;rr=0;if(force_available)rr=resV(i,j,k)
+     velx=[sum(fs%itpu_y(:,i,j,k)*fs%U(i,j-1:j,k)),sum(fs%itpu_y(:,i+1,j,k)*fs%U(i+1,j-1:j,k))]
+     vely=[sum(fs%itpv_y(:,i,j-1,k)*fs%V(i,j-1:j,k)),sum(fs%itpv_y(:,i,j,k)*fs%V(i,j:j+1,k))]
+     fx=[sum(fs%hybv_x(:,i,j,k)*fs%rho_Vold(i-1:i,j,k))*velx(1),sum(fs%hybv_x(:,i+1,j,k)*fs%rho_Vold(i:i+1,j,k))*velx(2)]
+     fy=[sum(fs%hybv_y(:,i,j-1,k)*fs%rho_Vold(i,j-1:j,k))*vely(1),sum(fs%hybv_y(:,i,j,k)*fs%rho_Vold(i,j:j+1,k))*vely(2)]
+     dm=sum(fs%divv_x(:,i,j,k)*fx)+sum(fs%divv_y(:,i,j,k)*fy)
+     cout=dt*(sum(max(fs%divv_x(:,i,j,k)*velx,0._WP))+sum(max(fs%divv_y(:,i,j,k)*vely,0._WP)))
+    endif
+    kick=0;if(force_available.and.rn.ne.0)kick=dt*rr/rn
+    write(trace_unit,'(*(g0,1x))')time%n,time%t,dt,time%it,trim(stage),trim(event),comp,i,j,k,pos,v,oldv,ro,rn,vf%VF(ia,ja,k),vf%VF(ib,jb,k),vf%SD(ia,ja,k),vf%SD(ib,jb,k),vf%curv(ia,ja,k),vf%curv(ib,jb,k),qphase(ia,ja,k),qphase(ib,jb,k),fs%P(ia,ja,k),fs%P(ib,jb,k),pj,rr,kick,dm,ro-dt*dm,cout
+   end subroutine
+
+   subroutine trace_dump(stage,dt)
+    character(len=*),intent(in)::stage
+    real(WP),intent(in)::dt
+    integer::u,bounds(12)
+    character(len=150)::name
+    bounds=[cfg%imin_,cfg%imax_,cfg%jmin_,cfg%jmax_,cfg%kmin_,cfg%kmax_,cfg%imino_,cfg%imaxo_,cfg%jmino_,cfg%jmaxo_,cfg%kmino_,cfg%kmaxo_]
+    write(name,'("DIAGNOSTIC_STAGE_step",i8.8,"_it",i1,"_rank",i4.4,".bin")')time%n,time%it,cfg%rank
+    open(newunit=u,file=trim(name),status='new',form='unformatted',access='stream')
+    write(u)20261116,99,storage_size(1._WP),bounds,cfg%rank,time%n,time%it,time%t,dt
+    write(u)fs%U,fs%V,fs%P,fs%Uold,fs%Vold,fs%rho_Uold,fs%rho_Vold,fs%rho_U,fs%rho_V,vf%VF,vf%SD,vf%curv,evp%div_src,qphase,fs%Pjx,fs%Pjy,T,theta_l,theta_g,cfg%VF
+    close(u)
+    if(trace_unit.ne.-1)flush(trace_unit)
+    print*,'DIAGNOSTIC_STATE_PRESERVED',trim(stage),trim(name)
+   end subroutine
+
+   subroutine output_fields()
+    integer::u,i,j,k
+    character(len=100)::name
+    if(time%n.eq.last_field_output_step)return
+    last_field_output_step=time%n
+    write(name,'("field_step",i8.8,"_rank",i4.4,".csv")')time%n,cfg%rank
+    open(newunit=u,file=trim(name),status='new')
+    write(u,'(a)')'x_m,y_m,T_K,liquid_fraction,u_m_s,v_m_s,solid,phase_heat_W_m3,liquid_T_K,vapor_T_K'
+    do k=cfg%kmin_,cfg%kmax_;do j=cfg%jmin_,cfg%jmax_;do i=cfg%imin_,cfg%imax_
+     write(u,'(9(es25.16e3,","),es25.16e3)')cfg%xm(i),cfg%ym(j),T(i,j,k),vf%VF(i,j,k),Ui(i,j,k),Vi(i,j,k),1-cfg%VF(i,j,k),qphase(i,j,k),Tsat+theta_l(i,j,k),Tsat+theta_g(i,j,k)
+    enddo;enddo;enddo
+    close(u)
+    if(cfg%amRoot)then
+     open(newunit=u,file='PHASE_ENERGY_ROUNDOFF.txt',status='replace')
+     write(u,*)roundoff_energy
+     close(u)
+    endif
+   end subroutine
+
+   !> Finalize the NGA2 simulation
+   subroutine simulation_final
+      implicit none
+      
+      ! Get rid of all objects - need destructors
+      ! monitor
+      ! ensight
+      ! bcond
+      ! timetracker
+      
+      ! Deallocate work arrays
+      deallocate(resU,resV,resW,Ui,Vi,Wi,Ui_L,Vi_L,Wi_L)
+
+   end subroutine simulation_final
+   
+   
+end module simulation

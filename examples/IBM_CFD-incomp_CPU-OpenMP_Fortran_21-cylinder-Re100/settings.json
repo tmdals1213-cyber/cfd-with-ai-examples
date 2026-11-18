@@ -1,0 +1,53 @@
+{
+  "Re": 100.0,
+  "geometry": "stationary circular cylinder, D=1",
+  "grid_points": [
+    161,
+    97,
+    2
+  ],
+  "cells": [
+    160,
+    96,
+    1
+  ],
+  "cell_count": 15360,
+  "original_cell_count": 184320,
+  "reduction_factor": 12.0,
+  "domain": {
+    "x": [
+      -8.0,
+      20.0
+    ],
+    "y": [
+      -8.0,
+      8.0
+    ],
+    "z": [
+      0.0,
+      1.0
+    ]
+  },
+  "minimum_cell_width": 0.062499999999999556,
+  "cells_per_diameter_at_body": 16,
+  "LES": false,
+  "IBM_interpolation": true,
+  "time_step": 0.01,
+  "time_step_mode": "constant",
+  "CFL_reference": 0.5,
+  "poisson_tolerance": 1e-05,
+  "initial_streamfunction_perturbation": 0.002,
+  "source_fix": "FIRSTPRIVATE UBODY/VBODY/WBODY in the six stationary/moving IBM forcing loops",
+  "compiler_flags": [
+    "-std=legacy",
+    "-fdefault-integer-8",
+    "-fdefault-real-8",
+    "-fdefault-double-8",
+    "-ffree-line-length-none",
+    "-O2",
+    "-Wl,--stack,134217728",
+    "-fopenmp"
+  ],
+  "reference_velocity": 1.0,
+  "reference_diameter": 1.0
+}

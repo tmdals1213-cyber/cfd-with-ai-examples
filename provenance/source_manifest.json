@@ -1,0 +1,250 @@
+{
+  "upstreamCommit": "28a58d937af89dd506456048be1cad58f6d383a9",
+  "files": [
+    {
+      "release": "examples/IBM_CFD-incomp_CPU-MPI_Fortran_01-marker-cylinder/src/geometry.f90",
+      "sourceCase": "ib_tester",
+      "sourceSHA256": "592c1cf11fa7cd1d0b4a63cd3851d392ed361b010bf79b7a43bdcd99de7c7888",
+      "releaseSHA256": "592c1cf11fa7cd1d0b4a63cd3851d392ed361b010bf79b7a43bdcd99de7c7888"
+    },
+    {
+      "release": "examples/IBM_CFD-incomp_CPU-MPI_Fortran_01-marker-cylinder/src/simulation.f90",
+      "sourceCase": "ib_tester",
+      "sourceSHA256": "4011d6b5c971a808b7874a54047240425e44113f5eb1a7e276e7127c3afbc835",
+      "releaseSHA256": "4011d6b5c971a808b7874a54047240425e44113f5eb1a7e276e7127c3afbc835"
+    },
+    {
+      "release": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder/src/geometry.f90",
+      "sourceCase": "ib_shock",
+      "sourceSHA256": "eec52bc9ddd27c50d93d28367ebf77c85a43709cfbb9f13a327f62e3d0e64223",
+      "releaseSHA256": "eec52bc9ddd27c50d93d28367ebf77c85a43709cfbb9f13a327f62e3d0e64223"
+    },
+    {
+      "release": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder/src/simulation.f90",
+      "sourceCase": "ib_shock",
+      "sourceSHA256": "1635244fc16dbf3262973c7680c57f53704742c5e3214b374761319ecebb460d",
+      "releaseSHA256": "1635244fc16dbf3262973c7680c57f53704742c5e3214b374761319ecebb460d"
+    },
+    {
+      "release": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder/src/spcomp_class.f90",
+      "sourceCase": "ib_shock",
+      "sourceSHA256": "f893c8db43e28eb43f220ce4407372af703d59e5f0f6dba750aab09bb912b1d9",
+      "releaseSHA256": "f893c8db43e28eb43f220ce4407372af703d59e5f0f6dba750aab09bb912b1d9"
+    },
+    {
+      "release": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D/src/cht_energy.f90",
+      "sourceCase": "cpu2d_water_eos_cht_20261113",
+      "sourceSHA256": "b8d2c0bdaeda0f22508696d5e2c0b90970b93eed8d8cfad483e07e74401410bc",
+      "releaseSHA256": "b8d2c0bdaeda0f22508696d5e2c0b90970b93eed8d8cfad483e07e74401410bc"
+    },
+    {
+      "release": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D/src/geometry.f90",
+      "sourceCase": "cpu2d_water_eos_cht_20261113",
+      "sourceSHA256": "ec437c9572418252805f499e8f40d1cf1dc6e577abeba97dca7f2823364bd5e9",
+      "releaseSHA256": "ec437c9572418252805f499e8f40d1cf1dc6e577abeba97dca7f2823364bd5e9"
+    },
+    {
+      "release": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D/src/simulation.f90",
+      "sourceCase": "cpu2d_water_eos_cht_20261113",
+      "sourceSHA256": "ecfc422d45a73a9fff68a555a326b6c996dc61803505c39078071865833c8bb6",
+      "releaseSHA256": "ecfc422d45a73a9fff68a555a326b6c996dc61803505c39078071865833c8bb6"
+    },
+    {
+      "release": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D/src/water_eos.f90",
+      "sourceCase": "cpu2d_water_eos_cht_20261113",
+      "sourceSHA256": "e9d38dec4c12b9bd96d63a66b2e04c29846281276ffd98d9a3b4f4238ceff928",
+      "releaseSHA256": "e9d38dec4c12b9bd96d63a66b2e04c29846281276ffd98d9a3b4f4238ceff928"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D/src/boiling_energy.f90",
+      "sourceCase": "stefan_two_temperature_reference_20261113",
+      "sourceSHA256": "58c98b96b5f01dbd41642b00fc082b245ac6cc37b2c2c0da5e877eaa08901b63",
+      "releaseSHA256": "58c98b96b5f01dbd41642b00fc082b245ac6cc37b2c2c0da5e877eaa08901b63"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D/src/evap_class.f90",
+      "sourceCase": "stefan_two_temperature_reference_20261113",
+      "sourceSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "releaseSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D/src/geometry.f90",
+      "sourceCase": "stefan_two_temperature_reference_20261113",
+      "sourceSHA256": "693444e15432ae4a6acbf3d02041f9bfe1ce396055351a42bf0683348f8746d7",
+      "releaseSHA256": "693444e15432ae4a6acbf3d02041f9bfe1ce396055351a42bf0683348f8746d7"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D/src/simulation.f90",
+      "sourceCase": "stefan_two_temperature_reference_20261113",
+      "sourceSHA256": "18a55fc91334077302f22464dc6b3cd8d3a3fa8e433d1a17590d6ddf39eef44d",
+      "releaseSHA256": "18a55fc91334077302f22464dc6b3cd8d3a3fa8e433d1a17590d6ddf39eef44d"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/boiling_energy.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "4bb99ebfe24c277404c1becd045cb46d709c8b61a7be943d2619346f450b45a7",
+      "releaseSHA256": "4bb99ebfe24c277404c1becd045cb46d709c8b61a7be943d2619346f450b45a7"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/evap_class.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "releaseSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/geometry.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "02f57ab09e2c3152ca8bab4e4903c4be30974fa96e83c41a2d79f73207445e35",
+      "releaseSHA256": "02f57ab09e2c3152ca8bab4e4903c4be30974fa96e83c41a2d79f73207445e35"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/phase_birth_core.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "releaseSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/simulation.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "6b3cae66930237675faebc0464d9cde49373dde7f0de546d7bd62f9af891d2cb",
+      "releaseSHA256": "6b3cae66930237675faebc0464d9cde49373dde7f0de546d7bd62f9af891d2cb"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/vfs_class.f90",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "281891f8d3759204b5570350ce7fafbc6ed3c45faaea8c71a7c1b6ccf7c9f327",
+      "releaseSHA256": "281891f8d3759204b5570350ce7fafbc6ed3c45faaea8c71a7c1b6ccf7c9f327"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/boiling_energy.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "064ca4b41ad715be90a81411ed427d874cdd2a440dd0dd97093f4ba844dc3c54",
+      "releaseSHA256": "064ca4b41ad715be90a81411ed427d874cdd2a440dd0dd97093f4ba844dc3c54"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/evap_class.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "releaseSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/geometry.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "50aa859bd40326f1657b142e84b28bbb03ba3e48f4b536035ad8d7058f2b191f",
+      "releaseSHA256": "50aa859bd40326f1657b142e84b28bbb03ba3e48f4b536035ad8d7058f2b191f"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/phase_birth_core.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "releaseSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/simulation.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "12e0da3bb286722466f7cd70e20a326a8a878f897f79b32ddec29b8f92fe0cc6",
+      "releaseSHA256": "12e0da3bb286722466f7cd70e20a326a8a878f897f79b32ddec29b8f92fe0cc6"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/vfs_class.f90",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36",
+      "releaseSHA256": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/boiling_energy.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "54d0fef3198f9be9397a17f7fd2ba1fa42af1305a65f12aab89be87c5393e04b",
+      "releaseSHA256": "54d0fef3198f9be9397a17f7fd2ba1fa42af1305a65f12aab89be87c5393e04b",
+      "historicalV3SourceSHA256": "dd2a5f0b719e707e0c068d76715a1b7a5659192f7256c7df90e6f10ecab9c841",
+      "previousV5SourceSHA256": "25e3abdce5360dc39e6479f3677d18a2d9d1d4762b9d2beb822b270243a4782f"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/evap_class.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "releaseSHA256": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/face_geometry3d.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043",
+      "releaseSHA256": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/geometry.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a",
+      "releaseSHA256": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/phase_birth_core.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "releaseSHA256": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/simulation.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "2c1ad548d8fcb0bca80ea56fdf67909137ac9eeda6e0da1631e403a456de61b9",
+      "releaseSHA256": "2c1ad548d8fcb0bca80ea56fdf67909137ac9eeda6e0da1631e403a456de61b9",
+      "historicalV3SourceSHA256": "3b231c7934c01b4887af8aaf329633b2d7a549492197815b8a1d5a705222be54"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/vfs_class.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "3551c6d888eda0c9954e2ac77a8a4476ac88f8d424aae8eaf72d3481f189be3d",
+      "releaseSHA256": "3551c6d888eda0c9954e2ac77a8a4476ac88f8d424aae8eaf72d3481f189be3d",
+      "previousV4SourceSHA256": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+    },
+    {
+      "release": "examples/IBM_CFD-incomp_CPU-MPI_Fortran_01-marker-cylinder/src/Make.package",
+      "sourceCase": "ib_tester",
+      "sourceSHA256": "b0563ad41ae4f358b0b00e51cf0d7c9d3865e8332605ec9e1852a25d9ab94593",
+      "releaseSHA256": "b0563ad41ae4f358b0b00e51cf0d7c9d3865e8332605ec9e1852a25d9ab94593"
+    },
+    {
+      "release": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder/src/Make.package",
+      "sourceCase": "ib_shock",
+      "sourceSHA256": "3409881012bf4de13b728db93f49d91f0a4a1632787800fc849912760627edaa",
+      "releaseSHA256": "3409881012bf4de13b728db93f49d91f0a4a1632787800fc849912760627edaa"
+    },
+    {
+      "release": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D/src/Make.package",
+      "sourceCase": "cpu2d_water_eos_cht_20261113",
+      "sourceSHA256": "a98a7412f1cefb6548fa64f01c1a3a0e3372923a7c1f8d945ce2ec6265c1443c",
+      "releaseSHA256": "a98a7412f1cefb6548fa64f01c1a3a0e3372923a7c1f8d945ce2ec6265c1443c"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D/src/Make.package",
+      "sourceCase": "stefan_two_temperature_reference_20261113",
+      "sourceSHA256": "55a594f0812e6b9f8106c33b918d5fe19b04e5df1958b55e61b4b9e106444636",
+      "releaseSHA256": "55a594f0812e6b9f8106c33b918d5fe19b04e5df1958b55e61b4b9e106444636"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D/src/Make.package",
+      "sourceCase": "cpu2d_open_boundary_momentum_quiet_20261116",
+      "sourceSHA256": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162",
+      "releaseSHA256": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D/src/Make.package",
+      "sourceCase": "cpu2d_inventory_enthalpy_v2_20261117",
+      "sourceSHA256": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162",
+      "releaseSHA256": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/Make.package",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "f5acf5912b1bad690c08228b8cc965f640ba06778cbb2ea86938410b5a1efcbc",
+      "releaseSHA256": "f5acf5912b1bad690c08228b8cc965f640ba06778cbb2ea86938410b5a1efcbc",
+      "previousV4SourceSHA256": "7211523eecc8eb3cb7a02d5f670052285c5275214ed2b859e24be17498fef560"
+    },
+    {
+      "release": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D/src/phase_moment_core.f90",
+      "sourceCase": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+      "sourceSHA256": "2a92051e1e9f6cb3d9fe384b7e46a57017a2b4616f7bdecd93f5ceba8c8e72e8",
+      "releaseSHA256": "2a92051e1e9f6cb3d9fe384b7e46a57017a2b4616f7bdecd93f5ceba8c8e72e8"
+    }
+  ]
+}

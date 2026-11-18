@@ -1,0 +1,41 @@
+{
+  "PASS": true,
+  "quantity": "Signed pressure-only stored-field load estimate on exposed-union surface",
+  "meanWindow_s": [
+    1.25,
+    2.5
+  ],
+  "gaitCyclesInMean": 2.0,
+  "meanSolo_N": 8.372276334900182,
+  "meanPaced_N": -0.24662622167018355,
+  "pressureLoadDifference_N": 8.618902556570365,
+  "algebraicPressureComponentChange_percent": 102.94574870447255,
+  "publishableDragReduction_percent": null,
+  "percentagePublicationHeld": true,
+  "percentageHoldReason": "Paced model pressure component is near zero and slightly negative; fluid-side pressure extraction and missing viscous contribution prevent a total-drag reduction claim.",
+  "checks": {
+    "solo": {
+      "frames": 83,
+      "maximumRelativeAreaCorrection": 0.07022127615980653,
+      "maximumGaugeError_N": 3.907985046680551e-14,
+      "maximumAffinePressureIdentityError_m3": 4.579669976578771e-16,
+      "meanUnfitted_N": 8.343181306758122
+    },
+    "group8": {
+      "frames": 83,
+      "maximumRelativeAreaCorrection": 0.07247097142878525,
+      "maximumGaugeError_N": 5.684341886080802e-14,
+      "maximumAffinePressureIdentityError_m3": 4.579669976578771e-16,
+      "meanUnfitted_N": -0.2941475236232963
+    }
+  },
+  "physicalTotalDragQualified": false,
+  "physicalPressureExteriorLimitQualified": false,
+  "steadyOrPeriodicQualified": false,
+  "viscousForceIncluded": false,
+  "pressureCanUseSolidSideCells": true,
+  "sourceNumericalFieldsUnchanged": true,
+  "negativeValuesClipped": false,
+  "oldRawPressureDiagnosticNotPromoted": true,
+  "limitation": "Numerical pressure contribution at the regularized interface on the 0.10 m grid; not validated exterior pressure drag or pressure-plus-viscous total drag."
+}

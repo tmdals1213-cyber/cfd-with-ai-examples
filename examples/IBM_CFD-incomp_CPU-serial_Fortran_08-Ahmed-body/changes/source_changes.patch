@@ -1,0 +1,158 @@
+--- original/mod_common.f90
++++ ahmed3d/mod_common.f90
+@@ -2,12 +2,12 @@
+ 
+ !======================= PARAMETERS ==================================
+ !-----GEOMETRY
+-      INTEGER*8, PARAMETER :: M1 = 449,M2 = 271,M3 = 289
++      INTEGER*8, PARAMETER :: M1 = 65,M2 = 49,M3 = 49
+       INTEGER*8, PARAMETER :: M1M=M1-1,M2M=M2-1,M3M=M3-1
+       INTEGER*8, PARAMETER :: M3MH=M3M/2+1
+ !-----IMMERSED BOUNDARY
+-      INTEGER*8, PARAMETER :: MBODY0= 9204
+-      INTEGER*8, PARAMETER :: MBODY = 133632	   
++      INTEGER*8, PARAMETER :: MBODY0= 6000
++      INTEGER*8, PARAMETER :: MBODY = 12000	   
+ !-----HISTORY
+       INTEGER*8, PARAMETER :: MHIST =  1000000    !# of time steps
+ !     M1,M2,M3    : Memory sizes for X,Y,Z direction grids
+--- original/lica_sphere.f90
++++ ahmed3d/lica_sphere.f90
+@@ -30,7 +30,7 @@
+         KVB = 0
+ 
+         IPX = 0        ! 0 : NOT PREODIC
+-        IPZ = 1        ! 1 : PREODIC
++        IPZ = 0        ! 1 : PREODIC
+ 
+         ICH = 0        ! 0 : CHANNEL X
+                        ! 1 : CHANNEL O (FOR THE CONST. MASS FLOW RATE)
+@@ -80,7 +80,7 @@
+        USE MOD_COMMON
+        IMPLICIT NONE
+ 
+-       CDAREA= ACOS(-1.)/4.
++       CDAREA= 1.2063276365254980e-01 ! Bounding projected y-z area, Lref=1
+ 
+       RETURN
+       END
+@@ -208,12 +208,13 @@
+ 	  !  at the side walls until the end of code		
+ !=======================================================================
+        USE MOD_COMMON
+-       USE MOD_FLOWARRAY, ONLY : U,V,W 
++       USE MOD_FLOWARRAY, ONLY : U,V,W,P 
+        IMPLICIT NONE
+        INTEGER*8     :: I,J,K
+ 
+        IHIST= 0
+        TIME = 0.
++       P = 0D0 ! Explicit initial pressure
+ 
+ !$OMP PARALLEL DO
+         DO 10 K=0,N3
+@@ -372,17 +373,13 @@
+       end
+ 
+ !=======================================================================
+-        FUNCTION FUNCBODY(X,Y,Z,IS)
+-	   ! IDENTIFICATION OF AN IMMERSED BODY IN A WORKING FLUID
+-	   ! BODY = {(X,Y,Z)|FUNCBODY(X,Y,Z) < 0}	
+-!=======================================================================
+-       IMPLICIT NONE
+-       REAL*8     :: X,Y,Z    
+-       REAL*8     :: FUNCBODY
+-       INTEGER*8  :: IS  ! IS : Section variable
+-
+-
+-            FUNCBODY = X**2.+Y**2.+Z**2 -0.5**2.
+-
+-        RETURN
+-        END+! Replace the existing FUNCBODY definition, do not link both definitions.
++function FUNCBODY(x,y,z,is) result(f)
++  use iso_fortran_env, only: real64, int64
++  use mod_stl_sdf, only: evaluate_sdf
++  implicit none
++  real(real64), intent(in) :: x,y,z
++  integer(int64), intent(in) :: is
++  real(real64) :: f
++  f=evaluate_sdf(x,y,z)
++end function
+--- original/lica.f90
++++ ahmed3d/lica.f90
+@@ -25,6 +25,7 @@
+ !
+ !=======================================================================
+       PROGRAM MAIN
++      USE MOD_STL_SDF, ONLY: LOAD_SDF
+ 
+       USE MOD_COMMON
+       USE MOD_FLOWARRAY
+@@ -35,6 +36,7 @@
+ 
+       CALL TIMESTAMP ( )
+       CALL real_time(TOTAL_TIME_B)
++      CALL LOAD_SDF('body.sdf')
+       CALL READINPUTFILE                     ! Read input file (lica.in)
+       CALL SIDEWALLBC                        ! BOUNDARY CONDITION OPTION : lica_Ahmed.f90
+       CALL GEOM                              ! GRID, MESH, INDEX ....
+@@ -822,7 +824,8 @@
+       ENDDO
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,UTARG,UBODY)
++!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,UTARG) &
++!$OMP firstprivate(UBODY)
+       DO N=1,NFC_INTP(1)
+          II =IFC(N,1)
+          JJ =JFC(N,1)
+@@ -871,7 +874,8 @@
+       ENDDO
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,VTARG,VBODY)
++!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,VTARG) &
++!$OMP firstprivate(VBODY)
+       DO N=1,NFC_INTP(2)
+          II =IFC(N,2)
+          JJ =JFC(N,2)
+@@ -920,7 +924,8 @@
+       ENDDO
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,WTARG,WBODY)
++!$OMP private(II,JJ,KK,IP,JP,KP,IPP,JPP,KPP,WTARG) &
++!$OMP firstprivate(WBODY)
+       DO N=1,NFC_INTP(3)
+          II =IFC(N,3)
+          JJ =JFC(N,3)
+@@ -978,7 +983,8 @@
+ !***********************************************************************
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,UTARG,UBODY)
++!$OMP private(II,JJ,KK,UTARG) &
++!$OMP firstprivate(UBODY)
+       DO N=NFC_INTP(1)+1,NFC_INTP(1)+NFC_INNER(1)
+          II=IFC(N,1)
+          JJ=JFC(N,1)
+@@ -991,7 +997,8 @@
+       ENDDO
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,VTARG,VBODY)
++!$OMP private(II,JJ,KK,VTARG) &
++!$OMP firstprivate(VBODY)
+       DO N=NFC_INTP(2)+1,NFC_INTP(2)+NFC_INNER(2)
+          II=IFC(N,2)
+          JJ=JFC(N,2)
+@@ -1004,7 +1011,8 @@
+       ENDDO
+ 
+ !$OMP PARALLEL DO &
+-!$OMP private(II,JJ,KK,WTARG,WBODY)
++!$OMP private(II,JJ,KK,WTARG) &
++!$OMP firstprivate(WBODY)
+       DO N=NFC_INTP(3)+1,NFC_INTP(3)+NFC_INNER(3)
+          II=IFC(N,3)
+          JJ=JFC(N,3)

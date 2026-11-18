@@ -1,0 +1,234 @@
+{
+  "newFlowSolversLaunchedForPackaging": false,
+  "cases": {
+    "08_ahmed": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "2ec477ad72bda9bd5cced1ce67e92793f0f2decdc731b5b5bb353aad4566ee35",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b1efcef6210cabd89ebefe170754651a7e4198c7f03240859c3adc9ac198f56c",
+        "lica_sphere.f90": "3efef48ac50b860e5a67cb709150ccaf902a523682272fbadb4500b3c53de8e9",
+        "mod_common.f90": "5ece1f3b9c8e6ae19936902fbd831f939cb7588eb6800087a8639bf32759e658",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_stl_sdf.f90": "0abbaa40949d187f226bcd283e04d7be31121e83ff1095b06cc18919dc7304f1",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.713482,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "6d816cb82663bf324f4d5db9633058aa8a9dd343c443640c618ec69308e929d2"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "09_drivaer": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "2ec477ad72bda9bd5cced1ce67e92793f0f2decdc731b5b5bb353aad4566ee35",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b1efcef6210cabd89ebefe170754651a7e4198c7f03240859c3adc9ac198f56c",
+        "lica_sphere.f90": "2f4e86e4a82d53e4590e839413db78e00a799db59096b0b2bc0fc777a747ff44",
+        "mod_common.f90": "a5ff4caec77903f324b9b9de5f748219ae6f5e227d7b271de703fe2cd4128b6f",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.533856299999999,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "2e477f87402e19f088ccd872790ac1f5addd936eb1dfd291c3f63a4d81666289"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "10_drivaer_les": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "6d7dcbf35194f02870586b504475d0c5acbbb927cf1c4f5ead99d6fb46d63db5",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b0c7cde1e917c381e71277d3f0b19459fa1b77315dea745afebda91f2d0308fd",
+        "lica_sphere.f90": "4dff2d07f3efc5489788c4cd886cf16912e960b53ad2487c042cd7fbf97a028b",
+        "mod_common.f90": "18c344f5fa717ee1a90f8f6429c18c74beb52005c24eedf726d62657a5de6422",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.526830200000001,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "f08ffeece47b470799b0e4444ec966d144db3da4c21b9a80199ada8fd02fd1f6"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "11_ev_pair": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "ecdbd77478d63cc6ec8936a18ff1703200c9b6aa1aab0bb6e3c4e5d89a4cd04a",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b0c7cde1e917c381e71277d3f0b19459fa1b77315dea745afebda91f2d0308fd",
+        "lica_sphere.f90": "fea68a370862ee48ef22f3980a98e8cda6ae22e9c6d9b023e882806cc2c73150",
+        "mod_common.f90": "67e2414875d64e2243906dfcf9840be1817fd25f211c15dab53b28e8c285e2fc",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.5563655999999995,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "e8e0a71da3a5bb09da27fe1283015f0ad8201351d9377e6427e1771fa3e125fc"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "12_suv_pair": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "ecdbd77478d63cc6ec8936a18ff1703200c9b6aa1aab0bb6e3c4e5d89a4cd04a",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b0c7cde1e917c381e71277d3f0b19459fa1b77315dea745afebda91f2d0308fd",
+        "lica_sphere.f90": "fea68a370862ee48ef22f3980a98e8cda6ae22e9c6d9b023e882806cc2c73150",
+        "mod_common.f90": "67e2414875d64e2243906dfcf9840be1817fd25f211c15dab53b28e8c285e2fc",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.545819300000002,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "e8e0a71da3a5bb09da27fe1283015f0ad8201351d9377e6427e1771fa3e125fc"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "13_car10": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "0499663968c3c6def7b91d1f5fd6a819059886c86c257417360e84dce714fda9",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b0c7cde1e917c381e71277d3f0b19459fa1b77315dea745afebda91f2d0308fd",
+        "lica_sphere.f90": "fea68a370862ee48ef22f3980a98e8cda6ae22e9c6d9b023e882806cc2c73150",
+        "mod_common.f90": "67e2414875d64e2243906dfcf9840be1817fd25f211c15dab53b28e8c285e2fc",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_pressure_operand_contract.f90": "d713d2cea6f3c6d556736c59c1788ac311fcbfc2999c669da1da710fd7992365",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "bd125f5d11a8304d7f31cd2b47ad7453adb61011341e449055f5a6622d7b414f"
+      },
+      "seconds": 5.705179600000001,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "d46a3cf6f11c3103bc4dffa0d6a3a41debf4c912d1d5466de85922f379ace611"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "14_turbine": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "7ae478aa210cfb41373ee77043a4985d57a27ac2353c7cd16bc61244e2ab839a",
+        "lica_movingIBM.f90": "053653bbf16880c8dd8a2f3505234e65aa2b85a0a9ec1eeed3e141e03a41e725",
+        "lica_sgs.f90": "b0c7cde1e917c381e71277d3f0b19459fa1b77315dea745afebda91f2d0308fd",
+        "lica_sphere.f90": "8efdc1d551d519f1ffa15236ab2e5fb14debb26d019f15f67de858c4e1e12ff3",
+        "mod_common.f90": "550eeadd1845ee4aaf45067677bc31dc7c91597e961e7302b07132db08d70925",
+        "mod_flowarray.f90": "774367fd70ee9aaf8319fa5c9f0e10269b188ba41bcddc48e355ceb56583a5e2",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_mgbicg.f90": "b1cf6620d81a750c464dc437a6f07c39549b4e2dd36dfb047da6b48021bb0ab5",
+        "mod_rotor_motion.f90": "d9307842ff3add8454f8d96ae6c13667a7d86063caefa2ec4edbfe38e321fd51",
+        "mod_stl_sdf.f90": "8b88cb2302fb3b5387679d98542f6c9aa5f811986e6e657ed505dd2484fcd830",
+        "poiss_mgbicgstab.f90": "ecb6e71af979a675d2b2789dd2249cc328f0f78a2e81d4e27376692389bfafb7"
+      },
+      "seconds": 5.7424873000000005,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "a4b015ac166c34c2e5d25a4295e5c26ceddef096211ee6a049d20b0aef79eadb"
+        }
+      ],
+      "kernelChecks": null
+    },
+    "15_runner_final": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "divfree_mac_reconstruction.py": "fef1e7bfcf7bd21b2ef50866229587d04197bd016bc6260b95948aa4fe943a9a",
+        "motion_model.py": "ab0378a2fd9feaf1689547ccc9ba829399ad74ef768c8a4c0ed6c4e3ba113f9a",
+        "penalty_les.cpp": "353ac18a19dc4902112bf808e22525075e405b5690bb6da5780482b776d772b6",
+        "surface_block_preconditioner.py": "e0e37e6efb37b60d06dd302ac324c5f54825b46299652b013859d57459f32824",
+        "tensor_pressure_pc.py": "122086114b9949badae1e11d7ded9be589d244c57dfae90b08d403dce15cf37f",
+        "vreman_sgs.hpp": "8486d1ed4adb85233043a0eaf679a30e1cd12c77621d462f490ec7ac62b6a06f"
+      },
+      "seconds": 3.732483099999996,
+      "targets": [
+        {
+          "name": "runner_cold.so",
+          "sha256": "271ebc6cc46a03a1e0c4800669985774c01f030d7ddcf76406e992e79fe9fc98"
+        },
+        {
+          "name": "runner_preview.so",
+          "sha256": "a6918b3780147fe8181ae3325eb12a82f86c965ec16149a8963d4ef61aa8bdb0"
+        }
+      ],
+      "kernelChecks": {
+        "dimensions": [
+          5,
+          7,
+          9
+        ],
+        "doublePrecisionABI": true,
+        "VremanAnalyticChecks": 3,
+        "fluidStepsAdvanced": 0
+      }
+    },
+    "21_cylinder": {
+      "exitCode": 0,
+      "state": "BUILD_PASSED_NO_CFD_LAUNCHED",
+      "sourceSHA256": {
+        "lica.f90": "9f90220c9a8e5d1cfa357f004e6cc7d1df8879bbc1a8b136da2a5abd369abe69",
+        "lica_cylinder.f90": "14d86d02168656283f12272d48e3e5c34be804642617830f131e3fcda5407010",
+        "lica_movingIBM.f90": "22f2add053fd56eccd62f44c3be0af07c39a4da0458140c160127df58623499c",
+        "lica_sgs.f90": "b1efcef6210cabd89ebefe170754651a7e4198c7f03240859c3adc9ac198f56c",
+        "mod_common.f90": "31e2eacafad0722a429c7f0de56364a36b60059c2b38531dfbe6268484d92a59",
+        "mod_flowarray.f90": "aa49e8d3fc74372a53f4beec0a93d67b842b3c083574c8183cc9725869d59e79",
+        "mod_movingIBM.f90": "f22a74bee86dc4939b21e542fae31f20f3d8b146acce8a4c358ad0a9d978763b",
+        "mod_poiss_z_ft.f90": "a7bc008471c6447100cf902b0209b0974bd097cdf79b0c3c126089550b866038",
+        "poiss_z_ft_ffte.f90": "b8ecd349817b7f4d076ad1a34a5e84d62ffc811247cb86fa81c8b9a596f9b2d3"
+      },
+      "seconds": 5.7714966,
+      "targets": [
+        {
+          "name": "lica",
+          "sha256": "7574812147dc19a30d304e6945712ee2191542c68b00db1fa8c20376e3f46d2e"
+        }
+      ],
+      "kernelChecks": null
+    }
+  },
+  "allNineCompleteBuildRecipesPassed": true,
+  "referenceOnlyEntriesAreNotBuildQualified": true,
+  "scope": "Existing Linux environment/dependencies; compile/link and small runner ABI/analytic kernel checks only. Not new CFD validation."
+}

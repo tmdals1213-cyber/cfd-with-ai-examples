@@ -1,0 +1,1 @@
+f90EXE_sources += vfs_class.f90 geometry.f90 evap_class.f90 phase_birth_core.f90 boiling_energy.f90 simulation.f90

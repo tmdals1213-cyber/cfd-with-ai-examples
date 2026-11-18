@@ -1,0 +1,139 @@
+{
+  "scope": "Targeted depleted-phase first-moment repair and same-condition short CFD crossing; not full-cycle/temporal-accuracy qualification",
+  "sourceCase": "cpu3d_immersion_phase_moment_v5_20261118",
+  "build": {
+    "PASS": true,
+    "binarySHA256": "67aa515f0136b924b8fa2b89d1684e26da2da93cae6a677aaf8b80fa5d040947",
+    "sourceSHA256": {
+      "boiling_energy.f90": "25e3abdce5360dc39e6479f3677d18a2d9d1d4762b9d2beb822b270243a4782f",
+      "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "face_geometry3d.f90": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043",
+      "geometry.f90": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a",
+      "Make.package": "f5acf5912b1bad690c08228b8cc965f640ba06778cbb2ea86938410b5a1efcbc",
+      "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "phase_moment_core.f90": "2a92051e1e9f6cb3d9fe384b7e46a57017a2b4616f7bdecd93f5ceba8c8e72e8",
+      "simulation.f90": "2c1ad548d8fcb0bca80ea56fdf67909137ac9eeda6e0da1631e403a456de61b9",
+      "vfs_class.f90": "3551c6d888eda0c9954e2ac77a8a4476ac88f8d424aae8eaf72d3481f189be3d"
+    }
+  },
+  "kernelChecks": {
+    "passed": 11,
+    "testSHA256": "262e132df416b6dada0ebb6b9667d41297adbe7a30a48fa2f49e1802830e65fc",
+    "covered": [
+      "Seven volume scales",
+      "Subnormal available volume",
+      "Complete depletion",
+      "Absent support explicit refusal",
+      "Captured original failure operands"
+    ]
+  },
+  "actualFailure": {
+    "rank": 2,
+    "step": 1486,
+    "trial": 5,
+    "cell": [
+      33,
+      76,
+      30
+    ],
+    "remainingGasVolume_m3": 1.6005796797277583e-19,
+    "oldPointSinkGasCentroid_m": [
+      -1.2859582640596892,
+      0.07289378731820766,
+      0.028208716839014523
+    ],
+    "domainWidth_m": 0.02,
+    "firstOverflow": "After barycenter position projection inside VOF geometric transport, not accepted velocity divergence",
+    "sourceOfEvidence": "20261118_143303_cpu3d_v4_bary_projection_probe"
+  },
+  "sourceClosure": "Negative phase-volume sources remove phase-average specific first moment after advection. Positive phase sources retain interface-point placement. Volumes, phase rates, latent/sensible ledgers, pressure, grid and dt unchanged.",
+  "closureLimit": "First-order cell-integrated uniform depletion moment closure, not exact swept-interface Stefan geometry or microscopic phase-change validation.",
+  "zeroStepAll8PhysicalCSVByteEqual": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "normalRestoreAudit": {
+    "physicalCells": 512000,
+    "finite": true,
+    "phaseFractionsInRange": true,
+    "gasVolumeDifference_m3": -3.2678531105070907e-18
+  },
+  "unchangedInputMaxDt_s": 2.5e-05,
+  "nativeMaxCFL": 0.35,
+  "hardwareZeroOverflowTrapsRetained": true,
+  "clippingUsed": false,
+  "historyMetricMaxDifferencesBeforeOldFailure": {
+    "gas_volume_m3": 9.114074512456272e-19,
+    "solid_Tmax_K": 0.0,
+    "fluid_Tmax_K": 4.547473508864641e-13,
+    "speed_max_m_s": 1.969027732418027e-06,
+    "total_energy_error_J": 1.8318679906315083e-14
+  },
+  "postRepairFinal": {
+    "step": 1493.0,
+    "time_s": 0.0372,
+    "dt_s": 7.211421255010064e-06,
+    "solid_Tmax_K": 335.1593104020171,
+    "fluid_Tmax_K": 330.42222014959316,
+    "speed_max_m_s": 0.5945520744972806,
+    "gas_volume_m3": 4.63696942057967e-06,
+    "phase_power_W": -4.928530169235335,
+    "sensible_heat_J": -4.138043493645493,
+    "latent_change_J": -0.0011636482511084378,
+    "input_heat_J": 0.14108444444444318,
+    "out_heat_J": -0.011548498157676813,
+    "total_energy_error_J": -5.426840211911807e-09,
+    "thermal_balance_W": -3.595638808917556e-08,
+    "mass_balance_relative": 1.0381518421956148e-10,
+    "div_minus_source_s_1": 3.1204150374719575e-10,
+    "pressure_relative_error": 4.924980457236284e-09,
+    "source_integral_error_s_1m3": 8.470329472543003e-22,
+    "top_volume_out_m3_s": -4.328927623857469e-06,
+    "top_gas_volume_out_m3_s": -4.328927623857469e-06,
+    "physical_Tmin_K": 318.15,
+    "thermal_coupling_iterations": 2.0,
+    "thermal_coupling_change_K": 0.0,
+    "inactive_thermal_interface_cells": 46.0,
+    "inactive_thermal_interface_area_m2": 1.1444261311193727e-12,
+    "phase_conversion_cfl": 0.9999446581520672,
+    "thermal_trial_count": 1.0,
+    "gas_centroid_x_m": -2.6113014491519697e-07,
+    "gas_centroid_y_m": 0.013806663347644497,
+    "heater_gas_contact_area_m2": 5.882586546529502e-05,
+    "wall_site_temperature_K": 335.1579004645886,
+    "wall_birth_events": 1.0,
+    "wall_birth_surface_J": 6.207147811040317e-09,
+    "evaporation_power_W": 0.052220638253926546,
+    "condensation_power_W": -4.980750807489262,
+    "cold_plate_heat_out_W": 4.672401290554859,
+    "w_max_m_s": 0.28188537857687035,
+    "gas_centroid_z_m": -4.263958337242817e-08
+  },
+  "oldFailureCrossedAtOriginalDt": true,
+  "actualExportAudit": {
+    "temperature": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "dcb7efee8fa0eae9f5741e29874c343ab1df3d3fc5177d0ba572516f413cc20e"
+    },
+    "latent_sink": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "b018f772524e5a7b1b2b627c38641d57a94f5450b0b570b59075bcbbc8ac873e"
+    },
+    "VOF": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "e2b9185aee67de28382541002a8f212ac59255aeb14e0d95e5c3b80d2e232152"
+    },
+    "velocity": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "487b121981670fd94ff32c27c709163aa14530a3d3bb3f4349e5c5cc3caffda3"
+    }
+  },
+  "longer100msCompleted": false,
+  "physicalCycleQualified": false
+}

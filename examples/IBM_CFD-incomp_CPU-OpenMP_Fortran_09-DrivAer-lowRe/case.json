@@ -1,0 +1,56 @@
+{
+  "geometry": "DrivAerML run_1, welded, decimated and locally repaired derivative",
+  "geometry_license": "CC BY-SA 4.0",
+  "grid_points": [
+    97,
+    65,
+    65
+  ],
+  "cells": [
+    96,
+    64,
+    64
+  ],
+  "cell_count": 393216,
+  "Re_L": 500,
+  "dt": 0.0025,
+  "steps": 4000,
+  "target_time": 10.0,
+  "LES": false,
+  "OpenMP": true,
+  "threads": 4,
+  "Aref": 0.138253923776182,
+  "boundary": "uniform +x inlet, convective x outlet, nonperiodic y/z far boundaries",
+  "ground": "none; fixed wheels; body in free stream",
+  "pressure_solver": "3D MG-preconditioned BiCGSTAB",
+  "pressure_tolerance": 1e-05,
+  "compiler_flags": [
+    "-std=legacy",
+    "-fdefault-integer-8",
+    "-fdefault-real-8",
+    "-fdefault-double-8",
+    "-ffree-line-length-none",
+    "-O2",
+    "-Wl,--stack,134217728",
+    "-fopenmp"
+  ],
+  "min_core_spacing": [
+    0.03125,
+    0.015625,
+    0.015625
+  ],
+  "interpretation": "Coarse low-Re functional CFD trial; small mirrors/tread and near-wall turbulence unresolved; not road-vehicle validation.",
+  "execution_segments": [
+    {
+      "mode": "serial",
+      "retained_steps": 1600,
+      "retained_time": 3.999999999999926
+    },
+    {
+      "mode": "OpenMP",
+      "threads": 4,
+      "remaining_steps": 2400
+    }
+  ],
+  "restart_note": "Same fixed dt and grid. Switched binary only after same-snapshot serial/OMP comparison passed. Original interrupted tail beyond checkpoint discarded."
+}

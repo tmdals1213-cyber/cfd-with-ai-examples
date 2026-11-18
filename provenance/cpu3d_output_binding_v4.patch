@@ -1,0 +1,59 @@
+--- a/boiling_energy.f90
++++ b/boiling_energy.f90
+@@ -11,7 +11,7 @@
+  use messager,only:die
+  use phase_birth_core,only:wall_site_activation,birth_ok=>ok
+  implicit none
+- real(WP),allocatable::T(:,:,:),E(:,:,:),qphase(:,:,:),theta_l(:,:,:),theta_g(:,:,:)
++ real(WP),allocatable,target::T(:,:,:),E(:,:,:),qphase(:,:,:),theta_l(:,:,:),theta_g(:,:,:)
+  real(WP),allocatable::El(:,:,:),Eg(:,:,:),Elold(:,:,:),Egold(:,:,:),HL(:,:,:),HG(:,:,:),inc(:,:,:,:)
+  real(WP)::Tsat,hfg,rl,rg,cpl,cpg,kl,kg,power,thermal_out,phase_power,thermal_balance,ks,rhos,cps,wall_superheat,roundoff_energy
+  real(WP),allocatable::save_El(:,:,:),save_Eg(:,:,:),save_E(:,:,:),save_T(:,:,:),save_l(:,:,:),save_g(:,:,:),save_s(:,:,:)
+@@ -400,7 +400,7 @@
+   where(cfg%VF.eq.0)theta_l=theta_s
+   where(cfg%VF.eq.0)theta_g=theta_s
+   call ghost(theta_l);call ghost(theta_g);E=El+Eg;call cfg%sync(E)
+-  T=Tsat+vf%VF*theta_l+(1-vf%VF)*theta_g;where(cfg%VF.eq.0)T=Tsat+theta_s
++  T(:,:,:)=Tsat+vf%VF*theta_l+(1-vf%VF)*theta_g;where(cfg%VF.eq.0)T=Tsat+theta_s
+  end subroutine
+  subroutine energy_remap(dt,vf,carrier_u,carrier_v,carrier_w)
+   real(WP),intent(in)::dt
+@@ -459,7 +459,7 @@
+   where(vf%VF.gt.VFlo.and.cfg%VF.gt.0)theta_l=El/(vf%VF*rl*cpl)
+   where(1-vf%VF.gt.VFlo.and.cfg%VF.gt.0)theta_g=Eg/((1-vf%VF)*rg*cpg)
+   call ghost(theta_l);call ghost(theta_g);E=El+Eg;call cfg%sync(E)
+-  T=Tsat+vf%VF*theta_l+(1-vf%VF)*theta_g;where(cfg%VF.eq.0)T=Tsat+theta_s
++  T(:,:,:)=Tsat+vf%VF*theta_l+(1-vf%VF)*theta_g;where(cfg%VF.eq.0)T=Tsat+theta_s
+   deallocate(u,v,w)
+  end subroutine
+ 
+--- a/simulation.f90
++++ b/simulation.f90
+@@ -23,13 +23,13 @@
+    
+    !> Get a couple linear solvers, a two-phase flow solver and volume fraction solver and corresponding time tracker
+    type(hypre_str),   public :: ps,psL
+-   type(tpns),        public :: fs,fsL
+-   type(vfs),         public :: vf
+-   type(evap),        public :: evp
+-   type(timetracker), public :: time
++   type(tpns), target, public :: fs,fsL
++   type(vfs), target, public :: vf
++   type(evap), target, public :: evp
++   type(timetracker), target, public :: time
+    
+    !> Ensight postprocessing
+-   type(surfmesh) :: smesh
++   type(surfmesh), target :: smesh
+    type(ensight)  :: ens_out
+    type(event)    :: ens_evt,diagnostic_evt
+    integer::last_field_output_step=-1
+@@ -45,7 +45,7 @@
+    
+    !> Private work arrays
+    real(WP), dimension(:,:,:), allocatable :: resU,resV,resW
+-   real(WP), dimension(:,:,:), allocatable :: Ui,Vi,Wi
++   real(WP), dimension(:,:,:), allocatable, target :: Ui,Vi,Wi
+    real(WP), dimension(:,:,:), allocatable :: Ui_L,Vi_L,Wi_L
+    
+    !> Problem definition

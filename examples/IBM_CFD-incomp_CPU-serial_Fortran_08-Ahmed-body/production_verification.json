@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "wall_seconds": 117.50892543792725,
+  "steps": 2000,
+  "final_time": 10.0,
+  "max_CFL": 0.34892507,
+  "max_divergence": 9.9935585e-06,
+  "finite": true,
+  "poisson_nonconverged": 0,
+  "residual_warnings": 0,
+  "CFL_warnings": 0,
+  "fields": 20
+}

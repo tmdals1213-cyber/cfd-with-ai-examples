@@ -1,0 +1,11 @@
+License scope for this multi-project collection
+
+This collection has multiple license scopes. There is no single MIT grant over every file.
+
+NGA2 and NGA2-derived examples retain the original Olivier Desjardins MIT notice in licenses/MIT-NGA2.txt and NOTICE_NGA2.md.
+Original LICA Fortran and its derivatives retain the original Haecheon Choi copyright and "Noncommercial use with copyrighted mark" notice in their source headers. These files are not relicensed under MIT.
+Separate SPECFEM3D reference excerpts retain GPL-3.0-or-later terms, original author notices and licenses/GPL-3.0.txt.
+Independent new helper/render/controller code and independent new C++ kernels retain the MIT scope stated in NOTICE.md, except where another original notice applies.
+Third-party geometry and animation assets are excluded; references/attribution do not change their separate terms.
+
+See docs/LICENSE_MAP.md and original source headers for the file scopes. Preserve those notices when copying any case.

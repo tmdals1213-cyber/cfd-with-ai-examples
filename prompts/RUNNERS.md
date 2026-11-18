@@ -1,0 +1,9 @@
+Read the final C++ penalty/Vreman runner case and its RECORDED_PRESSURE_SUMMARY.json first. Earlier four-runner Fortran multibody/ghost experiments are archived separately; do not silently combine them with the final solver.
+
+Final conditions: 21.0975km/h,192spm,0.625s gait, grid76×29×72, synchronous poses, single vs inverted-eight formation in case.json. Final matched time2.501953125s. Restore/extend only from genuine normal states with matching geometry, operator and source identities. The original raw fields and videos were deleted at the user's closeout; do not invent/relabel those as recovered assets.
+
+Bring the original licensed motion43sample NPZ, topology and matching geometry provider from the user's local private archive, or construct a separately declared new model. The supplied source has rebuildable C++ kernels and mathematical helper modules; reference_pipeline retains the original artifact-manifest stages and needs a fresh adapter. Do not pretend these are a one-command turnkey simulation without assets.
+
+The final surface95 calculation excludes internal/overlap union faces and fits positive quadrature to constant/affine pressure identities. It still samples the regularized pressure field, possibly on solid-side cells, with no viscous stress. Mean pressure component solo8.3723N versus paced−0.2466N is a diagnostic; do not publish102.95% as total drag reduction or convert it to a race record. Keep pressure sign and reference conventions consistent. Older raw full-mesh sums are a different, weaker diagnostic.
+
+The visual style is English, large short titles, sparse points/no tails, fixed vorticity levels and separate pressure/vorticity legends. The new compact summary can show recorded formation/numbers, but real unsteady flow rendering requires saved fields or a new authorized calculation.

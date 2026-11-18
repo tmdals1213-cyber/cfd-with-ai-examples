@@ -1,0 +1,32 @@
+[
+  {
+    "case": "03_water_cht_2d",
+    "file": "media/previews/water_cht_10s.png",
+    "sha256": "d2e1a1cc06211d34e6b3f2085cb8160af4d0eaf651eafa06180708b3f7075e3d",
+    "kind": "Historical actual-field preview; model limits in docs/MODELS_AND_LIMITS.md"
+  },
+  {
+    "case": "05_heated_bubble_2d",
+    "file": "media/previews/heated_bubble_480ms.png",
+    "sha256": "ad62291caea9bb57e77d6985ea833209cec795bdc58bb65467f7006fc82de0b7",
+    "kind": "Historical actual-field preview; model limits in docs/MODELS_AND_LIMITS.md"
+  },
+  {
+    "case": "06_dielectric_pool_2d",
+    "file": "media/previews/dielectric_2d_time_comparison.png",
+    "sha256": "63091c18959edd0f86bba7f15b2427dcaac5bb9ff564060970f05c8d6ed26c7c",
+    "kind": "Historical actual-field preview; model limits in docs/MODELS_AND_LIMITS.md"
+  },
+  {
+    "case": "04_stefan_2d",
+    "file": "media/previews/stefan_reference.png",
+    "sourceSHA256": "4d6041fe480cafcd0532e839edf3eea93cb808f2c7e674eeb8e4f3a39bca526f",
+    "kind": "Single-grid actual/analytic comparison"
+  },
+  {
+    "case": "07_immersion_3d",
+    "file": "media/previews/immersion_3d_20ms.png",
+    "source": "provenance/video_draft01.json",
+    "kind": "Native XYZ PLIC"
+  }
+]

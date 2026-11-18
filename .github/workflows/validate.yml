@@ -1,0 +1,28 @@
+name: Validate portfolio
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  portable-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the reviewed source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4, resolved 2026-11-18
+        with:
+          persist-credentials: false
+      - name: Check source hashes, links and excluded artifacts
+        run: python3 -B scripts/verify_portfolio.py
+      - name: Check solver-controller failure detection
+        run: python3 -B tests/check_controller.py
+      - name: Install a Fortran compiler if absent
+        run: |
+          if ! command -v gfortran >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install -y gfortran
+          fi
+      - name: Check depleted-phase moment kernel without CFD
+        run: python3 -B scripts/check_phase_moments.py

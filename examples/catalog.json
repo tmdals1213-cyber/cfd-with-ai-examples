@@ -1,0 +1,156 @@
+{
+  "01_ib_tester": {
+    "title": "Incompressible marker IBM",
+    "origin": "ib_tester",
+    "type": "upstream",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Five-step MPI startup was completed; no developed wake or force accuracy claim.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": false
+    },
+    "directory": "examples/IBM_CFD-incomp_CPU-MPI_Fortran_01-marker-cylinder",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.1,
+    "timeUnit": "case nondimensional/input units"
+  },
+  "02_ib_shock": {
+    "title": "Compressible shock / ghost-point IBM",
+    "origin": "ib_shock",
+    "type": "upstream",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Five-step MPI startup was completed; no developed shock-interaction validation.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": true
+    },
+    "directory": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.01,
+    "timeUnit": "case nondimensional/input units"
+  },
+  "03_water_cht_2d": {
+    "title": "EOS-driven natural convection and solid conduction",
+    "origin": "cpu2d_water_eos_cht_20261113",
+    "type": "custom",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Historical 10 s prototype; open outer reservoir, not the later closed-side tank. No phase change.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": true
+    },
+    "directory": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.02,
+    "timeUnit": "s"
+  },
+  "04_stefan_2d": {
+    "title": "Planar phase-change reference",
+    "origin": "stefan_two_temperature_reference_20261113",
+    "type": "custom",
+    "partition": [
+      1,
+      1,
+      1
+    ],
+    "ranks": 1,
+    "status": "One-grid analytic comparison completed to 0.5 s; not a general convergence proof.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.001,
+    "timeUnit": "s"
+  },
+  "05_heated_bubble_2d": {
+    "title": "Heat-driven seeded/wall-born vapor",
+    "origin": "cpu2d_open_boundary_momentum_quiet_20261116",
+    "type": "custom",
+    "partition": [
+      4,
+      2,
+      1
+    ],
+    "ranks": 8,
+    "status": "Historical initially gas-free 100 W water case: wall birth, growth, detachment and rise observed through ~0.48 s; not a predictive boiling correlation.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.001,
+    "timeUnit": "s"
+  },
+  "06_dielectric_pool_2d": {
+    "title": "Dielectric pool / cold ceiling",
+    "origin": "cpu2d_inventory_enthalpy_v2_20261117",
+    "type": "custom",
+    "partition": [
+      4,
+      2,
+      1
+    ],
+    "ranks": 8,
+    "status": "Accepted evolution reached 0.1611 s, then stopped by user. Velocity temporal accuracy remains unresolved.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.0001,
+    "timeUnit": "s"
+  },
+  "07_immersion_3d": {
+    "title": "True XYZ immersion-cooling prototype",
+    "origin": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+    "type": "custom",
+    "partition": [
+      2,
+      2,
+      2
+    ],
+    "ranks": 8,
+    "status": "Current v6 retains the v5 moment repair and v4 output repair. Original25us failed-step crossing passed to37.2ms; native-CFL100us and thermal1000-iteration checks passed to39.6ms. Longer100ms continuation is separate; no full-cycle/temporal-accuracy qualification.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.00025,
+    "timeUnit": "s"
+  }
+}

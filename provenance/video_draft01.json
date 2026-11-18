@@ -1,0 +1,226 @@
+{
+  "sourceRunLeaf": "20261117_202958_cpu3d_v3_restart_and_20ms/heated_3d_evolution_20ms",
+  "executionSHA256": "346d8215ee9501760917d2ffa09cf4aa23adabf037cc17124ee9a2a62fe15bb1",
+  "binarySHA256": "c7cf29d99dc974010e1746277dbae4e916c2fdac14c954adf780cc039dad63d6",
+  "history": {
+    "name": "history.csv",
+    "bytes": 767627,
+    "sha256": "8ef36cf56cea0eb6443f239cf65dc323ea859dd4793164f6500e929dfe3c3fdc"
+  },
+  "nativeCase": {
+    "name": "plic.case",
+    "bytes": 431,
+    "sha256": "636ab48ea086cfdd303e0e7ad672b472bb9b1da064531a341936f8c349c20abd"
+  },
+  "frames": [
+    {
+      "physicalTime_s": 0.001,
+      "step": 40,
+      "nativePLIC": {
+        "name": "plic.000001",
+        "bytes": 629896,
+        "sha256": "7ddb2ef26191f2102248f43743b62f345594b30217e4563e2132326f30deca92",
+        "polygons": 9212
+      }
+    },
+    {
+      "physicalTime_s": 0.00301683,
+      "step": 124,
+      "nativePLIC": {
+        "name": "plic.000003",
+        "bytes": 740012,
+        "sha256": "4155c2786fe984d6ed71dbf5126155be9dbc643d88b55adfcc77a6b2c5b48428",
+        "polygons": 10893
+      }
+    },
+    {
+      "physicalTime_s": 0.00401683,
+      "step": 164,
+      "nativePLIC": {
+        "name": "plic.000004",
+        "bytes": 784036,
+        "sha256": "bcb4f773f9f6c6b872a5033e363b8504c7cbcd8455c9278f0ccb72848a4fb5de",
+        "polygons": 11591
+      }
+    },
+    {
+      "physicalTime_s": 0.00601683,
+      "step": 244,
+      "nativePLIC": {
+        "name": "plic.000006",
+        "bytes": 824152,
+        "sha256": "6499c68755738a3b2426cdc6463ddf3c25d16b878b765d6772f43e51593dbc50",
+        "polygons": 12172
+      }
+    },
+    {
+      "physicalTime_s": 0.00801683,
+      "step": 324,
+      "nativePLIC": {
+        "name": "plic.000008",
+        "bytes": 840644,
+        "sha256": "16af3baf6acf23ff30aeaa038a5b2756b2cd65c1405837972c5af66daaf0476f",
+        "polygons": 12459
+      }
+    },
+    {
+      "physicalTime_s": 0.0100168,
+      "step": 404,
+      "nativePLIC": {
+        "name": "plic.000010",
+        "bytes": 866604,
+        "sha256": "821893fe71bfb58ca1fa100e5d5321413d1be72635629794b99942586a07d05a",
+        "polygons": 12853
+      }
+    },
+    {
+      "physicalTime_s": 0.0110168,
+      "step": 444,
+      "nativePLIC": {
+        "name": "plic.000011",
+        "bytes": 875504,
+        "sha256": "2f578d6f89819008fbd652fbeb6d892ecf8ef25c312d190ede3a0ba9e830d6ce",
+        "polygons": 13018
+      }
+    },
+    {
+      "physicalTime_s": 0.0130168,
+      "step": 524,
+      "nativePLIC": {
+        "name": "plic.000013",
+        "bytes": 889628,
+        "sha256": "7626001173debfb838373821d0f2e79fc73e214344e141a55481b04200c0acce",
+        "polygons": 13249
+      }
+    },
+    {
+      "physicalTime_s": 0.0150168,
+      "step": 604,
+      "nativePLIC": {
+        "name": "plic.000015",
+        "bytes": 890888,
+        "sha256": "268ba2f8d9e05a375be2896abfa05a8e61b20786f4f8a50621dde5c661a9a4d4",
+        "polygons": 13268
+      }
+    },
+    {
+      "physicalTime_s": 0.0170168,
+      "step": 684,
+      "nativePLIC": {
+        "name": "plic.000017",
+        "bytes": 894592,
+        "sha256": "caaf4cfa44e20de15bddf5e463bde5b7bb086c418832e2262cda6e4df74b6869",
+        "polygons": 13342
+      }
+    },
+    {
+      "physicalTime_s": 0.0180168,
+      "step": 724,
+      "nativePLIC": {
+        "name": "plic.000018",
+        "bytes": 894904,
+        "sha256": "61f12bbbec7f936847dc58b62a0f5e36c46b48c7c5b872eec76af4c4dae67caf",
+        "polygons": 13336
+      }
+    },
+    {
+      "physicalTime_s": 0.02,
+      "step": 804,
+      "nativePLIC": {
+        "name": "plic.000020",
+        "bytes": 896128,
+        "sha256": "8cc1ccd90893d77074b2d3eac481647643f55cf2bfa6a5d02cfd2803d237e87e",
+        "polygons": 13390
+      }
+    }
+  ],
+  "fieldsAtFinalTime": [
+    {
+      "name": "field_step00000804_rank0000.csv",
+      "bytes": 19968093,
+      "sha256": "95cf5ed67bf867910ace4d96955f81da68f6d4bd3fa5de29cd8c5b4c59bd9eb1"
+    },
+    {
+      "name": "field_step00000804_rank0001.csv",
+      "bytes": 19968093,
+      "sha256": "034861189b98abc58b2a3ea9f36a240f6117e044551493b2d999feb51f5c116b"
+    },
+    {
+      "name": "field_step00000804_rank0002.csv",
+      "bytes": 19968093,
+      "sha256": "87c4c16d1a99e64d44d62c8044704af937b4a3332c33db3fe71d5c52bf576d57"
+    },
+    {
+      "name": "field_step00000804_rank0003.csv",
+      "bytes": 19968093,
+      "sha256": "0a34f6f7882ef4672e5c2547e164db09735265a116ff9d4a553d9da344467c1d"
+    },
+    {
+      "name": "field_step00000804_rank0004.csv",
+      "bytes": 19968093,
+      "sha256": "87844a99a6f409c5f929f5c7f3f37011bc1ba37df7b72fd42c8ae2ed34e4c69b"
+    },
+    {
+      "name": "field_step00000804_rank0005.csv",
+      "bytes": 19968093,
+      "sha256": "7065e75eadff08caaa55e1595158e6ebdb401722c61e8afe72294694b10d45fe"
+    },
+    {
+      "name": "field_step00000804_rank0006.csv",
+      "bytes": 19968093,
+      "sha256": "ce4e7830c42b2ada6b20f1dd438016ce2bd9aa562dd042a1c482a6a349ebff70"
+    },
+    {
+      "name": "field_step00000804_rank0007.csv",
+      "bytes": 19968093,
+      "sha256": "bc721371f814a1173131a72edbb7a85c8d20012693ab68d84af228843830ec84"
+    }
+  ],
+  "fieldShape": [
+    80,
+    80,
+    80,
+    12
+  ],
+  "centralSliceZ_m": 0.0001250000000000001,
+  "temperatureRange_C": [
+    45,
+    63
+  ],
+  "speedRange_m_s": [
+    0,
+    0.6
+  ],
+  "displayInterpolation": "Bilinear image pixels only; native PLIC polygons are not smoothed into new geometry. No intermediate CFD states generated.",
+  "initialColdFilmIncluded": true,
+  "reservoirVaporPortsIncluded": true,
+  "completeCoolingCycleQualified": false,
+  "detachedBubbleRiseClaimed": false,
+  "voiceTimeStretch": false,
+  "outputs": [
+    {
+      "name": "IMMERSION_COOLING_LANDSCAPE_DRAFT01.mp4",
+      "width": 1920,
+      "height": 1080,
+      "fps": 24,
+      "frames": 576,
+      "duration_s": 24,
+      "bytes": 736276,
+      "sha256": "dce94cbe54e931f4ef6b6d3ce4998b91a9ead6d66dc8ef9240272a413bd8949a",
+      "fullDecodePassed": true,
+      "audio": true
+    },
+    {
+      "name": "IMMERSION_COOLING_PORTRAIT_DRAFT01.mp4",
+      "width": 1080,
+      "height": 1920,
+      "fps": 24,
+      "frames": 576,
+      "duration_s": 24,
+      "bytes": 942773,
+      "sha256": "6397261197c8bf8561b176e5a2a39d9b1f611f9573ab0cac5bbd6a23e9cc828e",
+      "fullDecodePassed": true,
+      "audio": true
+    }
+  ]
+}

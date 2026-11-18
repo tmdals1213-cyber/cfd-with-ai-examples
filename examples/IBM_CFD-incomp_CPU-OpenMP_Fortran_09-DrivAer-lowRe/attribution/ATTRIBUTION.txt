@@ -1,0 +1,11 @@
+Vehicle geometry attribution
+Ashton, N. et al. (2024), DrivAerML: High-Fidelity Computational Fluid Dynamics Dataset for Road-Car External Aerodynamics.
+Paper https://arxiv.org/abs/2408.11969
+Dataset https://huggingface.co/datasets/neashton/drivaerml
+Dataset snapshot revision 5d448b209bf654503c64ce7261c34fa125f46392
+Source run_1/drivaer_1.stl SHA256 411e6651284a26fc94924106b833fd79febc6deba63922c929dd8acfc99720d2
+License CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
+The derived DrivAer_reduced_length1.stl and sampled geometry retain CC BY-SA 4.0.
+Modifications: Source coordinate vertex rounding to six decimals, duplicate/degenerate removal; rigid rotation and translation, uniform length scaling; quadric decimation to 60,000 triangles. No holes filled. MeshFix repair after decimation; any affected local surface is a computational derivative. PyMeshFix 0.18.1 repair with joincomp=False and remove_smallest_components=False, explicitly removing self-intersections in decimated mesh.
+LICA Fortran sources retain their original 2017 Haecheon Choi copyright/noncommercial terms.
+MeshFix 0.18.1 was used only as an external preprocessing program; its GPL-3.0 license is retained. No MeshFix binary is redistributed in the CFD package.

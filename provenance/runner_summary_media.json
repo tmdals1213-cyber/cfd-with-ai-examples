@@ -1,0 +1,26 @@
+[
+  {
+    "file": "media/RUNNER_RECORDED_SUMMARY_LANDSCAPE.mp4",
+    "seconds": 16,
+    "fps": 24,
+    "width": 1920,
+    "height": 1080,
+    "sha256": "e4af3cb96429c072c22ab298fc3301c611119740e07084f429da3e234bc038eb",
+    "kind": "New presentation of recorded positions and historical pressure-component means; not recovered flow footage",
+    "newCFDStatesGenerated": false,
+    "physicalTotalDragQualified": false,
+    "fullDecodePassed": true
+  },
+  {
+    "file": "media/RUNNER_RECORDED_SUMMARY_PORTRAIT.mp4",
+    "seconds": 16,
+    "fps": 24,
+    "width": 1080,
+    "height": 1920,
+    "sha256": "9cefa59c5f8d5be21602a485d9a6437764bb82be1e39f85efe63c20e59cbefbe",
+    "kind": "New presentation of recorded positions and historical pressure-component means; not recovered flow footage",
+    "newCFDStatesGenerated": false,
+    "physicalTotalDragQualified": false,
+    "fullDecodePassed": true
+  }
+]

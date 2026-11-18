@@ -1,0 +1,63 @@
+Partition : 4 2 1
+Lx : .12
+Ly : .08
+Lz : 0.00025
+nx : 480
+ny : 320
+nz : 1
+Block width : .045
+Block height : .004
+Physical span : .0375
+Droplet center : 0 .004 0
+Droplet diameter : 0
+Gravity : 0 -9.81 0
+Static contact angle : 90
+Max timestep size : .000025
+Max cfl number : .35
+Sub-iterations : 2
+Max time : 0.0001
+Pressure tolerance : 1e-8
+Pressure iteration : 200
+Ensight output period : 0.0001
+Heat power : 100
+Copper density : 8960
+Copper heat capacity : 385
+Copper conductivity : 400
+Initial solid superheat : 5
+Liquid density : 1619.82
+Gas density : 13.36
+Liquid heat capacity : 1098.41
+Gas heat capacity : 885.04
+Liquid conductivity : 0.05216
+Gas conductivity : 0.00864
+Liquid dynamic viscosity : 0.00045306
+Gas dynamic viscosity : 9.4602e-06
+Saturation temperature : 329.75
+Latent heat : 84515.0
+Surface tension coefficient : 0.008273
+Initial liquid subcooling : 0
+Thermal interface tolerance : 1e-10
+Phase conversion CFL : .5
+Thermal trial replay : 0
+CSV output period : 0.0001
+Restart prefix : none
+Checkpoint step : -1
+Stop after checkpoint : 0
+Checkpoint identity : 5cfca4dd207d8654a67feda3ac4deb817731bc579942774f99d91445f74dde27
+
+Wall birth enabled : 1
+Wall birth superheat : 1
+Wall birth x : 0
+Wall birth width : .001
+Wall birth equivalent height : .0000005
+Cold plate width : .045
+Cold plate thickness : .002
+Pressure port width : .01
+Pool height : .02
+Initial cold film thickness : 0.000125
+Cold plate temperature : 318.15
+Full step replay test : 0
+Boundary mode : volume_balance_v6
+Working fluid model : FC72_literature_proxy_1bar
+Thermodynamic reference pressure : 100000
+Phase budget mode : bounded_inventory_enthalpy

@@ -1,0 +1,401 @@
+{
+  "01_ib_tester": {
+    "title": "Incompressible marker IBM",
+    "origin": "ib_tester",
+    "type": "upstream",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Five-step MPI startup was completed; no developed wake or force accuracy claim.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": false
+    },
+    "directory": "examples/IBM_CFD-incomp_CPU-MPI_Fortran_01-marker-cylinder",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.1,
+    "timeUnit": "case nondimensional/input units",
+    "family": "NGA2 fundamentals",
+    "buildTool": "scripts/case.py"
+  },
+  "02_ib_shock": {
+    "title": "Compressible shock / ghost-point IBM",
+    "origin": "ib_shock",
+    "type": "upstream",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Five-step MPI startup was completed; no developed shock-interaction validation.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": true
+    },
+    "directory": "examples/IBM_CFD-comp_CPU-MPI_Fortran_02-shock-cylinder",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.01,
+    "timeUnit": "case nondimensional/input units",
+    "family": "NGA2 fundamentals",
+    "buildTool": "scripts/case.py"
+  },
+  "03_water_cht_2d": {
+    "title": "EOS-driven natural convection and solid conduction",
+    "origin": "cpu2d_water_eos_cht_20261113",
+    "type": "custom",
+    "partition": [
+      2,
+      2,
+      1
+    ],
+    "ranks": 4,
+    "status": "Historical 10 s prototype; open outer reservoir, not the later closed-side tank. No phase change.",
+    "dependencies": {
+      "IRL": false,
+      "FFTW": true
+    },
+    "directory": "examples/FVFD_CFD-lowMach-CHT_CPU-MPI_Fortran_03-water-natural-convection-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.02,
+    "timeUnit": "s",
+    "family": "thermal / phase change",
+    "buildTool": "scripts/case.py"
+  },
+  "04_stefan_2d": {
+    "title": "Planar phase-change reference",
+    "origin": "stefan_two_temperature_reference_20261113",
+    "type": "custom",
+    "partition": [
+      1,
+      1,
+      1
+    ],
+    "ranks": 1,
+    "status": "One-grid analytic comparison completed to 0.5 s; not a general convergence proof.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-phasechange_CPU-MPI_Fortran_04-stefan-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.001,
+    "timeUnit": "s",
+    "family": "NGA2 fundamentals",
+    "buildTool": "scripts/case.py"
+  },
+  "05_heated_bubble_2d": {
+    "title": "Heat-driven seeded/wall-born vapor",
+    "origin": "cpu2d_open_boundary_momentum_quiet_20261116",
+    "type": "custom",
+    "partition": [
+      4,
+      2,
+      1
+    ],
+    "ranks": 8,
+    "status": "Historical initially gas-free 100 W water case: wall birth, growth, detachment and rise observed through ~0.48 s; not a predictive boiling correlation.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_05-heated-bubble-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.001,
+    "timeUnit": "s",
+    "family": "thermal / phase change",
+    "buildTool": "scripts/case.py"
+  },
+  "06_dielectric_pool_2d": {
+    "title": "Dielectric pool / cold ceiling",
+    "origin": "cpu2d_inventory_enthalpy_v2_20261117",
+    "type": "custom",
+    "partition": [
+      4,
+      2,
+      1
+    ],
+    "ranks": 8,
+    "status": "Accepted evolution reached 0.1611 s, then stopped by user. Velocity temporal accuracy remains unresolved.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_06-dielectric-pool-2D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.0001,
+    "timeUnit": "s",
+    "family": "thermal / phase change",
+    "buildTool": "scripts/case.py"
+  },
+  "07_immersion_3d": {
+    "title": "True XYZ immersion-cooling prototype",
+    "origin": "cpu3d_immersion_phase_moment_v6_heat_iteration_20261118",
+    "type": "custom",
+    "partition": [
+      2,
+      2,
+      2
+    ],
+    "ranks": 8,
+    "status": "Current v6 retains the v5 moment repair and v4 output repair. Original25us failed-step crossing passed to37.2ms; native-CFL100us and thermal1000-iteration checks passed to39.6ms. Longer100ms continuation is separate; no full-cycle/temporal-accuracy qualification.",
+    "dependencies": {
+      "IRL": true,
+      "FFTW": false
+    },
+    "directory": "examples/FVFD-VOF-PLIC_CFD-incomp-CHT-phasechange_CPU-MPI_Fortran_07-immersion-3D",
+    "resource": "CPU-MPI",
+    "language": "Fortran",
+    "GPUused": false,
+    "smokeTime": 0.00025,
+    "timeUnit": "s",
+    "family": "thermal / phase change",
+    "buildTool": "scripts/case.py"
+  },
+  "08_ahmed": {
+    "directory": "examples/IBM_CFD-incomp_CPU-serial_Fortran_08-Ahmed-body",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-serial",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "Re100 suspended coarse body; historical2000steps/time10; not a road-car accuracy benchmark.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "09_drivaer": {
+    "directory": "examples/IBM_CFD-incomp_CPU-OpenMP_Fortran_09-DrivAer-lowRe",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "Re500 coarse functional DrivAer test; final serial-to4thread continuation, no moving road.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "10_drivaer_les": {
+    "directory": "examples/IBM_CFD-incomp-LES_CPU-OpenMP_Fortran_10-DrivAer-wake",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "Re2000 Vreman wake demo; historical13141steps/time40; periodicity was not imposed.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "11_ev_pair": {
+    "directory": "examples/IBM_CFD-incomp-LES_CPU-OpenMP_Fortran_11-Model3-vs-IONIQ5",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "100km/h public artist models, moving road/fixed wheels; qualitative comparison, not certified vehicle predictions.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "12_suv_pair": {
+    "directory": "examples/IBM_CFD-incomp-LES_CPU-OpenMP_Fortran_12-Urus-vs-GClass",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "100km/h public artist models; current retained coarse direct-forcing route, moving-road approximation.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "13_car10": {
+    "directory": "examples/IBM_CFD-incomp-LES_CPU-OpenMP_Fortran_13-ten-vehicle-campaign",
+    "family": "vehicle",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_pressure_operand_contract.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "Ten artist-model bodies, common100km/h/time window; retain original force/operator semantics and shape limitations.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "14_turbine": {
+    "directory": "examples/IBM-moving_CFD-incomp-LES_CPU-OpenMP_Fortran_14-turbine",
+    "family": "other moving IBM",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_stl_sdf.f90",
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_mgbicg.f90",
+      "mod_rotor_motion.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_sphere.f90",
+      "lica_sgs.f90",
+      "poiss_mgbicgstab.f90",
+      "lica.f90"
+    ],
+    "scope": "Prescribed rotor motion, not structural FSI. Historical startup/restart work; no new completed-rotor validation here.",
+    "redistributionTerms": "LICA original noncommercial/copyright terms; not MIT",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false
+  },
+  "15_runner_final": {
+    "directory": "examples/IBM-penalty_CFD-incomp-LES_CPU-OpenMP_CPP-Python_15-solo-vs-eight-runners",
+    "family": "runner",
+    "backend": "C++-OpenMP-penalty",
+    "language": "CPP-Python",
+    "resource": "CPU-OpenMP",
+    "scope": "Final solo and inverted8 matched2.501953125s demonstration; independent C++ penalty/Vreman path, distinct from LICA ghost-point interpolation.",
+    "fullFieldsIncluded": false,
+    "geometryEmbedded": false,
+    "originalVideoStatus": "Deleted on the previous user closeout instruction; code and recorded summaries retained.",
+    "pipelineState": "Kernel can be rebuilt. Original per-stage artifact orchestration is reference code requiring asset/manifest adaptation, not a turnkey new simulation."
+  },
+  "16_runner_four": {
+    "directory": "examples/IBM-ghost_CFD-incomp_CPU_Fortran-Python_16-four-runner-prototype",
+    "family": "runner",
+    "backend": "LICA-multibody-Fortran",
+    "scope": "Historical four-person moving-IBM prototype. Reference modules only, not proof of a completed/stable final run. The final matched campaign used the separate C++ path.",
+    "state": "ARCHIVED_NOT_RESTARTED",
+    "fullFieldsIncluded": false
+  },
+  "17_hull_stopped": {
+    "directory": "examples/FVM-VOF_CFD-incomp-FSI_CPU_CPP-Fortran_17-hull-stopped",
+    "family": "archived multiphysics",
+    "state": "USER_STOPPED_DO_NOT_RUN",
+    "scope": "Stopped hull/VOF exploratory source. No full free-floating FSI completion or production force qualification."
+  },
+  "18_thermal_earlier": {
+    "directory": "examples/IBM_CHT_CPU_CPP-Fortran-Python_18-earlier-chip-thermal",
+    "family": "supporting historical work",
+    "scope": "Earlier LICA-era thermal prototypes, superseded by the current NGA2 thermal/phase-change cases.",
+    "retainedNumericalSourceFiles": 4,
+    "state": "REFERENCE_ONLY_NOT_EXECUTED"
+  },
+  "19_acoustic": {
+    "directory": "examples/FEM_CFD-acoustic_CPU_Fortran_19-SPECFEM-reference",
+    "family": "supporting historical work",
+    "scope": "Unexecuted SPECFEM3D acoustic source excerpts/reference preparation, spectral-element FEM rather than a qualified IBM acoustic calculation.",
+    "retainedNumericalSourceFiles": 5,
+    "state": "REFERENCE_ONLY_NOT_EXECUTED",
+    "redistributionTerms": "SPECFEM3D GPL3-or-later headers retained; reference excerpts, dependencies not bundled."
+  },
+  "20_hairdryer": {
+    "directory": "examples/PREP_CFD-CHT_CPU_Python_20-hairdryer-preparation",
+    "family": "supporting historical work",
+    "scope": "Earlier handoff/inventory preparation; no completed hairdryer CFD/thermal outcome newly asserted.",
+    "retainedNumericalSourceFiles": 0,
+    "state": "REFERENCE_ONLY_NOT_EXECUTED"
+  },
+  "21_cylinder": {
+    "directory": "examples/IBM_CFD-incomp_CPU-OpenMP_Fortran_21-cylinder-Re100",
+    "family": "baseline verification",
+    "backend": "LICA-Fortran",
+    "language": "Fortran",
+    "resource": "CPU-OpenMP",
+    "sourceOrder": [
+      "mod_common.f90",
+      "mod_flowarray.f90",
+      "mod_poiss_z_ft.f90",
+      "mod_movingIBM.f90",
+      "lica_movingIBM.f90",
+      "lica_cylinder.f90",
+      "lica_sgs.f90",
+      "poiss_z_ft_ffte.f90",
+      "lica.f90"
+    ],
+    "scope": "Re100 interpolated IBM, 160×96×1 cells. Historical20000steps to time200, maxCFL.45961, finite, no recorded Poisson nonconvergence. Not a new grid/time convergence claim.",
+    "redistributionTerms": "Original LICA noncommercial/copyright notice"
+  }
+}

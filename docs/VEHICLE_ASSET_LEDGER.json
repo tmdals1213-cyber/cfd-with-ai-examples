@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "per_model": [
+    {
+      "id": "bmw-e36-m3",
+      "title": "BMW E36 M3",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:20.022161+00:00",
+      "flags": [
+        "EMBEDDED_PROFILE_ALIAS_DIFFERS_FROM_CURRENT_AUTHOR_PROFILE"
+      ]
+    },
+    {
+      "id": "porsche-911",
+      "title": "Porsche 911 (930) Turbo 1975",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:20.600216+00:00",
+      "flags": []
+    },
+    {
+      "id": "ferrari-f40",
+      "title": "Ferrari f40",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:21.092963+00:00",
+      "flags": []
+    },
+    {
+      "id": "lamborghini-urus",
+      "title": "Lamborghini Urus 2018",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:21.602882+00:00",
+      "flags": []
+    },
+    {
+      "id": "mercedes-benz-g-class-w263",
+      "title": "Mercedes Benz G-class W263",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:22.095431+00:00",
+      "flags": [
+        "W263_CATEGORY_YEAR_LABEL_NOT_VEHICLE_IDENTITY_VALIDATION"
+      ]
+    },
+    {
+      "id": "audi-r8",
+      "title": "Audi R8",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:23.177526+00:00",
+      "flags": []
+    },
+    {
+      "id": "ford-mustang",
+      "title": "Ford Mustang Shelby GT500",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:24.492205+00:00",
+      "flags": []
+    },
+    {
+      "id": "nissan-gt-r",
+      "title": "Nissan Skyline R34 GT-R",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:25.026941+00:00",
+      "flags": []
+    },
+    {
+      "id": "toyota-supra-mk4",
+      "title": "Toyota Supra mk4",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:25.507880+00:00",
+      "flags": []
+    },
+    {
+      "id": "tesla_model3",
+      "title": "2024 Tesla Model 3",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_SOURCE_HTTP_FAILURE_PRESERVED",
+      "primary_model_license": null,
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:26.074287+00:00",
+      "flags": [
+        "ORIGINAL_MODEL_SOURCE_UNAVAILABLE",
+        "CURRENT_PRIMARY_LICENSE_CORROBORATION_NULL"
+      ]
+    },
+    {
+      "id": "land-rover-defender-110",
+      "title": "Land Rover Defender 110",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:26.568328+00:00",
+      "flags": []
+    },
+    {
+      "id": "hyundai_ioniq5",
+      "title": "Hyundai Ioniq 5 - Lowpoly",
+      "embedded_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "embedded_license": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "primary_status": "PRIMARY_PUBLIC_MODEL_METADATA_READ",
+      "primary_model_license": {
+        "uri": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "label": "CC Attribution",
+        "fullName": "Creative Commons Attribution",
+        "requirements": "Author must be credited. Commercial use is allowed.",
+        "url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+        "slug": "by"
+      },
+      "primary_source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "checked_utc": "2026-10-30T03:52:27.225364+00:00",
+      "flags": [
+        "HOST_SOFTWARE_NC_TERMS_DISTINCT_FROM_PRIMARY_MODEL_CC_BY"
+      ]
+    }
+  ],
+  "primary_license_deed": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+  "repo_license_statement": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+  "repository_file_vs_model_license": "Repository software/license summary not automatically a per-model permission. Here11 current public author-model API records match embedded CC-BY4; Tesla lacks current original-source corroboration.",
+  "inherited_carros_modifications": "Pinned repository documents weld/simplify(~30percenttriangle target)/prune/meshopt. Files are repository-processed derivatives, not asserted original author full-resolution files. This task did not perform these operations.",
+  "catalog_stale_summary_count": {
+    "catalog_records": 532,
+    "license_document_car_count": 530,
+    "meaning": "Global prose counts differ; fixed actual records/file metadata used, not that global count as a rights test"
+  },
+  "selected_sharealike_models": 0,
+  "tesla": {
+    "original_source_http": 404,
+    "embedded_author": "RBLXSupercars",
+    "archived_uploader_credit": "brandonleong28",
+    "uploader_page": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+    "uploader_page_current_license_checked": false,
+    "scope": "Both credits preserved from existing Tesla_CREDITS; no original-author/current-uploader equivalence or rights clearance inferred"
+  },
+  "hyundai": {
+    "host_repository_software_license": "Driftline Non-Commercial License1.0",
+    "model_primary_license": "CC-BY4.0",
+    "scope": "No host code copied/executed/adopted. Separate original model publisher license currentBY; not a blanket host/model permission or ban."
+  },
+  "logos_and_trademarks": "Separate assets/rights, not acquired or certified here",
+  "changes_by_this_task": "Byte-identical file copies/downloads and JSON/header reads only; no geometry modification/decoding",
+  "no_legal_clearance_warranty": true
+}

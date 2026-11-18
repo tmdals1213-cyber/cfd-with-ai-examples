@@ -1,0 +1,48 @@
+{
+  "geometry": "STL Ahmed body, normalized length 1",
+  "grid_points": [
+    65,
+    49,
+    49
+  ],
+  "cells": [
+    64,
+    48,
+    48
+  ],
+  "cell_count": 147456,
+  "Re_L": 100.0,
+  "dt": 0.005,
+  "LES": false,
+  "OpenMP": false,
+  "threads": 1,
+  "domain": {
+    "x": [
+      -3,
+      5
+    ],
+    "y": [
+      -2,
+      2
+    ],
+    "z": [
+      -2,
+      2
+    ]
+  },
+  "Aref": 0.1206327636525498,
+  "Aref_definition": "normalized y-z bounding box area, not an integrated silhouette area",
+  "boundary": "uniform +x inlet, convective x outlet, nonperiodic y and z far boundaries",
+  "ground": "none: body suspended in free stream; not a vehicle road/wheel simulation",
+  "pressure_solver": "3D MG-preconditioned BiCGSTAB",
+  "poisson_tolerance": 1e-05,
+  "compiler_flags": [
+    "-std=legacy",
+    "-fdefault-integer-8",
+    "-fdefault-real-8",
+    "-fdefault-double-8",
+    "-ffree-line-length-none",
+    "-O2",
+    "-Wl,--stack,134217728"
+  ]
+}

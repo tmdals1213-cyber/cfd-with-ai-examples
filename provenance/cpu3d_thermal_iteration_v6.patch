@@ -1,0 +1,11 @@
+--- a/boiling_energy.f90
++++ b/boiling_energy.f90
+@@ -99,7 +99,7 @@
+   type(hypre_str),intent(inout)::hs
+   hs%stc(1,:)=[0,0,0];hs%stc(2,:)=[1,0,0];hs%stc(3,:)=[-1,0,0]
+   hs%stc(4,:)=[0,1,0];hs%stc(5,:)=[0,-1,0];hs%stc(6,:)=[0,0,1];hs%stc(7,:)=[0,0,-1]
+-  hs%rcvg=1e-11_WP;hs%maxit=250;hs%opr(1,:,:,:)=1;call hs%init()
++  hs%rcvg=1e-11_WP;hs%maxit=1000;hs%opr(1,:,:,:)=1;call hs%init()
+  end subroutine
+  subroutine ghost(a)
+   real(WP),intent(inout)::a(cfg%imino_:,cfg%jmino_:,cfg%kmino_:)

@@ -1,0 +1,69 @@
+{
+  "state": "V5_NATIVE_CFL_DT100US_SHORT_PASSED_PENDING_100MS",
+  "observed": {
+    "maxDt_s": 9.999999999676466e-05,
+    "maxAcceptedSpeed_m_s": 0.600879614513353,
+    "maxCapillaryCFL": 0.20184100721540488,
+    "wallSeconds": 295.5546222,
+    "physicalAdvance_s": 0.0020000000000000018
+  },
+  "outputAudit": {
+    "temperature": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "20b5f6746b3bdf8b2313c1be402db5dcc541316655614020480a49abf698dfdb"
+    },
+    "latent_sink": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "ad6357bab5dcf73bffe9fe02549bf9c580ef5f6fa0f6701eab4485fed0b99844"
+    },
+    "VOF": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "82dda47866008981154f6ca3b9f47bc0a787acbe78edf8d8b6de511fc6bcfa61"
+    },
+    "velocity": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "25c8438284b95620f81619dca54a1083434af7e9a31662de453188689117dabc"
+    }
+  },
+  "final": {
+    "step": 1514.0,
+    "time_s": 0.0392,
+    "dt_s": 3.976653374648115e-05,
+    "solid_Tmax_K": 335.1812950178813,
+    "fluid_Tmax_K": 330.45097105023814,
+    "speed_max_m_s": 0.5569293891251077,
+    "gas_volume_m3": 4.636897224611387e-06,
+    "phase_power_W": -4.942998080353886,
+    "sensible_heat_J": -4.129919485375412,
+    "latent_change_J": -0.0012451661916940576,
+    "input_heat_J": 0.14866962962962835,
+    "out_heat_J": -0.012005803536178762,
+    "total_energy_error_J": -5.6610318779715645e-09,
+    "thermal_balance_W": -1.6431306626429887e-07,
+    "mass_balance_relative": -9.354538992367152e-12,
+    "div_minus_source_s_1": 1.294942153506895e-08,
+    "pressure_relative_error": 9.53370707663452e-09,
+    "source_integral_error_s_1m3": 8.470329472543003e-22,
+    "top_volume_out_m3_s": -4.341635376057443e-06,
+    "top_gas_volume_out_m3_s": -4.341635376057443e-06,
+    "physical_Tmin_K": 318.15,
+    "thermal_coupling_iterations": 2.0,
+    "thermal_coupling_change_K": 0.0,
+    "inactive_thermal_interface_cells": 63.0,
+    "inactive_thermal_interface_area_m2": 1.9108381936567026e-12,
+    "phase_conversion_cfl": 1.4990152443111617,
+    "thermal_trial_count": 1.0,
+    "gas_centroid_x_m": -2.9424821608603564e-07,
+    "gas_centroid_y_m": 0.013806637062472168,
+    "heater_gas_contact_area_m2": 5.881190411339501e-05,
+    "wall_site_temperature_K": 335.1799190049755,
+    "wall_birth_events": 1.0,
+    "wall_birth_surface_J": 6.207147811040317e-09,
+    "evaporation_power_W": 0.05104309636135944,
+    "condensation_power_W": -4.994041176715246,
+    "cold_plate_heat_out_W": 4.70990559059193,
+    "w_max_m_s": 0.24021069291214192,
+    "gas_centroid_z_m": -6.550215926857492e-08
+  },
+  "scope": "Short native-CFL feasibility only; later thermal250-iteration limit was separately extended in v6, with original1e-11 criterion."
+}

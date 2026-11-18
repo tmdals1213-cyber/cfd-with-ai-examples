@@ -1,0 +1,138 @@
+{
+  "asOf": "2026-11-18",
+  "upstreamCommit": "28a58d937af89dd506456048be1cad58f6d383a9",
+  "3D": {
+    "binarySHA256": "c7cf29d99dc974010e1746277dbae4e916c2fdac14c954adf780cc039dad63d6",
+    "sourceSHA256": {
+      "boiling_energy.f90": "dd2a5f0b719e707e0c068d76715a1b7a5659192f7256c7df90e6f10ecab9c841",
+      "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "face_geometry3d.f90": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043",
+      "geometry.f90": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a",
+      "Make.package": "7211523eecc8eb3cb7a02d5f670052285c5275214ed2b859e24be17498fef560",
+      "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "simulation.f90": "3b231c7934c01b4887af8aaf329633b2d7a549492197815b8a1d5a705222be54",
+      "vfs_class.f90": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+    },
+    "completedTime_s": 0.02,
+    "steps": 804,
+    "wallSeconds": 2490.8683584,
+    "summedOwnedRankPeakRSS_KiB": 7178552,
+    "final": {
+      "step": 804.0,
+      "time_s": 0.02,
+      "dt_s": 8.173350405777519e-06,
+      "solid_Tmax_K": 334.9699029525931,
+      "fluid_Tmax_K": 330.1547664082765,
+      "speed_max_m_s": 0.572778741353573,
+      "gas_volume_m3": 4.637546127385815e-06,
+      "phase_power_W": -3.793857036169608,
+      "sensible_heat_J": -4.20839140635555,
+      "latent_change_J": -0.0005124768314707828,
+      "input_heat_J": 0.07585185185184912,
+      "out_heat_J": -0.007084347680253636,
+      "total_energy_error_J": -3.6472421319023145e-09,
+      "thermal_balance_W": -5.3817643674847204e-08,
+      "mass_balance_relative": 1.6103792556260253e-10,
+      "div_minus_source_s_1": 1.440181307543753e-09,
+      "pressure_relative_error": 8.092684919589098e-09,
+      "source_integral_error_s_1m3": 0.0,
+      "top_volume_out_m3_s": -3.3322982635589227e-06,
+      "top_gas_volume_out_m3_s": -3.3322982635589227e-06,
+      "physical_Tmin_K": 318.15,
+      "thermal_coupling_iterations": 2.0,
+      "thermal_coupling_change_K": 0.0,
+      "inactive_thermal_interface_cells": 24.0,
+      "inactive_thermal_interface_area_m2": 1.5801516931019636e-12,
+      "phase_conversion_cfl": 1.4887833823097332,
+      "thermal_trial_count": 1.0,
+      "gas_centroid_x_m": -7.719333591123083e-09,
+      "gas_centroid_y_m": 0.01380733784331516,
+      "heater_gas_contact_area_m2": 5.8510264344434275e-05,
+      "wall_site_temperature_K": 334.9679708253872,
+      "wall_birth_events": 1.0,
+      "wall_birth_surface_J": 6.207147811040317e-09,
+      "evaporation_power_W": 0.06967271529684252,
+      "condensation_power_W": -3.8635297514664506,
+      "cold_plate_heat_out_W": 3.3644995124636212,
+      "w_max_m_s": 0.3303491243320582,
+      "gas_centroid_z_m": -7.167929601098931e-09
+    },
+    "sameBinaryRestartAll8CSVByteEqual": true,
+    "physicalCycleQualified": false
+  },
+  "stefan": {
+    "analyticComparisonCompleted": true,
+    "qualification": "Record one-grid discrepancy; no accuracy pass threshold invented after seeing results",
+    "grid": [
+      8,
+      80,
+      1
+    ],
+    "steps": 5000,
+    "final": {
+      "time_s": 0.49999999999996125,
+      "computedLayer_m": 0.0007057496086785402,
+      "analyticLayer_m": 0.0007057065024683124,
+      "relativeInterfaceError": 6.108234808244413e-05,
+      "analyticLayerGrowth_m": 0.0001432065024683124,
+      "computedLayerGrowth_m": 0.0001432496086785402,
+      "relativeGrowthIncrementError": 0.00030100735291228745
+    },
+    "maxAbsoluteRelativeInterfaceError": 6.108234808244413e-05,
+    "scope": "Canonical fixed-temperature wall phase-change test only, not CHT or nucleation",
+    "independentFieldAudit": {
+      "cells": 640,
+      "gasVolume_m3": 2.6465610325445244e-08,
+      "gasVolumeDifference_m3": -9.926167350636332e-24,
+      "sensible_J": 1.2937643217326424,
+      "sensibleDifference_J": 6.661338147750939e-16,
+      "liquidT_K": [
+        373.12429584766636,
+        373.12429584766636
+      ],
+      "vaporT_K": [
+        373.6950972602202,
+        382.23701557050043
+      ],
+      "phaseEnergyRoundoffTransfer_J": 0.0
+    },
+    "historyAudit": {
+      "total_energy_error_J": 1.2725878597436013e-10,
+      "thermal_balance_W": 1.0171323765878482e-09,
+      "div_minus_source_s_1": 6.661615703507096e-13,
+      "pressure_relative_error": 9.987794093647477e-09,
+      "mass_balance_relative": 9.548499871921212e-05,
+      "phasePowerRange_W": [
+        0.013018385250540254,
+        0.016349936427204507
+      ]
+    }
+  },
+  "water": {
+    "historicalTime_s": 10,
+    "engineeringAccuracyQualified": false
+  },
+  "2Ddielectric": {
+    "lastAcceptedTime_s": 0.161117871555948,
+    "stoppedByUser": true,
+    "velocityTemporalConverged": false
+  },
+  "heatedBubble2D": {
+    "initialVapor_m3": 0.0,
+    "observedDetachmentBracket_s": [
+      0.4000712285295638,
+      0.4200712285295616
+    ],
+    "trackedDetachedBubble": {
+      "from_s": 0.4200712285295616,
+      "to_s": 0.48009746537466996,
+      "centroidFrom_mm": 10.87700231703975,
+      "centroidTo_mm": 19.435998788517413,
+      "centroidRise_mm": 8.558996471477663,
+      "minimumActualGasWeightedV_m_s": 0.13145586940760012,
+      "lastVolume_uL": 1280.240387214393,
+      "smallestHeaterGapAtFirstQualifiedFrame_mm": 3.0,
+      "trackedDetachedFrames": 4
+    }
+  }
+}

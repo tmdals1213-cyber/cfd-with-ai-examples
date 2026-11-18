@@ -1,0 +1,64 @@
+{
+  "model": "FC72_equivalent_single_working_fluid_constant_property_1bar",
+  "interpretation": "Published FC-72 (perfluorohexane) liquid/vapor representative model; one working-fluid approximation, no air/species diffusion. Not a supplier batch certification.",
+  "source": {
+    "type": "primary doctoral thesis",
+    "url": "https://espace.curtin.edu.au/bitstream/handle/20.500.11937/80365/Guggilla%20G%202020.pdf?isAllowed=y&sequence=1",
+    "title": "Coalescence and evaporation dynamics",
+    "authorThesis": "Guggilla G,2020",
+    "table": "3.1",
+    "printedPage": 32,
+    "accessDate": "2026-11-17",
+    "allValuesCopiedAsOneSaturationState": true
+  },
+  "pressure_Pa": 100000.0,
+  "Tsat_K": 329.75,
+  "liquid": {
+    "density_kg_m3": 1619.82,
+    "dynamic_viscosity_Pa_s": 0.00045306,
+    "cp_J_kgK": 1098.41,
+    "conductivity_W_mK": 0.05216
+  },
+  "vapor": {
+    "density_kg_m3": 13.36,
+    "dynamic_viscosity_Pa_s": 9.4602e-06,
+    "cp_J_kgK": 885.04,
+    "conductivity_W_mK": 0.00864
+  },
+  "latent_heat_J_kg": 84515.0,
+  "surface_tension_N_m": 0.008273,
+  "manufacturerCrossCheck": {
+    "url": "https://multimedia.3m.com/mws/media/64892O/3m-fluorinert-electronic-liquid-fc-72.pdf",
+    "nominalNormalBoiling_C": 56,
+    "nominalLatent_J_kg": 88000,
+    "usedToReplaceThesisValues": false,
+    "note": "Manufacturer25C liquid-property rows are not substituted into the56.6C thesis saturation-state set."
+  },
+  "CoolPropAudit": {
+    "installedVersion": "8.0.0",
+    "pureFluid": "n-Perfluorohexane",
+    "CAS": "355-42-0",
+    "EOSReference": "Gao-2022-CxFy",
+    "at101325PaT_K": 330.2743574152702,
+    "transportModelsAvailable": false,
+    "usedForSelectedState": false,
+    "note": "Local EOS returns a somewhat different pure-fluid state and lacks viscosity,conductivity and surface-tension models. Do not mix it with the complete chosen thesis state or invent missing transport values."
+  },
+  "referenceConditions": {
+    "bottomHeat_W": 100,
+    "initialCopperSuperheat_K": 5,
+    "coldPlate_C": 45,
+    "thermodynamicPressure_Pa": 100000,
+    "initialLiquidAndVaporTemperature_K": 329.75
+  },
+  "scope": [
+    "Fixed phase densities/properties; phase-density buoyancy and bubble-driven flow included. Thermal-expansion/EOS natural convection is not newly qualified by this representative boiling model.",
+    "No claim of a specific CPU junction temperature, real nucleation-site density, electrical assembly certification, or sealed-vessel pressure response.",
+    "Small pressure changes enter mechanical pressure only; saturation state is fixed for the first regulated-reference model."
+  ],
+  "derived": {
+    "density_ratio": 121.2440119760479,
+    "latentOnly100WCondensate_uL_s": 730.4650598645737,
+    "capillaryLength_m": 0.0007245394720736517
+  }
+}

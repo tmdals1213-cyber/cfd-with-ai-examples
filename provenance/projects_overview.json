@@ -1,0 +1,33 @@
+{
+  "file": "media/PROJECTS_OVERVIEW.mp4",
+  "seconds": 24,
+  "fps": 24,
+  "components": [
+    {
+      "source": "VEHICLE_CAR10_LANDSCAPE.mp4",
+      "sha256": "9e873e0c9f230e70605c6aa590e1683f52b588828e62f3e4bd66033fa47cd20e",
+      "presentationStart_s": 1,
+      "presentationDuration_s": 8
+    },
+    {
+      "source": "RUNNER_RECORDED_SUMMARY_LANDSCAPE.mp4",
+      "sha256": "e4af3cb96429c072c22ab298fc3301c611119740e07084f429da3e234bc038eb",
+      "presentationStart_s": 4,
+      "presentationDuration_s": 8
+    },
+    {
+      "source": "IMMERSION_COOLING_LANDSCAPE_DRAFT01.mp4",
+      "sha256": "dce94cbe54e931f4ef6b6d3ce4998b91a9ead6d66dc8ef9240272a413bd8949a",
+      "presentationStart_s": 10,
+      "presentationDuration_s": 8
+    }
+  ],
+  "newCFDStatesGenerated": false,
+  "sourceKinds": [
+    "Single final-field car camera orbit",
+    "Recorded runner offsets and pressure means",
+    "Actual1\u201320ms XYZ PLIC/field showcase"
+  ],
+  "fullDecodePassed": true,
+  "sha256": "bf95ff44bd6d04ad52432ead5232e8434241edb6f6c036563e190fdce27a57fe"
+}

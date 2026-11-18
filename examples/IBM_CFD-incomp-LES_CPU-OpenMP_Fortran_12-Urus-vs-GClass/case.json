@@ -1,0 +1,143 @@
+{
+  "project": "URUS vs G-CLASS: public-model SUV wind tunnel",
+  "phase": "extended from common completed checkpoint",
+  "U_m_s": 27.77777777777778,
+  "speed_km_h": 100.0,
+  "Lref_m": 5.0,
+  "nu_m2_s": 1.5e-05,
+  "rho_kg_m3": 1.2,
+  "Re_Lref": 9259259.25925926,
+  "reference_time_s": 0.18,
+  "cells": [
+    160,
+    80,
+    80
+  ],
+  "cell_count": 1024000,
+  "fine_spacing_m": [
+    0.1171875,
+    0.0390625,
+    0.0625
+  ],
+  "fine_region_Lref": {
+    "x": [
+      -0.75,
+      2.25
+    ],
+    "y": [
+      0,
+      0.5
+    ],
+    "z": [
+      -0.4,
+      0.4
+    ]
+  },
+  "domain_Lref": {
+    "x": [
+      -2,
+      5
+    ],
+    "y": [
+      0,
+      2
+    ],
+    "z": [
+      -2,
+      2
+    ]
+  },
+  "ground": "y=0 prescribed tangential velocity U=U_in, V=W=0; moving-road approximation",
+  "wheels": "fixed geometry and zero IBM wall velocity for both vehicles",
+  "boundary": "uniform +x inlet; convective +x outlet; nonperiodic lateral far field; free-slip top",
+  "LES": "Vreman C=.035",
+  "max_dt_star": 0.004,
+  "CFL_target": 0.4,
+  "pressure_tolerance": 0.0001,
+  "target_time_star": 18.0,
+  "target_time_s": 3.24,
+  "field_every_steps": 20,
+  "threads": 8,
+  "purpose": "Qualitative publicity and visualization from attributed public models",
+  "vehicles": [
+    {
+      "id": "urus",
+      "name": "Lamborghini Urus2018",
+      "display_label": "URUS",
+      "nominal_length_m": 5.112,
+      "Aref_Lref2": 0.11709510423290362,
+      "Aref_m2": 2.9273776058225907,
+      "Aref_method": "Projected SDF silhouette, identical sampling method for both SUVs",
+      "STL": "urus_IBM.stl",
+      "plot_colour": "#ff6978",
+      "preprocess_seconds": 3.2030000000086147,
+      "source_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "licence": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "scale_note": "Uniformly scaled artist model; reference length, not certified factory CAD dimensions"
+    },
+    {
+      "id": "gclass",
+      "name": "Mercedes-Benz G-Class (simplified)",
+      "display_label": "G-CLASS",
+      "nominal_length_m": 4.764,
+      "Aref_Lref2": 0.13283484564317447,
+      "Aref_m2": 3.3208711410793614,
+      "Aref_method": "Projected SDF silhouette, identical sampling method for both SUVs",
+      "STL": "gclass_IBM.stl",
+      "plot_colour": "#50d9ed",
+      "preprocess_seconds": 3.3429999999934807,
+      "source_author": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "licence": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+      "scale_note": "Uniformly scaled artist model; reference length, not certified factory CAD dimensions"
+    }
+  ],
+  "IBM_interpolation": 0,
+  "IBM_wall": "Existing LICA direct forcing without interpolation; same choice for both coarse-grid vehicle cases",
+  "initial_dt_star": 0.0005,
+  "body_interior": "Opaque vertical exterior envelope; seal display-model cabin/engine voids connected to open underside. No vehicle internal-flow model.",
+  "threads_per_case": 8,
+  "parallel_cases": 2,
+  "video_title": "URUS vs G-CLASS",
+  "video_slug": "URUS_vs_GCLASS_drag_9x16",
+  "max_wall_s_per_case": 14400,
+  "model_scale_references": {
+    "urus": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+    "gclass": "<LOCAL_PATH_NOT_DISTRIBUTED>"
+  },
+  "aero_fuel": {
+    "enabled": true,
+    "distance_km": 100.0,
+    "tank_to_wheel_efficiency": 0.3,
+    "gasoline_LHV_MJ_per_L": 32.0,
+    "price_KRW_per_L": 1855.56,
+    "price_date_KST": "2026-10-29",
+    "price_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+    "price_source_observation": "KNOC nationwide gasoline retail average, 2026-10-29:1855.56KRW/L; retrieved2026-10-29KST",
+    "energy_source": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+    "LHV_note": "Common rounded gasoline-equivalent assumption,32MJ/L; AFDC gasoline/E10 range112114-116090Btu/USgal is approximately31.25-32.36MJ/L",
+    "efficiency_note": "Common illustrative tank-to-wheel efficiency; not measured for either vehicle",
+    "scope": "Aero-only, common gasoline-equivalent cost at the simulated constant speed; excludes rolling resistance, acceleration, grade and auxiliaries. Not total real-vehicle fuel economy.",
+    "force_statistic": "Time-weighted mean net drag over the same selected common late window as RMS ranking; do not use RMS for work",
+    "reveal_video_seconds": [
+      20,
+      22
+    ],
+    "on_screen_conditions": false,
+    "round_display_KRW_to": 100,
+    "presentation": "Minimal ending: winner, drag reduction, model names, approximate aero-only cost and100km. Put assumptions in caption/result files."
+  },
+  "graph_ymax_N": 1200,
+  "graph_range_method": "1.15 times max of per-case 99.5th percentile after 0.20s, rounded up to 200N; minimum800N",
+  "drag_statistics_window_lengths_s": [
+    2.16,
+    1.62,
+    1.08,
+    0.72,
+    0.54,
+    0.36,
+    0.18
+  ],
+  "statistics_window_plan": "Extended horizon: same >=.54s,three-block5percent criterion; longest available window starts at1.08s to exclude startup; predeclared before extension finishes"
+}

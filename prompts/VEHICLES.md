@@ -1,0 +1,7 @@
+Work on the vehicle cases in examples/legacy_catalog.json. Read docs/LEGACY_SETUP.md and docs/LICENSE_MAP.md. These are LICA Fortran IBM / Cartesian finite-volume cases; several use OpenMP and Vreman SGS. They are separate from the runner C++ penalty kernel and from NGA2.
+
+Choose an actual source/input pair, build in a new local directory, obtain the matching licensed geometry and recreate its SDF/IBM preprocessing at the declared grid. Do not use an SDF or ibmpre binary produced for a different grid, compiler kind width, orientation or body. Preserve original LICA notices and dimensional/nondimensional conventions. The common preprocessor reference has compile-time dimensions/switches; it must be adapted deliberately per case.
+
+Historical vehicle comparisons used artist models and coarse Cartesian cells, often fixed wheels and approximate moving roads. They are demonstrations, not certified drag/vehicle rankings. Follow the actual per-case configuration; low-Re suspended DrivAer/Ahmed cases differ from the100km/h ground cases. Preserve actual pressure operand/force definitions and avoid mixing stored kinematic/dimensional pressure conventions. An orbit around one final field is a camera sequence, not an unsteady flow history.
+
+Do not start old SSH/auth controllers or assume any old hostname/account is available. Use fresh local/scheduler configuration. Continue only a case explicitly selected by the user; active current immersion cooling is a separate run. Keep failed cases and normal checkpoints distinct.

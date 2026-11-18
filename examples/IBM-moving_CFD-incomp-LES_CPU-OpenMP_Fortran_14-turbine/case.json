@@ -1,0 +1,46 @@
+{
+  "geometry": "Artec 3D Turbine, normalized diameter D=1",
+  "mode": "prescribed rigid rotation, moving IBM, no structural FSI",
+  "diameter_m": 0.05,
+  "rpm": 3000.0,
+  "nu_m2_s": 1.5e-05,
+  "U_tip_m_s": 7.853981633974483,
+  "Re_tip_D": 26179.93877991494,
+  "inflow_m_s": 1.5707963267948966,
+  "nondimensional_reference": "L=D, U=tip speed, t*=t U/D",
+  "reference_time_s": 0.006366197723675814,
+  "omega_star": 2.0,
+  "spinup_duration_star": 4.0,
+  "target_rotations_after_start": 2.0,
+  "target_time": 8.283185307179586,
+  "cells": [
+    128,
+    96,
+    96
+  ],
+  "cell_count": 1179648,
+  "fine_spacing": [
+    0.02,
+    0.015,
+    0.015
+  ],
+  "LES": "constant Vreman C=.035",
+  "threads": 8,
+  "max_dt_star": 0.004,
+  "field_every_steps": 10,
+  "purpose": "promotional qualitative rotating-geometry CFD visualization; no comparison validation",
+  "boundary": "uniform weak +x throughflow, convective outlet, nonperiodic lateral far field",
+  "x_half_bound": 0.2971662979125977,
+  "source_url": "<LOCAL_PATH_NOT_DISTRIBUTED>",
+  "rho_kg_m3": 1.2,
+  "force_reference": "rotor disc area pi D^2/4, final tip speed; signed force on rotor, +x axial",
+  "CFL_target": 0.5,
+  "retained_prefix_wall_seconds": 714.6410000000033,
+  "restart": {
+    "checkpoint": "fld000200",
+    "time": 0.37651659996065484,
+    "step": 200,
+    "pressure_preserved": true,
+    "reason": "Continue the rotating-geometry demo at adaptive CFL .5; histories after the retained checkpoint are archived."
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "actualSavedStates": 5,
+  "firstTime_s": 0.02501778857874546,
+  "lastTime_s": 0.035017788578745226,
+  "frameFieldsInterpolated": false,
+  "CFDstepsExecuted": 0,
+  "presentationFramesRepeatNearestActualSavedState": true,
+  "sourceHistory": {
+    "name": "history.csv",
+    "bytes": 469707,
+    "sha256": "f950d51053ce02734d384afe305fdd30a68bc04da711e76aed061f83877eee33"
+  },
+  "sourceCase": {
+    "name": "nga.case",
+    "bytes": 969,
+    "sha256": "d32f37d3ad82affbd5652201f7cd19f90bc8e81d3cddd996fab55d367e001869"
+  },
+  "sourcePLICCase": {
+    "name": "plic.case",
+    "bytes": 235,
+    "sha256": "70d8e0879442ec5cf47c114ca780fef1c447c0e8129256036d036baff7631fdc"
+  },
+  "independentCSV": [
+    {
+      "name": "field_step00001205_rank0000.csv",
+      "bytes": 19968093,
+      "sha256": "a66f29f990e0f08d8c9d7a908b07633f92f2c0e3be76d7c941f6b78abe945a55"
+    },
+    {
+      "name": "field_step00001205_rank0001.csv",
+      "bytes": 19968093,
+      "sha256": "edad1f5fa8bd9612428b5b9df0b6368e066c00e48cebe61ae4d74fdfa460928f"
+    },
+    {
+      "name": "field_step00001205_rank0002.csv",
+      "bytes": 19968093,
+      "sha256": "c3ca78f3312682d10aa079407aec389bab9082ade0da65ab18c19d198f9b49a6"
+    },
+    {
+      "name": "field_step00001205_rank0003.csv",
+      "bytes": 19968093,
+      "sha256": "6d743a2b7788c4716b0602b6195d28dd893ba354193a204c4d0abfd034f045e3"
+    },
+    {
+      "name": "field_step00001205_rank0004.csv",
+      "bytes": 19968093,
+      "sha256": "e51d755f125f56d6d762e35690d56c45cc684077004bf3eae90d132824bf7bdc"
+    },
+    {
+      "name": "field_step00001205_rank0005.csv",
+      "bytes": 19968093,
+      "sha256": "82fe994136e97c78300bef052aee6cbe2a618d4a1a2287da796675a9d8e10e8a"
+    },
+    {
+      "name": "field_step00001205_rank0006.csv",
+      "bytes": 19968093,
+      "sha256": "1d7511bb90d8c7a2c2f08a5173467f6ca3611db772e1170081f3883bf74c113b"
+    },
+    {
+      "name": "field_step00001205_rank0007.csv",
+      "bytes": 19968093,
+      "sha256": "354346cbd646837e72d31dec9be29cd820c404e21105fa362ce32fde203aa9b3"
+    }
+  ],
+  "independentExportByteComparisons": {
+    "temperature": true,
+    "latent_sink": true,
+    "VOF": true,
+    "velocity": true
+  },
+  "gasVolumeError_m3": -3.2729353081906165e-18,
+  "maxAdjacentSavedVelocityChangeLinf_m_s": 0.257685124874115,
+  "fixedTemperatureRange_C": [
+    45,
+    63
+  ],
+  "fixedSpeedRange_m_s": [
+    0,
+    0.6
+  ],
+  "completeCoolingCycleQualified": false,
+  "sourceSnapshots": [
+    {
+      "step": 1005,
+      "time_s": 0.02501778857874546,
+      "temperature": {
+        "name": "temperature.000001",
+        "bytes": 2048244,
+        "sha256": "e92e0f7733ccbf26365544dc9030048c5d591f386b2d05b02f90ade5382e6000"
+      },
+      "velocity": {
+        "name": "velocity.000001",
+        "bytes": 6144244,
+        "sha256": "41ec630fcc02505a5b3e7c5665dedb2c9acd4f62d480b989e470c2b0966f2e80"
+      },
+      "VOF": {
+        "name": "VOF.000001",
+        "bytes": 2048244,
+        "sha256": "23e67a4a94940ecc7ca15781ff293e9ed482a3fd8ec5d30caa0d0866bcfee328"
+      },
+      "PLIC": {
+        "name": "plic.000001",
+        "bytes": 899112,
+        "sha256": "36ec0e193626fcccc3f5548a7509c796e95336928f29d3d6d54c75e3da88e333",
+        "polygons": 13484
+      },
+      "maxNativeSpeed_m_s": 0.2986396551132202
+    },
+    {
+      "step": 1105,
+      "time_s": 0.027517788578745532,
+      "temperature": {
+        "name": "temperature.000002",
+        "bytes": 2048244,
+        "sha256": "47a8ea9bb5f3987aa3f43a75e8278d090ac1e2e5f78ec70d6b719c59bb38217d"
+      },
+      "velocity": {
+        "name": "velocity.000002",
+        "bytes": 6144244,
+        "sha256": "fd327a23fd4d2a08d6608644a06668ad730e59dcf9af14524939b37f5b18faff"
+      },
+      "VOF": {
+        "name": "VOF.000002",
+        "bytes": 2048244,
+        "sha256": "a352712feb635140a1652027a6cf6bfa4e76324ba6a8cc196ee8c7f42b775cbf"
+      },
+      "PLIC": {
+        "name": "plic.000002",
+        "bytes": 904184,
+        "sha256": "0323ee72e4e165349df798eda8dc4acd9ee830d73928aded46e318ab8b043cff",
+        "polygons": 13588
+      },
+      "maxNativeSpeed_m_s": 0.3601609766483307
+    },
+    {
+      "step": 1205,
+      "time_s": 0.030017788578745604,
+      "temperature": {
+        "name": "temperature.000003",
+        "bytes": 2048244,
+        "sha256": "7a8de50c343425743a1276e66523992cd8dfae39aa061b47ace1fc3f00135246"
+      },
+      "velocity": {
+        "name": "velocity.000003",
+        "bytes": 6144244,
+        "sha256": "3b44f252b5e801cf7ca9ec308aa69a591f81cb9162e5992d206d1fe32504912c"
+      },
+      "VOF": {
+        "name": "VOF.000003",
+        "bytes": 2048244,
+        "sha256": "5264b7f16ffd6e679e8f7c939cbecdd70d321bad511eba36ca21a98b6add91e2"
+      },
+      "PLIC": {
+        "name": "plic.000003",
+        "bytes": 910432,
+        "sha256": "4a5d57a6e858fc7e7ff9e35a4ecdd4096612176615b313771ff27d4849efd315",
+        "polygons": 13678
+      },
+      "maxNativeSpeed_m_s": 0.3928844630718231
+    },
+    {
+      "step": 1305,
+      "time_s": 0.0325177885787455,
+      "temperature": {
+        "name": "temperature.000004",
+        "bytes": 2048244,
+        "sha256": "feb8ef37834842d345413b527ef4b92fd7955f251d752d9db10fc9a02c648058"
+      },
+      "velocity": {
+        "name": "velocity.000004",
+        "bytes": 6144244,
+        "sha256": "75f181d0fe7b3aeb82b0dab279b24c9e707d8b4a098d25f3bb4282be8e4bd0c6"
+      },
+      "VOF": {
+        "name": "VOF.000004",
+        "bytes": 2048244,
+        "sha256": "3c14bb5fbd5bf33a29bfd1b54ff06d1ed376d2ec4091957a3610c14430f1fa58"
+      },
+      "PLIC": {
+        "name": "plic.000004",
+        "bytes": 918636,
+        "sha256": "ad48bf1a0e30b994ec6a9fa68a088c5cae8417fd98a406e7241736216bb07ab1",
+        "polygons": 13821
+      },
+      "maxNativeSpeed_m_s": 0.41089391708374023
+    },
+    {
+      "step": 1405,
+      "time_s": 0.035017788578745226,
+      "temperature": {
+        "name": "temperature.000005",
+        "bytes": 2048244,
+        "sha256": "5416d50087673a70f170905dd172a723b8f13bec0e38179bf118db44cf3ccc53"
+      },
+      "velocity": {
+        "name": "velocity.000005",
+        "bytes": 6144244,
+        "sha256": "4f3c40b9e3bfecfd31af92812faa83fc910c9cee3f9ea86188271193ffea9ef5"
+      },
+      "VOF": {
+        "name": "VOF.000005",
+        "bytes": 2048244,
+        "sha256": "b59740035bad982fe62f3a0cbb3b8e449d80698a47bebbbb53d01460189f75da"
+      },
+      "PLIC": {
+        "name": "plic.000005",
+        "bytes": 923832,
+        "sha256": "3ef96aab30490e28eee3612a56fce054dabe80f5acb0236ae5532830de14547b",
+        "polygons": 13928
+      },
+      "maxNativeSpeed_m_s": 0.3992770314216614
+    }
+  ],
+  "video": {
+    "name": "IMMERSION_FLOW_25_TO_35MS_PREVIEW.mp4",
+    "sha256": "a98fa5f2590762ea01f3fba58c7b1f59cd949b0a935a2caeb9f3b18d90218517",
+    "bytes": 154021,
+    "decodedCompletely": true,
+    "frames": 96,
+    "fps": 24
+  },
+  "publicationScope": "Five actual saved states from25.0178 to35.0178ms. Renderer/data audit preview, not100ms completion."
+}

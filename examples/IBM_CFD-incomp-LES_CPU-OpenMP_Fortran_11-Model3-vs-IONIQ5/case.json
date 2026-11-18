@@ -1,0 +1,98 @@
+{
+  "project": "Tesla Model 3 vs Hyundai IONIQ 5: public-model virtual wind tunnel",
+  "phase": "prepared",
+  "U_m_s": 27.77777777777778,
+  "speed_km_h": 100.0,
+  "Lref_m": 5.0,
+  "nu_m2_s": 1.5e-05,
+  "rho_kg_m3": 1.2,
+  "Re_Lref": 9259259.25925926,
+  "reference_time_s": 0.18,
+  "cells": [
+    160,
+    80,
+    80
+  ],
+  "cell_count": 1024000,
+  "fine_spacing_m": [
+    0.1171875,
+    0.0390625,
+    0.0625
+  ],
+  "fine_region_Lref": {
+    "x": [
+      -0.75,
+      2.25
+    ],
+    "y": [
+      0,
+      0.5
+    ],
+    "z": [
+      -0.4,
+      0.4
+    ]
+  },
+  "domain_Lref": {
+    "x": [
+      -2,
+      5
+    ],
+    "y": [
+      0,
+      2
+    ],
+    "z": [
+      -2,
+      2
+    ]
+  },
+  "ground": "y=0 prescribed tangential velocity U=U_in, V=W=0; moving-road approximation",
+  "wheels": "fixed geometry and zero IBM wall velocity for both vehicles",
+  "boundary": "uniform +x inlet; convective +x outlet; nonperiodic lateral far field; free-slip top",
+  "LES": "Vreman C=.035",
+  "max_dt_star": 0.004,
+  "CFL_target": 0.4,
+  "pressure_tolerance": 0.0001,
+  "target_time_star": 12.0,
+  "target_time_s": 2.16,
+  "field_every_steps": 20,
+  "threads": 16,
+  "purpose": "Qualitative publicity and visualization from attributed public models",
+  "vehicles": [
+    {
+      "id": "tesla_model3",
+      "name": "Tesla Model 3",
+      "nominal_length_m": 4.72,
+      "Aref_Lref2": 0.0939048641265906,
+      "Aref_m2": 2.347621603164765,
+      "Aref_method": "Projected silhouette of negative SDF cells; common SDF sampling approach for both models",
+      "preprocess_seconds": 3.3439999999973224,
+      "STL": "tesla_model3_IBM.stl"
+    },
+    {
+      "id": "hyundai_ioniq5",
+      "name": "Hyundai IONIQ 5",
+      "nominal_length_m": 4.635,
+      "Aref_Lref2": 0.10183270920996028,
+      "Aref_m2": 2.545817730249007,
+      "Aref_method": "Projected silhouette of negative SDF cells; common SDF sampling approach for both models",
+      "preprocess_seconds": 3.187999999994645,
+      "STL": "hyundai_ioniq5_IBM.stl"
+    }
+  ],
+  "IBM_interpolation": 0,
+  "IBM_wall": "Existing LICA direct forcing without interpolation; same choice for both coarse-grid vehicle cases",
+  "initial_dt_star": 0.0005,
+  "initial_interpolated_attempt": "Tesla run/ and run_direct/ retained as stopped setup diagnostics; not used in production",
+  "body_interior": "Opaque vertical exterior envelope; seal display-model cabin/engine voids connected to open underside. No vehicle internal-flow model.",
+  "thread_history": {
+    "tesla_model3": [
+      8
+    ],
+    "hyundai_ioniq5": [
+      8,
+      16
+    ]
+  }
+}

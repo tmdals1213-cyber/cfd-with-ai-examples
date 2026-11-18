@@ -1,0 +1,22 @@
+Partition : 2 2 1
+Lx : 0.120
+Ly : 0.080
+nx : 240
+ny : 160
+Block width : 0.045
+Block height : 0.004
+Physical span : 0.0375
+Heat power : 10.0
+Copper density : 8960.0
+Copper heat capacity : 385.0
+Copper conductivity : 400.0
+Gravity : 0 -9.81 0
+Inlet velocity : 0.0
+Max timestep size : 0.01
+Max cfl number : 0.35
+Max time : 0.02
+Pressure tolerance : 1e-9
+Pressure iteration : 200
+Thermal tolerance : 1e-11
+Thermal iteration : 150
+Ensight output period : 0.02

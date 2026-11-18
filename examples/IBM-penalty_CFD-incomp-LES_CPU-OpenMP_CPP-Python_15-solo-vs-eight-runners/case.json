@@ -1,0 +1,101 @@
+{
+  "speed_kmh": 21.0975,
+  "speed_m_s": 5.860416666666667,
+  "cadence_spm": 192,
+  "gaitPeriod_s": 0.625,
+  "gridCells": [
+    76,
+    29,
+    72
+  ],
+  "domain_xyz_m": [
+    [
+      -8,
+      6
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      -6,
+      6
+    ]
+  ],
+  "rho_kg_m3": 1.225,
+  "nu_m2_s": 1.5e-05,
+  "SGS": "Vreman Cv=.035",
+  "surfacePenalty": 10000,
+  "offsets_m": [
+    [
+      0,
+      0.005,
+      0
+    ],
+    [
+      3.29,
+      0.005,
+      1.66
+    ],
+    [
+      3.29,
+      0.005,
+      -1.66
+    ],
+    [
+      2.64,
+      0.005,
+      0.83
+    ],
+    [
+      2.64,
+      0.005,
+      -0.83
+    ],
+    [
+      1.99,
+      0.005,
+      0
+    ],
+    [
+      -0.65,
+      0.005,
+      0.83
+    ],
+    [
+      -0.65,
+      0.005,
+      -0.83
+    ]
+  ],
+  "variants": {
+    "solo": [
+      0
+    ],
+    "inverted8": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "recordedEndTime_s": 2.501953125,
+  "pressureMaxIterations": 384,
+  "combinedCFLTarget": 0.45,
+  "combinedCFLUpper": 0.5,
+  "physicalTotalDragQualified": false,
+  "assetContract": {
+    "motionNPZ": [
+      "positions_m[43,nVertex,3]",
+      "triangles[nTriangle,3]",
+      "source_times_s[43]"
+    ],
+    "sourceMotionRate_Hz": 60,
+    "motionMode": "periodic_c1",
+    "geometryAndAnimationEmbedded": false
+  }
+}

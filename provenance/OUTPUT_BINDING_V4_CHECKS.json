@@ -1,0 +1,53 @@
+{
+  "scope": "Output storage repair; no physics change or complete-cycle qualification",
+  "build": {
+    "PASS": true,
+    "binarySHA256": "464ba26ff882e320e4a89e72bc1dee770ef5a96094e6eeef9de00f0a75fdcbde",
+    "sourceSHA256": {
+      "boiling_energy.f90": "25e3abdce5360dc39e6479f3677d18a2d9d1d4762b9d2beb822b270243a4782f",
+      "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+      "face_geometry3d.f90": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043",
+      "geometry.f90": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a",
+      "Make.package": "7211523eecc8eb3cb7a02d5f670052285c5275214ed2b859e24be17498fef560",
+      "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+      "simulation.f90": "2c1ad548d8fcb0bca80ea56fdf67909137ac9eeda6e0da1631e403a456de61b9",
+      "vfs_class.f90": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+    }
+  },
+  "normalCheckpoint": {
+    "step": 1000,
+    "time_s": 0.024892788578745457,
+    "all8RestoreCSVByteEqual": true
+  },
+  "shortRun": {
+    "state": "COMPLETED",
+    "exitCode": 0,
+    "allOwnedRanksClosed": true,
+    "finalStep": 1025.0,
+    "finalTime_s": 0.0252,
+    "finalEnergyError_J": -4.362742249389759e-09,
+    "finalDivMinusSource_s_1": 5.840649075494753e-10,
+    "historyMaxDifferenceAgainstSameDtV3BeforeOldFailure": 0.0
+  },
+  "savedOutput": {
+    "temperature": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "4e309fbe668a5b2c5bc9e73f737e5a7b882d2d945f9f223560487ba98e7495d1"
+    },
+    "latent_sink": {
+      "exactFloat32FromActualDoubleCSV": true,
+      "fileSHA256": "fc1617dc7703d275e996c8481cac0bf4f390e4bb2562733dd8177c59c16b01a8"
+    }
+  },
+  "hardwareZeroOverflowTrapsRetained": true,
+  "clippingUsed": false,
+  "physicsGridTolerancesChanged": false,
+  "diagnosticFinding": "Old retained EnSight latent_sink reference read temperature-like or enormous garbage while actual physical arrays were finite/infloat32range. First overflow occurred on scalar float32 conversion before MPI write. TARGET owners and non-reallocating temperature assignment preserve exported storage.",
+  "limits": [
+    "Exact output audit covers temperature and latent_sink at the matched short-run snapshot, not every exported field at every future time.",
+    "Short v4 check does not establish that every later v3 failure has the same cause.",
+    "Legacy same-source checkpoint was accepted only after explicit zero-step physical-byte equivalence; arbitrary cross-binary restart remains forbidden.",
+    "100ms continuation is not completed evidence in this package."
+  ],
+  "historicalVideoSource": "v3 completed20ms, unchanged"
+}

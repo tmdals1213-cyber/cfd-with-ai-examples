@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "speed_kmh": 100.0,
+    "U_m_s": 27.77777777777778,
+    "L0_m": 5.0,
+    "rho_kg_m3": 1.2,
+    "nu_m2_s": 1.5e-05,
+    "grid_cells": [
+      160,
+      80,
+      80
+    ],
+    "target_time_star": 18.0,
+    "same_window_s": [
+      0.0,
+      3.24
+    ],
+    "moving_road": true,
+    "fixed_wheels": true,
+    "LES": "Vreman C=0.035",
+    "cold_entry": "MAKEFLD; IREAD=0; EPS_PTR=0.001",
+    "proposed_analysis_time_star": [
+      6.0,
+      18.0
+    ],
+    "duration_convergence_qualified": false
+  },
+  "caseIds": [
+    "bmw-e36-m3",
+    "porsche-911",
+    "ferrari-f40",
+    "lamborghini-urus",
+    "mercedes-benz-g-class-w263",
+    "audi-r8",
+    "ford-mustang",
+    "nissan-gt-r",
+    "toyota-supra-mk4",
+    "land-rover-defender-110"
+  ]
+}

@@ -1,0 +1,10 @@
+# Preserve source/checkpoint-provenance byte hashes across platforms.
+# The scripts/*.sh files are authored with LF endings.
+* -text
+*.mp4 binary
+*.png binary
+
+# Exact source hashes preserve imported formatting and patch context.
+examples/**/src/** -whitespace
+legacy/** -whitespace
+*.patch -whitespace

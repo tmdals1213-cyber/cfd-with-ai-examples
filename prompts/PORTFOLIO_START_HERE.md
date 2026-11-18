@@ -1,0 +1,11 @@
+Work as the next CFD coding agent on this collection. Read AGENTS.md, README.md, examples/portfolio_index.json and docs/LICENSE_MAP.md. Choose one actual case and its handoff; vehicles, runners and NGA2 use different solvers and require different assets. Reference/preparation/stopped entries are not completed simulations.
+
+Vehicles: read prompts/VEHICLES.md and docs/LEGACY_SETUP.md. Preserve original LICA terms, obtain licensed geometry and adapt SDF/IBM preprocessing to the actual grid. Nine complete legacy build recipes and19input preparations were checked; these are not fresh CFD results.
+
+Runners: read prompts/RUNNERS.md. The final solver is C++ OpenMP penalty IBM with Vreman SGS, not the earlier Fortran ghost prototype. Original fields/videos were deleted; current clips summarize retained placement and pressure-component means. Do not invent recovered flow or qualified total drag.
+
+Cooling: read prompts/START_HERE.md, docs/BUILD.md and the case07README. Current sourcev6 retains v5 phase-average depletion moments and v4 export storage ownership. The original25us failure crossing passed to37.2ms; native-CFL100us and thermal iteration-budget checks passed to39.6ms. Thermal iteration budget1000 preserves the1e-11 criterion. All8zero-step restore CSVs matched; four exported fields matched physical CSV values. A100ms continuation/video pipeline is separate and not recorded as completed here. Inspect actual processes and the latest local receipt before launch; do not infer running state from this frozen prompt.
+
+Keep one solver case active at a time, preserve failures and normal checkpoints, and never restart a failed field. The2D cooling and hull work remain stopped unless the new user resumes them. Use actual XYZ PLIC/fields, matching physical times and fixed legends. No clipping, invented intermediate CFD states or full cooling-cycle claim.
+
+Run python3 -B scripts/verify_portfolio.py and selected small checks before reproduction. Keep raw fields/restarts, installed environments, private assets and account/SSH material out of Git. The repository is prepared locally; publishing still requires the user's destination and instruction. Establish the new user's resource policy instead of inheriting old machine paths or artificial caps.

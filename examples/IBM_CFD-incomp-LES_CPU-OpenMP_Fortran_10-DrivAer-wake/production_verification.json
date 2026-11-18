@@ -1,0 +1,11 @@
+{
+  "exit_code": 0,
+  "steps": 13141,
+  "final_time": 40.0,
+  "wall_seconds": 4934.1720000000005,
+  "max_CFL": 0.37856674,
+  "max_divergence": 9.9993674e-05,
+  "finite": true,
+  "poisson_nonconverged": 0,
+  "fields": 658
+}

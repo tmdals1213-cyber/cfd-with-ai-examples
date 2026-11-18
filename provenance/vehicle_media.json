@@ -1,0 +1,52 @@
+[
+  {
+    "file": "media/VEHICLE_CAR10_LANDSCAPE.mp4",
+    "originalName": "car10_english_overlay_film_20261102/final/CAR10_English_2560x1440.mp4",
+    "originalSHA256": "27ee137ab6b5ced4495922a58b67d499ca88b0f5d091bcebe501863477883e04",
+    "sha256": "9e873e0c9f230e70605c6aa590e1683f52b588828e62f3e4bd66033fa47cd20e",
+    "bytes": 5631752,
+    "scope": "Camera orbit around the same final field; not unsteady time evolution.",
+    "newCFDStatesGenerated": false,
+    "fullDecodePassed": true
+  },
+  {
+    "file": "media/VEHICLE_CAR10_PORTRAIT.mp4",
+    "originalName": "car10_english_overlay_film_20261102/final/CAR10_English_SNS_1080x1920.mp4",
+    "originalSHA256": "c7fb3e05d37eee77eec6f9d47a95330670850cb216df680c60039e9740fb2e50",
+    "sha256": "4951b7bb23ffdaf6d57b1ef0e2f4cfde42c70a67ff747334368dc58e643a44c8",
+    "bytes": 7357137,
+    "scope": "Same-time final-field comparison with camera motion.",
+    "newCFDStatesGenerated": false,
+    "fullDecodePassed": true
+  },
+  {
+    "file": "media/VEHICLE_DRIVAER_WAKE.mp4",
+    "originalName": "drivaer_unsteady_demo/car_wake_preview.mp4",
+    "originalSHA256": "47e7da910d646b856d9b3447c35bde06bf559abe62f41322ac1efdf866b156c4",
+    "sha256": "f7a2c6c42cc5cc547dfc43b453d866846d559a504bbf4971203ac1ebfecb6a40",
+    "bytes": 441906,
+    "scope": "Historical actual saved wake preview; model/grid limits retained.",
+    "newCFDStatesGenerated": false,
+    "fullDecodePassed": true
+  },
+  {
+    "file": "media/VEHICLE_EV_PAIR.mp4",
+    "originalName": "ev_aero_comparison/drag_comparison/final/Model3_vs_IONIQ5_drag_9x16_final.mp4",
+    "originalSHA256": "c743c29d64b18a0bad59ecf4ceed198de89b2bb33874dd6209f7c7f4a33654a2",
+    "sha256": "d3abdc7770a11330b74f7393a29b4f35b069b0df42c34d60b7303346c7318ccb",
+    "bytes": 3257642,
+    "scope": "Historical qualitative artist-model EV comparison.",
+    "newCFDStatesGenerated": false,
+    "fullDecodePassed": true
+  },
+  {
+    "file": "media/VEHICLE_SUV_PAIR.mp4",
+    "originalName": "suv_aero_comparison/drag_comparison/final/URUS_vs_GCLASS_drag_9x16_final.mp4",
+    "originalSHA256": "064a930b001d060cfe9d9654e1b0b88faf0d6d441f09d9d3fe65d0976d14b64a",
+    "sha256": "0e0746bbd341f4e36496d497760a9f3c5cc6788670bb5095735ead641876a966",
+    "bytes": 4526581,
+    "scope": "Historical qualitative artist-model SUV comparison.",
+    "newCFDStatesGenerated": false,
+    "fullDecodePassed": true
+  }
+]

@@ -1,0 +1,120 @@
+{
+  "PASS": true,
+  "inputVariants": [
+    {
+      "case": "08_ahmed",
+      "variant": "default",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "09_drivaer",
+      "variant": "default",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "10_drivaer_les",
+      "variant": "default",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "11_ev_pair",
+      "variant": "hyundai_ioniq5",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "11_ev_pair",
+      "variant": "tesla_model3",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "12_suv_pair",
+      "variant": "gclass",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "12_suv_pair",
+      "variant": "urus",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "audi-r8",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "bmw-e36-m3",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "ferrari-f40",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "ford-mustang",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "lamborghini-urus",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "land-rover-defender-110",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "mercedes-benz-g-class-w263",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "nissan-gt-r",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "porsche-911",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "13_car10",
+      "variant": "toyota-supra-mk4",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "14_turbine",
+      "variant": "default",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    },
+    {
+      "case": "21_cylinder",
+      "variant": "default",
+      "coldStartPrepared": true,
+      "wholeFieldOrRestartBorrowed": false
+    }
+  ],
+  "flowSolversLaunched": 0
+}

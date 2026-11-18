@@ -1,0 +1,83 @@
+{
+  "geometry": "same DrivAer_reduced_length1.stl as previous case",
+  "Re_L": 2000,
+  "LES": "constant Vreman, C=0.035",
+  "cells": [
+    144,
+    64,
+    64
+  ],
+  "cell_count": 589824,
+  "grid_points": [
+    145,
+    65,
+    65
+  ],
+  "fine_x_range": [
+    -0.75,
+    3.25
+  ],
+  "fine_dx": 0.03125,
+  "fine_dy_dz": 0.015625,
+  "initial_condition": "uniform flow with one-time localized discrete divergence-free streamfunction perturbation, amplitude 0.001",
+  "periodic_forcing": false,
+  "purpose": "qualitative nonstationary car-wake demonstration, not a verified road-car prediction",
+  "source_fixes": [
+    "SGS_CVM OpenMP private neighbor indices",
+    "SGS_CVM uniform-gradient zero and nonnegative invariant guard"
+  ],
+  "smoke_comparison": {
+    "runs": [
+      {
+        "mode": "serial",
+        "threads": 1,
+        "steps": 20,
+        "time": 0.05,
+        "CFL_max": 0.5451145,
+        "divergence_max": 9.6555737e-06,
+        "finite": true,
+        "wall_seconds": 71.60900000000038,
+        "poisson_nonconverged": 0
+      },
+      {
+        "mode": "omp",
+        "threads": 4,
+        "steps": 20,
+        "time": 0.05,
+        "CFL_max": 0.5451145,
+        "divergence_max": 9.6555632e-06,
+        "finite": true,
+        "wall_seconds": 31.75,
+        "poisson_nonconverged": 0
+      }
+    ],
+    "velocity_max_difference": 2.5260349367783874e-13
+  },
+  "boundary": "uniform +x, convective outlet, nonperiodic y/z far field; no ground, fixed wheels",
+  "threads": 8,
+  "pressure_tolerance": 0.0001,
+  "time_step": "adaptive CFL 0.35, capped dt*=0.005",
+  "target_time": 40.0,
+  "field_every_steps": 20,
+  "periodicity": "To be measured from force and wake histories; no imposed oscillation frequency",
+  "thread_benchmark": {
+    "runs": [
+      {
+        "threads": 4,
+        "steps": 40,
+        "wall_seconds": 14.32799999999952,
+        "max_CFL": 0.37749255,
+        "max_divergence": 9.1035638e-05
+      },
+      {
+        "threads": 8,
+        "steps": 40,
+        "wall_seconds": 13.92199999999957,
+        "max_CFL": 0.37749255,
+        "max_divergence": 9.1035638e-05
+      }
+    ],
+    "max_velocity_difference": 5.091847082860923e-15
+  },
+  "initial_condition_detail": "Restart from the prepared cold-start smoke and thread benchmark after a short warm-up; time and history reset to zero, pressure preserved."
+}

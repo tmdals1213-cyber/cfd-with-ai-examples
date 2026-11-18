@@ -1,0 +1,117 @@
+{
+  "preparedAt": "2026-11-18T11:41:06.238520+09:00",
+  "state": "LOCAL_PUBLICATION_CANDIDATE_VALIDATED_NOT_UPLOADED",
+  "builds": {
+    "01_ib_tester": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 42.579232931137085,
+      "binarySHA256": "414b557d902c9d508b795ac8106ee230001a952f94a6bbb720ef76fea110a7fa",
+      "sourceSHA256": {
+        "geometry.f90": "592c1cf11fa7cd1d0b4a63cd3851d392ed361b010bf79b7a43bdcd99de7c7888",
+        "Make.package": "b0563ad41ae4f358b0b00e51cf0d7c9d3865e8332605ec9e1852a25d9ab94593",
+        "simulation.f90": "4011d6b5c971a808b7874a54047240425e44113f5eb1a7e276e7127c3afbc835"
+      }
+    },
+    "02_ib_shock": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 21.423648595809937,
+      "binarySHA256": "773e1a216cc29f6d763272f844db7f2de610c1daec88592540473e525d8bcd42",
+      "sourceSHA256": {
+        "geometry.f90": "eec52bc9ddd27c50d93d28367ebf77c85a43709cfbb9f13a327f62e3d0e64223",
+        "Make.package": "3409881012bf4de13b728db93f49d91f0a4a1632787800fc849912760627edaa",
+        "simulation.f90": "1635244fc16dbf3262973c7680c57f53704742c5e3214b374761319ecebb460d",
+        "spcomp_class.f90": "f893c8db43e28eb43f220ce4407372af703d59e5f0f6dba750aab09bb912b1d9"
+      }
+    },
+    "03_water_cht_2d": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 53.28974533081055,
+      "binarySHA256": "9ffc08bd4f02333d47f6114e071a01510c857761062591e04c031588d0433a50",
+      "sourceSHA256": {
+        "cht_energy.f90": "b8d2c0bdaeda0f22508696d5e2c0b90970b93eed8d8cfad483e07e74401410bc",
+        "geometry.f90": "ec437c9572418252805f499e8f40d1cf1dc6e577abeba97dca7f2823364bd5e9",
+        "Make.package": "a98a7412f1cefb6548fa64f01c1a3a0e3372923a7c1f8d945ce2ec6265c1443c",
+        "simulation.f90": "ecfc422d45a73a9fff68a555a326b6c996dc61803505c39078071865833c8bb6",
+        "water_eos.f90": "e9d38dec4c12b9bd96d63a66b2e04c29846281276ffd98d9a3b4f4238ceff928"
+      }
+    },
+    "04_stefan_2d": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 126.98157262802124,
+      "binarySHA256": "2cfe69b634dc651583cb14f1f5cf58c38a5c736d3bab3dcc00304dc26056b72d",
+      "sourceSHA256": {
+        "boiling_energy.f90": "58c98b96b5f01dbd41642b00fc082b245ac6cc37b2c2c0da5e877eaa08901b63",
+        "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+        "geometry.f90": "693444e15432ae4a6acbf3d02041f9bfe1ce396055351a42bf0683348f8746d7",
+        "Make.package": "55a594f0812e6b9f8106c33b918d5fe19b04e5df1958b55e61b4b9e106444636",
+        "simulation.f90": "18a55fc91334077302f22464dc6b3cd8d3a3fa8e433d1a17590d6ddf39eef44d"
+      }
+    },
+    "05_heated_bubble_2d": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 95.06842541694641,
+      "binarySHA256": "ce28bb41cf555b2a30c750e9e99b2305ba16452004b6411531273c9bc8d66a10",
+      "sourceSHA256": {
+        "boiling_energy.f90": "4bb99ebfe24c277404c1becd045cb46d709c8b61a7be943d2619346f450b45a7",
+        "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+        "geometry.f90": "02f57ab09e2c3152ca8bab4e4903c4be30974fa96e83c41a2d79f73207445e35",
+        "Make.package": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162",
+        "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+        "simulation.f90": "6b3cae66930237675faebc0464d9cde49373dde7f0de546d7bd62f9af891d2cb",
+        "vfs_class.f90": "281891f8d3759204b5570350ce7fafbc6ed3c45faaea8c71a7c1b6ccf7c9f327"
+      }
+    },
+    "06_dielectric_pool_2d": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 71.9703574180603,
+      "binarySHA256": "72cb7389fb4d21dcbe70b06f2a34b17e2da2d6b239b95cdd27ae84252ba4df27",
+      "sourceSHA256": {
+        "boiling_energy.f90": "064ca4b41ad715be90a81411ed427d874cdd2a440dd0dd97093f4ba844dc3c54",
+        "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+        "geometry.f90": "50aa859bd40326f1657b142e84b28bbb03ba3e48f4b536035ad8d7058f2b191f",
+        "Make.package": "fd10fd0eda46aaea5ae4ed4abba380642ab229f173ee53a36c7a0bce4552c162",
+        "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+        "simulation.f90": "12e0da3bb286722466f7cd70e20a326a8a878f897f79b32ddec29b8f92fe0cc6",
+        "vfs_class.f90": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+      }
+    },
+    "07_immersion_3d": {
+      "PASS": true,
+      "compiler": "GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+      "seconds": 112.53032302856445,
+      "binarySHA256": "ad17baf12aa3dc905d463271569d4548c150118ddb125d4c136890cba2aeeb25",
+      "sourceSHA256": {
+        "boiling_energy.f90": "dd2a5f0b719e707e0c068d76715a1b7a5659192f7256c7df90e6f10ecab9c841",
+        "evap_class.f90": "0d11720d2887bb42f1dcae930b3697e5345aaa4b81d30fd895bc4f465fdc9099",
+        "face_geometry3d.f90": "df7795bb475f2672d580bb7586c3f2e97c6fd1da40be7fd962069035bcf54043",
+        "geometry.f90": "d211d2f3d3a9543f4e2a3856b440d52db33c69e7ca2bfe3f7c826b84f61bcc8a",
+        "Make.package": "7211523eecc8eb3cb7a02d5f670052285c5275214ed2b859e24be17498fef560",
+        "phase_birth_core.f90": "aeea042864d9db7ef14cadadeff6789e2f15687fe9aeabfe80f4c5895e4489bf",
+        "simulation.f90": "3b231c7934c01b4887af8aaf329633b2d7a549492197815b8a1d5a705222be54",
+        "vfs_class.f90": "020f71ee10a292516b7a17ebfd623c7a91724dade0b7ff276dd08c533a884a36"
+      }
+    }
+  },
+  "PLICfaceKernelChecks": 6,
+  "controllerAuditTests": 4,
+  "sourceFilesPinned": 39,
+  "caseEntries": 7,
+  "freshCFDLaunchedForPackaging": false,
+  "ongoingOriginalCFDModified": false,
+  "cleanLinuxOSInstallReproduced": false,
+  "existingDependenciesReused": true,
+  "wholeFieldOrRestartIncluded": false,
+  "privatePathTokenPatternScanPassed": true,
+  "MarkdownLinksPassed": true,
+  "videoFullDecodePassed": true,
+  "gitRemotes": [],
+  "knownPackagingFailurePreserved": "Initial source collector omitted Make.package files; corrected before final isolated builds. All seven final entries build successfully.",
+  "scientificLimit": "Build/execution history and numerical conservation evidence do not establish grid/time convergence or predictive CPU cooling performance.",
+  "scope": "Historical portable NGA2 build matrix:case07wasv3. Intermediatev4 output evidence andv5 moment evidence are retained separately. Currentv6 build/thermal-budget evidence is THERMAL_ITERATION_V6_CHECKS.json; the other six case sources are unchanged."
+}

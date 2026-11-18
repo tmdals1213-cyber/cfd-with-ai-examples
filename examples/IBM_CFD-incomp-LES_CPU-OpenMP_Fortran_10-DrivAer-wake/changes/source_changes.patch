@@ -1,0 +1,85 @@
+--- previous/mod_common.f90
++++ unsteady_demo/mod_common.f90
+@@ -2,7 +2,7 @@
+ 
+ !======================= PARAMETERS ==================================
+ !-----GEOMETRY
+-      INTEGER*8, PARAMETER :: M1 = 97,M2 = 65,M3 = 65
++      INTEGER*8, PARAMETER :: M1 = 145,M2 = 65,M3 = 65
+       INTEGER*8, PARAMETER :: M1M=M1-1,M2M=M2-1,M3M=M3-1
+       INTEGER*8, PARAMETER :: M3MH=M3M/2+1
+ !-----IMMERSED BOUNDARY
+--- previous/lica_sphere.f90
++++ unsteady_demo/lica_sphere.f90
+@@ -211,6 +211,7 @@
+        USE MOD_FLOWARRAY, ONLY : U,V,W,P 
+        IMPLICIT NONE
+        INTEGER*8     :: I,J,K
++       REAL*8 :: DEMO_PSI
+ 
+        IHIST= 0
+        TIME = 0.
+@@ -233,6 +234,24 @@
+         DO 30 J=0,N2
+         DO 30 I=0,N1
+  30     W(I,J,K) = 0.
++
++! One initial localized streamfunction perturbation, not a time forcing.
++       DO K=1,N3M
++       DO J=1,N2M
++       DO I=1,N1
++        U(I,J,K)=U(I,J,K)+(DEMO_PSI(X(I),Y(J+1),ZMP(K)) &
++                    -DEMO_PSI(X(I),Y(J),ZMP(K)))/SDY(J)
++       ENDDO
++       ENDDO
++       ENDDO
++       DO K=1,N3M
++       DO J=1,N2
++       DO I=1,N1M
++        V(I,J,K)=V(I,J,K)-(DEMO_PSI(X(I+1),Y(J),ZMP(K)) &
++                    -DEMO_PSI(X(I),Y(J),ZMP(K)))/SDX(I)
++       ENDDO
++       ENDDO
++       ENDDO
+ 
+ !     Z PERIODICITY
+       IF (IPZ .EQ. 1) THEN
+@@ -383,3 +402,11 @@
+   real(real64) :: f
+   f=evaluate_sdf(x,y,z)
+ end function
++
++      REAL*8 FUNCTION DEMO_PSI(XX,YY,ZZ)
++      USE MOD_COMMON, ONLY: EPS_PTR
++      IMPLICIT NONE
++      REAL*8 :: XX,YY,ZZ
++      DEMO_PSI=EPS_PTR*EXP(-((XX-0.85D0)/0.4D0)**2 &
++               -((YY-0.17D0)/0.25D0)**2-((ZZ-0.03D0)/0.25D0)**2)
++      END FUNCTION DEMO_PSI
+--- previous/lica_sgs.f90
++++ unsteady_demo/lica_sgs.f90
+@@ -240,7 +240,7 @@
+       REAL*8    :: A(3,3),B(6)
+       REAL*8    :: AAA,BBB
+ 
+-!$OMP PARALLEL DO &
++!$OMP PARALLEL DO private(I,J,KP,KM,JP,JM,IP,IM) &
+ !$OMP private(UP,UM,VP,VM,WP,WM) &
+ !$OMP private(VG11,VG12,VG13,VG21,VG22,VG23,VG31,VG32,VG33) &
+ !$OMP private(A,B,AAA,BBB)
+@@ -352,9 +352,12 @@
+       AAA=A(1,1)**2+A(1,2)**2+A(1,3)**2+A(2,1)**2+A(2,2)**2+A(2,3)**2+A(3,1)**2+A(3,2)**2+A(3,3)**2
+       BBB=B(1)*B(4)+B(4)*B(6)+B(6)*B(1)-B(2)**2  -B(3)**2  -B(5)**2
+ 
+-      BBB = AMAX1(BBB,1.0E-16)
+-
+-      TNU(I,J,K)= CSGS*SQRT(BBB/AAA)
++      BBB = MAX(BBB,0D0)
++      IF (AAA.GT.TINY(1D0)) THEN
++        TNU(I,J,K)= CSGS*SQRT(BBB/AAA)
++      ELSE
++        TNU(I,J,K)= 0D0 ! Uniform flow has zero eddy viscosity
++      ENDIF
+ 
+    10 CONTINUE
+ 
